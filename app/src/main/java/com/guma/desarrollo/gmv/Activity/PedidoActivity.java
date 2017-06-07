@@ -5,6 +5,8 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -53,12 +55,13 @@ import java.util.TimerTask;
 public class PedidoActivity extends AppCompatActivity {
     private ListView listView;
     List<Map<String, Object>> list;
-    TextView Total,txtCount,txtItemName,txtItemCant,txtItemCod,txtItemValor,txtBonificado,txtPrecio,txtComent;
+    TextView Total,txtCount,txtItemName,txtItemCant,txtItemCod,txtItemValor,txtBonificado,txtPrecio;
     EditText Inputcant,Exist;
     ArrayList<Pedidos> fList;
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     Spinner spinner;
+
 
     TextView textView;
     Timer timer;
@@ -72,7 +75,7 @@ public class PedidoActivity extends AppCompatActivity {
 
         listView = (ListView) findViewById(R.id.listViewSettingConnect);
         list = new ArrayList<>();
-        
+
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = preferences.edit();
         setTitle(preferences.getString("NameClsSelected"," --ERROR--"));
@@ -80,8 +83,14 @@ public class PedidoActivity extends AppCompatActivity {
         txtCount= (TextView) findViewById(R.id.txtCountArti);
         timer = new Timer();
         textView = (TextView) findViewById(R.id.idTimer);
-        txtComent = (TextView)findViewById(R.id.txtObservacion);
+
+
+
+
+
         String bandera = preferences.getString("BANDERA", "0");
+
+
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -119,8 +128,8 @@ public class PedidoActivity extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int id) {
                                     Intent send = new Intent(PedidoActivity.this,ResumenActivity.class);
                                     send.putExtra("LIST", (Serializable) list);
-                                    editor.putString("COMENTARIO", txtComent.getText().toString()).apply();
-                                    //send.putExtra("NombreCliente",getIntent().getStringExtra("NombreCliente"));
+                                    //editor.putString("COMENTARIO", txtComent.getText().toString()).apply();
+
                                     startActivity(send);
                                     timer.cancel();
                                     finish();
@@ -159,7 +168,7 @@ public class PedidoActivity extends AppCompatActivity {
                 /*Agregar comentario*/
             List<Pedidos> comen = Pedidos_model.getComentario(ManagerURI.getDirDb(), PedidoActivity.this,IdPedido);
             for(Pedidos obj2 : comen) {
-                txtComent.setText(obj2.getmComentario());
+               // txtComent.setText(obj2.getmComentario());
             }
             Refresh();
         }

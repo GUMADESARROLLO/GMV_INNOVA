@@ -6,8 +6,8 @@
     android:minHeight="?attr/listPreferredItemHeight"
     android:orientation="vertical"
     android:paddingBottom="8dp"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingLeft="30dp"
+
     android:paddingTop="8dp">
 
     <TableLayout
@@ -21,12 +21,12 @@
             android:layout_height="fill_parent"
             >
             <TextView
+                android:textColor="@color/black"
                 android:id="@+id/lst_nombre"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="ARTICULO"
-
-                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textSize="17sp"
                 tools:text="ARTICULO" />
 
 
@@ -38,7 +38,7 @@
                 android:layout_height="fill_parent"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:textAppearance="?attr/textAppearanceListItem"
+                android:textSize="17sp"
                 android:text="CODIGO"
                 android:id="@+id/lst_codigo" />
         </TableRow>
@@ -50,7 +50,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="PRECIO"
-                android:textAppearance="?attr/textAppearanceListItem"
+                android:textSize="17sp"
                 tools:text="PRECIO" />
         </TableRow>
 </TableLayout>

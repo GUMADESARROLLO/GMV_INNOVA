@@ -274,7 +274,11 @@ public class AgendaActivity extends AppCompatActivity  implements ConnectivityRe
             }
         }*/
         for (Clientes obj : Clientes_model.getClientes(ManagerURI.getDirDb(), AgendaActivity.this,"NOMBRE")) {
-            addProduct(0,"MASTER CLIENTE",obj.getmNombre(),obj.getmCliente());
+
+            if (obj.getmCliente().equals("00641")){
+                addProduct(0,"MASTER CLIENTE",obj.getmNombre(),obj.getmCliente());
+            }
+
         }
 
        // Clientes_model.getClientes(ManagerURI.getDirDb(), AgendaActivity.this,"NOMBRE");
