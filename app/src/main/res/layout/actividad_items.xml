@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="10dp">
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="0dp"
+                android:id="@+id/ActividadChk"
+                />
+            <TextView
+                android:layout_marginLeft="0dp"
+                android:id="@+id/ActividadItem"
+                android:layout_height="fill_parent"
+                android:layout_width="400dp"
+                android:layout_weight="1"
+                android:layout_alignParentTop="true"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+            <TextView
+                android:layout_marginLeft="40dp"
+                android:id="@+id/IdAEItem"
+                android:layout_height="fill_parent"
+                android:layout_width="1dp"
+                android:layout_weight="1"
+                android:layout_alignParentTop="true"
+                android:visibility="gone"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+        </TableRow>
+
+    </TableLayout>
+</RelativeLayout>

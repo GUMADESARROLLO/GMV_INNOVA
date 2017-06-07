@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?attr/listPreferredItemHeight"
+    android:orientation="horizontal"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <ImageView
+                android:layout_marginLeft="10dp"
+                android:layout_height="50dp"
+                android:layout_width="50dp"
+                android:src="@drawable/moneda"/>
+            <LinearLayout
+                android:layout_marginLeft="10dp"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/lst_puntos"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    tools:text="CLIENTE" />
+                <TextView
+                    android:id="@+id/lst_factura"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:textAppearance="?android:attr/textAppearanceListItem"
+                    tools:text="COBRO" />
+                <TextView
+                    android:id="@+id/lst_fecha"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:textAppearance="?android:attr/textAppearanceListItem"
+                    tools:text="FECHA" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_marginLeft="10dp"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:gravity="right"
+                    android:id="@+id/lst_monto"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:textAppearance="?android:attr/textAppearanceListItem"
+                    tools:text="MONTO" />
+            </LinearLayout>
+        </TableRow>
+    </TableLayout>
+
+</LinearLayout>

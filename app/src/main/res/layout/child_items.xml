@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TableLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center_horizontal">
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="10dp">
+            <TextView
+                android:layout_marginLeft="42dp"
+                android:id="@+id/childItem"
+                android:text="HOLA"
+                android:layout_height="fill_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:textSize="17sp"/>
+            <ImageView
+                android:id="@+id/iCake"
+                android:layout_height="fill_parent"
+                android:layout_width="100dp"
+
+                />
+        </TableRow>
+
+    </TableLayout>
+
+</RelativeLayout>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.guma.desarrollo.gmv">
+
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="com.google.android.gms.permission.ACTIVITY_RECOGNITION" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:name=".MyApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/logo_gmv"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="android.app.searchable"
+            android:resource="@xml/searchable" />
+
+        <activity
+            android:name=".Activity.WelcomeActivity"
+            android:theme="@style/Theme.AppCompat.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Activity.LoginActivity"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.AppCompat.NoActionBar" />
+        <activity
+            android:name=".Activity.AgendaActivity"
+            android:label="@string/title_activity_agenda"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.MarcarRegistroActivity"
+            android:label="@string/title_activity_marcar_registro"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.AccionesActivity"
+            android:label="@string/title_activity_acciones"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.CobroInActivity"
+            android:label="@string/title_activity_cobro_in"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.PedidoActivity"
+            android:label="@string/title_activity_pedido"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.ArticulosActivity"
+            android:label="@string/title_activity_articulos"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.IndicadoresClienteActivity"
+            android:label="@string/title_activity_indicadores_cliente"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.ResumenActivity"
+            android:label="@string/title_activity_resumen"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.CumpleannoActivity"
+            android:label="@string/title_activity_cumpleanno"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.BandejaPedidosActivity"
+            android:label="@string/title_activity_bandeja_pedidos"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.BandejaCobrosActivity"
+            android:label="@string/title_activity_bandeja_cobros"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.RptHoyActivity"
+            android:label="@string/title_activity_rpt_hoy"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Activity.QrActivity" />
+
+        <receiver
+            android:name=".api.ConnectivityReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
+        <service
+            android:name=".api.DetectedActivitiesIntentService"
+            android:exported="false" />
+
+        <meta-data
+            android:name="android.app.searchable"
+            android:resource="@xml/searchable" />
+
+        <activity
+            android:name=".Activity.FacturasActivity"
+            android:label="@string/title_activity_facturas"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".Activity.RazonActivity" />
+        <activity android:name=".Activity.RazonesActivity" />
+        <activity android:name=".Activity.listview_row" />
+        <activity
+            android:name=".Activity.CrearAgendaActivity"
+            android:label="@string/title_activity_crear_agenda"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.ClientesActivity"
+            android:label="@string/title_activity_clientes"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.ComprasActivity"
+            android:label="@string/title_activity_compras"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.AcercadeActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Activity.ScrollingRazones"
+            android:label="@string/title_activity_scrolling_razones"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+    </application>
+
+</manifest>

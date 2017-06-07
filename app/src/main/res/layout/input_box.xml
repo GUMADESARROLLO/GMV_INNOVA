@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_root"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:maxWidth="100dp"
+    android:padding="10dp" >
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="0dp">
+            <TextView
+                android:layout_height="fill_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Cantidad: "
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+            <EditText
+                android:text=""
+                android:inputType="number"
+                android:id="@+id/txtFrmCantidad"
+                android:layout_height="fill_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1" >
+                <requestFocus />
+            </EditText>
+        </TableRow>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="0dp">
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_height="fill_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Bonificado: "
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <Spinner
+                android:textAlignment="textEnd"
+                android:id="@+id/sp_boni"
+                android:layout_height="fill_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:spinnerMode="dropdown" />
+        </TableRow>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="0dp">
+            <TextView
+                android:layout_height="fill_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Existencia: "
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <EditText
+                android:inputType="text"
+                android:id="@+id/txtFrmExistencia"
+                android:layout_height="fill_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:focusable="false"/>
+        </TableRow>
+    </TableLayout>
+    <Button
+        android:id="@+id/btnDone"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_gravity="end"
+        android:text="ACEPTAR"
+        android:layout_weight="1"/>
+</LinearLayout>

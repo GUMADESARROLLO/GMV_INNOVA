@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?attr/listPreferredItemHeight"
+    android:orientation="vertical"
+    android:paddingBottom="8dp"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="8dp">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            >
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="0dp"
+                android:layout_marginTop="30dp"
+                android:adjustViewBounds="false"
+                android:src="@drawable/carro"
+                />
+            <LinearLayout
+                android:layout_marginLeft="10dp"
+                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/txt_id_pedido"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    tools:text="" />
+                <TextView
+                    android:id="@+id/lst_cliente"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    tools:text="CLIENTE" />
+                <TextView
+                    android:id="@+id/lst_total"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    tools:text="COBRO" />
+                <TextView
+                    android:id="@+id/lst_fecha"
+                    android:layout_height="wrap_content"
+                    android:layout_width="fill_parent"
+                    android:textAppearance="?android:attr/textAppearanceListItem"
+                    tools:text="FECHA" />
+            </LinearLayout>
+        </TableRow>
+        <TableRow
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
+            <TextView
+                android:layout_height="fill_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:text=""
+                android:id="@+id/txt_id_cliente" />
+            <TextView
+                android:id="@+id/txt_id_estado"
+                android:gravity="end"
+                android:layout_height="fill_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:text="" />
+            <ImageView
+                android:id="@+id/img"
+                android:layout_width="50dip"
+                android:layout_height="fill_parent"
+                android:src="@drawable/uno2"
+                android:layout_marginLeft="3dip"
+                android:scaleType="center"/>
+        </TableRow>
+</TableLayout>
+</RelativeLayout>

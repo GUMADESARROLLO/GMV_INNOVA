@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "291853906918",
+    "firebase_url": "https://cordguma.firebaseio.com",
+    "project_id": "cordguma",
+    "storage_bucket": "cordguma.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:291853906918:android:0d2aab0fe9c81fee",
+        "android_client_info": {
+          "package_name": "com.guma.desarrollo.gmv"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "291853906918-em6mo4qoqhcfpkuvrgrihhaipticel1v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.guma.desarrollo.gmvinnova",
+            "certificate_hash": "c1b7257046c9dee22ea94faae74ec3279a7fe60c"
+          }
+        },
+        {
+          "client_id": "291853906918-sp36itpjfisn7vkh4avpsholr5u3cafd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBV1EmqmPS3yWAfMensVC0AobDoEyE2nx0"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "291853906918-sp36itpjfisn7vkh4avpsholr5u3cafd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

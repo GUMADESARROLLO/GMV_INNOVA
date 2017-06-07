@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="?attr/listPreferredItemHeight"
+    android:orientation="vertical"
+    android:paddingBottom="8dp"
+    android:paddingTop="8dp">
+    <LinearLayout
+        android:paddingLeft="10dp"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent">
+        <TextView
+            android:id="@+id/lst_Nombre"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_weight="1"
+            android:textColor="@color/black"
+            android:textSize="17sp"
+            tools:text="Nombre: " />
+        <TextView
+            android:id="@+id/lst_Codigo"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            tools:text="Codigo: " />
+        <TextView
+            android:id="@+id/lst_Cantidad"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_weight="1"
+            tools:text="Cantidad: " />
+        <TextView
+            android:id="@+id/lst_Fecha"
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            tools:text="Fecha: " />
+    </LinearLayout>
+
+
+</LinearLayout>

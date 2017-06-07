@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tvListItemName"
+            android:layout_height="fill_parent"
+            android:layout_width="wrap_content"
+            android:textStyle="bold"
+            android:gravity="start"
+            android:padding="5dp"
+            android:text="ARTICULO"/>
+        <TextView
+            android:id="@+id/item_codigo"
+            android:layout_height="fill_parent"
+            android:layout_width="wrap_content"
+            android:textStyle="bold"
+            android:gravity="start"
+            android:padding="5dp"
+            android:text="ARTICULO"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:background="@color/cardview_light_background"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/Item_cant"
+            android:layout_height="fill_parent"
+            android:layout_width="50dp"
+            android:gravity="start"
+            android:padding="5dp"
+            android:text="Canitdad"/>
+        <TextView
+
+            android:layout_height="fill_parent"
+            android:layout_width="50dp"
+            android:gravity="center"
+            android:padding="5dp"
+            android:text="X"/>
+        <TextView
+            android:id="@+id/tvListItemPrecio"
+            android:layout_height="fill_parent"
+            android:layout_width="100dp"
+            android:gravity="start"
+            android:padding="5dp"
+            android:text="Precio"
+            />
+        <TextView
+            android:id="@+id/tbListBonificado"
+            android:layout_height="fill_parent"
+            android:layout_width="100dp"
+            android:gravity="start"
+            android:padding="5dp"
+            android:text="Bonificado"
+            />
+        <TextView
+            android:layout_height="fill_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:gravity="end"
+            android:padding="5dp"
+            android:text="C$ "
+
+            />
+        <TextView
+            android:id="@+id/Item_valor"
+            android:layout_height="fill_parent"
+            android:layout_width="70dp"
+            android:gravity="end"
+            android:padding="5dp"
+            android:layout_marginRight="50dp"
+            android:text="Valor"
+
+            />
+    </LinearLayout>
+</LinearLayout>

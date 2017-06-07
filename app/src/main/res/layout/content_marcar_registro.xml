@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
+    android:id="@+id/content_marcar_registro"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.guma.desarrollo.gmv.Activity.MarcarRegistroActivity"
+    tools:showIn="@layout/activity_marcar_registro">
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TableRow
+            android:gravity="center"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="10dp">
+            <ImageView
+                android:paddingTop="10dp"
+
+                android:layout_gravity="center"
+                android:id="@+id/iv_callQr"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginTop="15dp"
+                app:srcCompat="@drawable/ico1" />
+        </TableRow>
+    </TableLayout>
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        card_view:cardCornerRadius="4dp">
+    <TableLayout
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+                <ImageView
+                    android:tint="@color/INN_LIGHT_MORADO"
+                    android:layout_gravity="center"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="8dp"
+                    app:srcCompat="@drawable/ic_room_black_36dp" />
+                <TextView
+                    android:id="@+id/txtlati"
+                    android:layout_height="fill_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:textSize="27sp"
+                    android:text="12.1021388" />
+                <ImageView
+                    android:tint="@color/INN_LIGHT_MORADO"
+                    android:layout_gravity="center"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="8dp"
+                    app:srcCompat="@drawable/ic_room_black_36dp" />
+                <TextView
+                    android:id="@+id/txtlongi"
+                    android:layout_height="fill_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:textSize="27sp"
+                    android:text="-86.2642598" />
+
+            </TableRow>
+            <TableRow
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <TextView
+                    android:id="@+id/lblLati"
+                    android:layout_marginLeft="20dp"
+                    android:layout_height="fill_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:textSize="27sp"
+                    android:text="Latitud" />
+                <TextView
+                    android:layout_marginLeft="50dp"
+                    android:id="@+id/lblLongi"
+                    android:layout_height="fill_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:textSize="27sp"
+                    android:text="Longitud" />
+
+            </TableRow>
+
+            <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="100dp"
+                android:orientation="horizontal">
+                <RadioButton android:id="@+id/inLocal"
+                    android:gravity="center"
+                    android:layout_height="fill_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:onClick="onRadioButtonClicked"/>
+                <RadioButton android:id="@+id/outLocal"
+                    android:layout_marginLeft="100dp"
+                    android:layout_marginRight="50dp"
+                    android:layout_height="fill_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:onClick="onRadioButtonClicked"/>
+
+            </RadioGroup>
+            <TableRow
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_margin="10dp">
+                <TextView
+                    android:id="@+id/txtInlocal1"
+                    android:layout_marginLeft="20dp"
+                    android:layout_height="fill_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:textSize="27sp"
+                    android:text="EN LOCAL" />
+                <TextView
+                    android:id="@+id/txtInlocal2"
+                    android:layout_height="fill_parent"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:textColor="@color/black"
+                    android:textSize="27sp"
+                    android:text="FUERA DE LOCAL" />
+
+            </TableRow>
+
+        </TableLayout>
+    </android.support.v7.widget.CardView>
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button
+            android:text="SIGUIENTE"
+            android:layout_width="250dp"
+            android:layout_height="80dp"
+            android:enabled="false"
+            android:id="@+id/btnGoToStep2"
+            android:layout_gravity="center" />
+    </LinearLayout>
+
+
+</LinearLayout>

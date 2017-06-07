@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_root"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    android:padding="10dp" >
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+    <TableRow
+        android:gravity="center"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_margin="0dp">
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="INFORMACION DEL CROBRO"
+            />
+    </TableRow>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="0dp">
+            <TextView
+                android:layout_marginTop="10dp"
+                android:layout_height="fill_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="CLIENTE: "
+                android:textAppearance="?android:attr/textAppearanceListItem" />
+            <TextView
+                android:layout_marginTop="10dp"
+                android:text="XXX"
+                android:textAppearance="?android:attr/textAppearanceListItem"
+                android:id="@+id/txtFrmCliente"
+                android:layout_height="fill_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1" >
+                <requestFocus />
+            </TextView>
+        </TableRow>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="0dp">
+            <TextView
+                android:layout_height="fill_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="IMPORTE: "
+                android:textAppearance="?android:attr/textAppearanceListItem" />
+
+            <TextView
+                android:text="XXX"
+                android:textAppearance="?android:attr/textAppearanceListItem"
+                android:id="@+id/txtFrmImporte"
+                android:layout_height="fill_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1" />
+        </TableRow>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="0dp">
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_height="fill_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="FECHA: "
+                android:textAppearance="?android:attr/textAppearanceListItem" />
+
+            <TextView
+                android:text="XXX"
+                android:textAppearance="?android:attr/textAppearanceListItem"
+                android:id="@+id/txtFrmFecha"
+                android:layout_height="fill_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1" />
+        </TableRow>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="0dp">
+            <TextView
+                android:layout_height="fill_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="OBSERVACIONES: "
+                android:textAppearance="?android:attr/textAppearanceListItem" />
+        </TableRow>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="0dp">
+            <TextView
+                android:text="XXX"
+                android:textAppearance="?android:attr/textAppearanceListItem"
+                android:id="@+id/txtFrmObservaciones"
+                android:layout_height="fill_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"/>
+        </TableRow>
+    </TableLayout>
+</LinearLayout>

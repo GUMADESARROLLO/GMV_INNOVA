@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_indicadores_cliente"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context="com.guma.desarrollo.gmv.Activity.IndicadoresClienteActivity"
+    tools:showIn="@layout/activity_indicadores_cliente">
+
+
+
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_marginTop="120dp"
+        android:layout_gravity="center"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        card_view:cardCornerRadius="4dp">
+    <TableLayout
+        android:layout_marginTop="70dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="10dp">
+
+            <TextView
+                android:id="@+id/lbl1"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:textAlignment="center"
+                android:layout_height="fill_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="HISTORIA DE COMPRAS" />
+
+
+        </TableRow>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="10dp">
+            <TextView
+                android:id="@+id/lbl2"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:layout_height="fill_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="PROMEDIO DE VENTA" />
+            <TextView
+                android:id="@+id/txtPromedio"
+                android:layout_height="fill_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="C$ 0.0" />
+
+
+        </TableRow>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="10dp">
+            <TextView
+                android:id="@+id/lbl3"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:layout_height="fill_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="CANTIDAD DE ITEMS" />
+            <TextView
+                android:id="@+id/txtCantItem"
+                android:layout_height="fill_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="0" />
+        </TableRow>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="10dp">
+            <TextView
+                android:textColor="@color/black"
+                android:layout_height="fill_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:id="@+id/lbl4"
+                android:textSize="20sp"
+                android:text="LIMITE DE CREDITO" />
+            <TextView
+                android:id="@+id/txtLimite"
+                android:layout_height="fill_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="C$ 0.00" />
+        </TableRow>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="10dp">
+            <TextView
+                android:layout_height="fill_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:id="@+id/lbl5"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:text="CREDITO DISP." />
+            <TextView
+                android:id="@+id/txtCredito"
+                android:layout_height="fill_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="C$ 0.00" />
+        </TableRow>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="10dp">
+            <TextView
+                android:layout_height="fill_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:id="@+id/lbl6"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:text="PUNTOS DISP." />
+            <TextView
+                android:textColor="@color/button_info"
+                android:id="@+id/txtPuntos"
+                android:layout_height="fill_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="0.00" />
+        </TableRow>
+        <TableRow
+            android:gravity="center"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="10dp">
+                <ImageView
+                    android:tint="@color/INN_LIGHT_NARANJA"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_marginBottom="16dp"
+                    android:layout_marginTop="8dp"
+                    app:srcCompat="@drawable/ic_remove_red_eye_white_24dp" />
+                <TextView
+                    android:layout_marginLeft="10dp"
+                    android:id="@+id/txtHistorial"
+                    android:layout_height="fill_parent"
+                    android:layout_width="fill_parent"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
+                    android:text="HISTORIAL DE COMPRA" />
+
+        </TableRow>
+
+
+    </TableLayout>
+    </android.support.v7.widget.CardView>
+    <LinearLayout
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"
+        android:layout_width="200dp"
+        android:layout_height="fill_parent">
+        <Button
+            android:background="@drawable/inn_btn_morado"
+            android:textColor="@color/white"
+            android:id="@+id/btnIndicadores"
+            android:text="OK"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+
+</LinearLayout>
