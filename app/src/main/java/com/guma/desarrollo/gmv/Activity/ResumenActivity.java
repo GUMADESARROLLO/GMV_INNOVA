@@ -3,6 +3,8 @@ package com.guma.desarrollo.gmv.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -39,7 +41,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class ResumenActivity extends AppCompatActivity {
-    TextView lblNombreClliente,lblNombreVendedor,countArti,SubTotal,ivaTotal,Total,Atendio,txtidPedido,txtObservacion;
+    TextView lblNombreClliente,lblNombreVendedor,countArti,SubTotal,ivaTotal,Total,Atendio,txtidPedido,txtObservacion,textView;
+    TextView tlNombre,tlDireccion,txtDescripcion,txtTotal;
+
     private static ListView listView;
     float vLine = 0;
     ArrayList<Pedidos> mPedido = new ArrayList<>();
@@ -47,8 +51,8 @@ public class ResumenActivity extends AppCompatActivity {
     public SharedPreferences preferences;
     public SharedPreferences.Editor editor;
     String CodCls,idPedido,bandera = "0",comentario;
+    private AssetManager assetMgr;
 
-    TextView textView;
     Timer timer;
 
     @Override
@@ -59,9 +63,21 @@ public class ResumenActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         setTitle("RESUMEN");
         Intent ints = getIntent();
+        assetMgr = getResources().getAssets();
+        // tbPedido,tlCodPedido,tlVendedor,tlCodVendedor
+        tlNombre =  (TextView)findViewById(R.id.text1);
+        tlDireccion = (TextView)findViewById(R.id.text2);
+        txtDescripcion = (TextView)findViewById(R.id.idtTitulo);
+        txtTotal = (TextView)findViewById(R.id.idtTotal);
+
+        tlNombre.setTypeface(Typeface.createFromAsset(assetMgr ,"fonts/roboto_bold.ttf"));
+        txtDescripcion.setTypeface(Typeface.createFromAsset(assetMgr ,"fonts/roboto_bold.ttf"));
+        txtTotal.setTypeface(Typeface.createFromAsset(assetMgr ,"fonts/roboto_bold.ttf"));
+        tlDireccion.setTypeface(Typeface.createFromAsset(assetMgr ,"fonts/roboto_light_italic.ttf"));
+
         listView = (ListView) findViewById(R.id.ListView1);
 
-        final List<Map<String, Object>> list = (List<Map<String, Object>>) ints.getSerializableExtra("LIST");
+       final List<Map<String, Object>> list = (List<Map<String, Object>>) ints.getSerializableExtra("LIST");
         listView.setAdapter(
                 new SimpleAdapter(this, list,R.layout.list_item_resumen,
                 new String[] {"ITEMNAME", "ITEMCANTI","ITEMCODIGO","ITEMVALOR","BONIFICADO","PRECIO" },
@@ -72,9 +88,9 @@ public class ResumenActivity extends AppCompatActivity {
         CodCls =  preferences.getString("ClsSelected","");
         comentario =  preferences.getString("COMENTARIO","");
 
-        txtObservacion = (TextView)findViewById(R.id.txtObservacion);
-        txtObservacion.setEnabled(false);
-        txtObservacion.setText(comentario);
+        //txtObservacion = (TextView)findViewById(R.id.txtObservacion);
+        //txtObservacion.setEnabled(false);
+       //txtObservacion.setText(comentario);
 
         timer = new Timer();
         textView = (TextView) findViewById(R.id.idTimer);
@@ -87,6 +103,8 @@ public class ResumenActivity extends AppCompatActivity {
         lblNombreClliente = (TextView) findViewById(R.id.NombreCliente);
         lblNombreVendedor = (TextView) findViewById(R.id.NombreVendedor);
         lblNombreVendedor.setText("");
+        lblNombreVendedor.setTypeface(Typeface.createFromAsset(assetMgr ,"fonts/roboto_bold.ttf"));
+        txtidPedido.setTypeface(Typeface.createFromAsset(assetMgr ,"fonts/roboto_bold.ttf"));
         lblNombreClliente.setText(ints.getStringExtra("NombreCliente"));
         countArti = (TextView) findViewById(R.id.txtCountArti);
 
@@ -108,7 +126,7 @@ public class ResumenActivity extends AppCompatActivity {
 
             int key = SQLiteHelper.getIdTemporal(ManagerURI.getDirDb(),ResumenActivity.this,"PEDIDOS");
             idPedido = "F09-" + "P"+ Clock.getIdDate()+String.valueOf(key);
-            txtidPedido.setText(idPedido);
+            txtidPedido.setText("Nº PEDIDO: "+idPedido);
             Atendio.setText("LE ATENDIO: "+preferences.getString("VENDEDOR",""));
         }
         for (Map<String, Object> obj : list){

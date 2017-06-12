@@ -21,7 +21,7 @@ import java.util.List;
 public final class SQLiteHelper extends SQLiteOpenHelper
 {
     
-    public static final String DATABASE = "dbgmv.db";
+    public static final String DATABASE = "dbgmvinn.db";
     private static final int flag = SQLiteDatabase.NO_LOCALIZED_COLLATORS;//database version
     //private static final int flag = 102;//database version
     //private static final int flag = 1;

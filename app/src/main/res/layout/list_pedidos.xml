@@ -6,7 +6,7 @@
     android:minHeight="?attr/listPreferredItemHeight"
     android:orientation="vertical"
     android:paddingBottom="8dp"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingLeft="20dp"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="8dp">
 
@@ -27,7 +27,7 @@
                 android:layout_marginLeft="0dp"
                 android:layout_marginTop="30dp"
                 android:adjustViewBounds="false"
-                android:src="@drawable/carro"
+                android:src="@drawable/ic_shopping_cart_black_48dp"
                 />
             <LinearLayout
                 android:layout_marginLeft="10dp"
@@ -39,26 +39,29 @@
                     android:id="@+id/txt_id_pedido"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=""
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    tools:text="" />
+                    tools:text="CODIGO"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"/>
                 <TextView
                     android:id="@+id/lst_cliente"
                     android:layout_height="wrap_content"
                     android:layout_width="fill_parent"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
                     tools:text="CLIENTE" />
                 <TextView
                     android:id="@+id/lst_total"
                     android:layout_height="wrap_content"
                     android:layout_width="fill_parent"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
                     tools:text="COBRO" />
                 <TextView
                     android:id="@+id/lst_fecha"
                     android:layout_height="wrap_content"
                     android:layout_width="fill_parent"
-                    android:textAppearance="?android:attr/textAppearanceListItem"
+                    android:textColor="@color/black"
+                    android:textSize="20sp"
                     tools:text="FECHA" />
             </LinearLayout>
         </TableRow>

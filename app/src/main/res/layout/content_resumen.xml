@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:id="@+id/content_resumen"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -25,12 +26,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
+                android:id="@+id/text1"
+                android:textColor="@color/black"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textSize="15sp"
+                android:textSize="20sp"
                 android:gravity="center"
-                style="@style/AppTheme"
                 android:text="@string/resumen_empresa"/>
         </android.support.design.widget.TextInputLayout>
 
@@ -38,50 +39,47 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
+                android:id="@+id/text2"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:textSize="15sp"
+                android:textSize="20sp"
                 android:gravity="center"
                 android:text="@string/resumen_direccion"/>
         </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
+        <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textSize="15sp"
-                android:gravity="center"
-                android:text="Nº PEDIDO:"/>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+
             <TextView
                 android:id="@+id/IdPedido"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
+                android:layout_height="fill_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:gravity="center"
+                android:textColor="@color/black"
+                android:textSize="20sp"
                 android:text="@string/resumen_npedido"/>
-        </android.support.design.widget.TextInputLayout>
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:textSize="15sp"
-                android:gravity="center"
-                android:text="Le Atendio:"/>
+        </TableRow>
+        <TableRow
+
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
             <TextView
                 android:id="@+id/NombreVendedor"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
                 android:gravity="center"
-
+                android:layout_height="fill_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:textSize="20sp"
                 android:text="@string/atendio"/>
-
-        </android.support.design.widget.TextInputLayout>
+        </TableRow>
+        </TableLayout>
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -98,6 +96,9 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content">
             <TextView
+                android:id="@+id/idtTitulo"
+                android:textColor="@color/black"
+                android:textSize="20sp"
                 android:layout_height="fill_parent"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -106,7 +107,9 @@
                 android:text="@string/title_resumen_Descripcion"
                 />
             <TextView
-
+                android:id="@+id/idtTotal"
+                android:textColor="@color/black"
+                android:textSize="20sp"
                 android:layout_height="fill_parent"
                 android:layout_width="100dp"
                 android:gravity="start"

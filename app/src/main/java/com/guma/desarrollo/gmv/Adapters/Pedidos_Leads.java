@@ -1,6 +1,8 @@
 package com.guma.desarrollo.gmv.Adapters;
 
 import android.content.Context;
+import android.content.res.AssetManager;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,8 +23,10 @@ import java.util.List;
  */
 
 public class Pedidos_Leads extends ArrayAdapter<Pedidos>{
+    private AssetManager assetMgr;
     public Pedidos_Leads(Context context, List<Pedidos> objects) {
         super(context, 0, objects);
+        assetMgr = context.getResources().getAssets();
     }
 
     @Override
@@ -33,10 +37,15 @@ public class Pedidos_Leads extends ArrayAdapter<Pedidos>{
         }
 
         TextView midPedido = (TextView) convertView.findViewById(R.id.txt_id_pedido);
-        TextView mFecha = (TextView) convertView.findViewById(R.id.lst_fecha);
         TextView mCliente = (TextView) convertView.findViewById(R.id.lst_cliente);
+        TextView mFecha = (TextView) convertView.findViewById(R.id.lst_fecha);
         TextView mMonto = (TextView) convertView.findViewById(R.id.lst_total);
         TextView mEstado = (TextView) convertView.findViewById(R.id.txt_id_estado);
+
+        midPedido.setTypeface(Typeface.createFromAsset(assetMgr ,"fonts/roboto_bold.ttf"));
+        mCliente.setTypeface(Typeface.createFromAsset(assetMgr ,"fonts/roboto_bold.ttf"));
+        mMonto.setTypeface(Typeface.createFromAsset(assetMgr ,"fonts/roboto_bold.ttf"));
+        mFecha.setTypeface(Typeface.createFromAsset(assetMgr ,"fonts/roboto_light.ttf"));
 
         Pedidos lead = getItem(position);
 

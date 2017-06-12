@@ -107,13 +107,20 @@
             <TableRow
                 android:gravity="center"
                 android:layout_width="fill_parent"
-                android:layout_height="fill_parent"                >
-                <Button
-                    android:gravity="center"
-                    android:id="@+id/txtSendPedido"
-                    android:text="->"
-                    android:textColor="@color/white"
-                    android:background="@drawable/inn_btn_morado"/>
+                android:layout_height="fill_parent">
+                <FrameLayout
+                    android:background="@drawable/inn_btn_morado"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp" >
+                    <Button
+                        style="@style/captionOnly"
+                        android:id="@+id/txtSendPedido"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:drawableStart="@drawable/ic_send_white_24dp"
+                        android:gravity="center" />
+                </FrameLayout>
             </TableRow>
             <TableRow
                 android:layout_marginTop="20dp"
