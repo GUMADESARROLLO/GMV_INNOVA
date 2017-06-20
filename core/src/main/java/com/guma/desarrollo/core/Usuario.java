@@ -10,13 +10,19 @@ public class Usuario {
     private String mNombre;
     private String mRol;
     private String mPass;
+    private String mCobro;
+    private String mPedido;
+    private String mRazon;
 
-    public Usuario(String mIdUser, String mUsuario, String mNombre, String mRol, String mPass) {
+    public Usuario(String mIdUser, String mUsuario, String mNombre, String mRol, String mPass, String mCobro, String mPedido, String mRazon) {
         this.mIdUser = mIdUser;
         this.mUsuario = mUsuario;
         this.mNombre = mNombre;
         this.mRol = mRol;
         this.mPass = mPass;
+        this.mCobro = mCobro;
+        this.mPedido = mPedido;
+        this.mRazon = mRazon;
     }
 
     public Usuario() {
@@ -59,5 +65,29 @@ public class Usuario {
 
     public void setmPass(String mPass) {
         this.mPass = mPass;
+    }
+
+    public String getmCobro() {
+        return mCobro;
+    }
+
+    public void setmCobro(String mCobro) {
+        this.mCobro = mCobro;
+    }
+
+    public String getmPedido() {
+        return mPedido;
+    }
+
+    public void setmPedido(String mPedido) {
+        this.mPedido = mPedido;
+    }
+
+    public String getmRazon() {
+        return mRazon;
+    }
+
+    public void setmRazon(String mRazon) {
+        this.mRazon = mRazon;
     }
 }

@@ -90,6 +90,30 @@ public class TaskDownload extends AsyncTask<Integer,Integer,String> {
                     }
                 });
 
+        Class_retrofit.Objfit()
+                .create(Servicio.class)
+                .obtenerLotes()
+                .enqueue(new Callback<Respuesta_articulos>() {
+                    @Override
+                    public void onResponse(Call<Respuesta_articulos> call, Response<Respuesta_articulos> response) {
+                        if(response.isSuccessful()){
+                            pdialog.setMessage("Lotes.... ");
+                            Respuesta_articulos articulolote = response.body();
+                            Log.d(TAG, "onResponse: Lotes " + articulolote.getCount());
+                            Log.d(TAG, "onResponse: Lotes " + response.body().getResults().get(0).getmCodigo());
+                            Articulos_model.SaveLotes(cnxt,articulolote.getResults());
+                        }else{
+                            pdialog.dismiss();
+                            Log.d(TAG, "onResponse: noSuccessful Lotes" + response.errorBody() );
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<Respuesta_articulos> call, Throwable t) {
+                        Log.d(TAG, "onResponse: Failure Lotes" + t.getMessage() );
+                        pdialog.dismiss();
+                    }
+                });
+
         /*Actividades*/
         //Toast.makeText(cnxt, "Antes de ...", Toast.LENGTH_LONG).show();
         Class_retrofit.Objfit()
@@ -115,7 +139,7 @@ public class TaskDownload extends AsyncTask<Integer,Integer,String> {
                     }
                 });
 
-       Class_retrofit.Objfit()
+        Class_retrofit.Objfit()
                 .create(Servicio.class)
                 .obtenerListaClienteMora(Usuario)
                 .enqueue(new Callback<Respuesta_mora>() {
@@ -140,10 +164,11 @@ public class TaskDownload extends AsyncTask<Integer,Integer,String> {
                 });
 
 
-       List<Pedidos> listPedidos = Pedidos_model.getInfoPedidos(ManagerURI.getDirDb(),cnxt,false);
+        List<Pedidos> listPedidos = Pedidos_model.getInfoPedidos(ManagerURI.getDirDb(),cnxt,false);
 
         Gson gson = new Gson();
-       if (listPedidos.size()>0) {
+        Log.d("", "alderekisde: "+ gson.toJson(listPedidos));
+        if (listPedidos.size()>0) {
             Class_retrofit.Objfit()
                     .create(Servicio.class)
                     .actualizarPedidos(gson.toJson(listPedidos))
@@ -153,7 +178,7 @@ public class TaskDownload extends AsyncTask<Integer,Integer,String> {
                             if (response.isSuccessful()) {
                                 pdialog.setMessage("Actualizando pedidos....");
                                 Log.d("alder",response.body().toString());
-                                Pedidos Obj = new Pedidos();
+                                //Pedidos Obj = new Pedidos();
                                 Respuesta_pedidos pedidosRespuesta = response.body();
                                 Pedidos_model.actualizarPedidos(cnxt, pedidosRespuesta.getResults());
                             } else {
@@ -168,7 +193,7 @@ public class TaskDownload extends AsyncTask<Integer,Integer,String> {
                     });
         }
 
-       Class_retrofit.Objfit()
+        Class_retrofit.Objfit()
                 .create(Servicio.class)
                 .obtenerListaClienteIndicadores(Usuario)
                 .enqueue(new Callback<Respuesta_indicadores>() {
@@ -191,7 +216,7 @@ public class TaskDownload extends AsyncTask<Integer,Integer,String> {
 
                     }
                 });
-       Class_retrofit.Objfit().
+        Class_retrofit.Objfit().
                 create(Servicio.class).
                 obtenerListaClientes(Usuario).
                 enqueue(new Callback<Respuesta_clientes>() {
@@ -217,7 +242,7 @@ public class TaskDownload extends AsyncTask<Integer,Integer,String> {
                 });
 
 
-       Class_retrofit.Objfit().create(Servicio.class)
+        Class_retrofit.Objfit().create(Servicio.class)
                 .obtenerFacturasPuntos(Usuario)
                 .enqueue(new Callback<Respuesta_puntos>() {
                     @Override
@@ -295,10 +320,10 @@ public class TaskDownload extends AsyncTask<Integer,Integer,String> {
                     }
                 });
 
-       editor.putString("lstDownload", Clock.getTimeStamp());
-       editor.apply();
+        editor.putString("lstDownload", Clock.getTimeStamp());
+        editor.apply();
 
-       return null;
+        return null;
     }
 
     @Override

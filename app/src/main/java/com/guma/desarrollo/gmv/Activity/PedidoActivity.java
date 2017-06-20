@@ -84,13 +84,7 @@ public class PedidoActivity extends AppCompatActivity {
         timer = new Timer();
         textView = (TextView) findViewById(R.id.idTimer);
 
-
-
-
-
         String bandera = preferences.getString("BANDERA", "0");
-
-
 
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {

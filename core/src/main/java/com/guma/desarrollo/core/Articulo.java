@@ -15,8 +15,10 @@ public class Articulo {
     private String mPuntos;
     private String mReglas;
     private String mUnidadMedida;
+    private String mLote;
+    private String mFecha;
 
-    public Articulo(String mCodigo, String mName, String mExistencia, String mUnidad, String mPrecio, String mPuntos, String mReglas, String mUnidadMedida) {
+    public Articulo(String mCodigo, String mName, String mExistencia, String mUnidad, String mPrecio, String mPuntos, String mReglas, String mUnidadMedida, String mLote, String mFecha) {
         this.mCodigo = mCodigo;
         this.mName = mName;
         this.mExistencia = mExistencia;
@@ -25,7 +27,10 @@ public class Articulo {
         this.mPuntos = mPuntos;
         this.mReglas = mReglas;
         this.mUnidadMedida = mUnidadMedida;
+        this.mLote = mLote;
+        this.mFecha = mFecha;
     }
+
     public Articulo(){
 
     }
@@ -92,5 +97,21 @@ public class Articulo {
 
     public void setmUnidadMedida(String mUnidadMedida) {
         this.mUnidadMedida = mUnidadMedida;
+    }
+
+    public String getmLote() {
+        return mLote;
+    }
+
+    public void setmLote(String mLote) {
+        this.mLote = mLote;
+    }
+
+    public String getmFecha() {
+        return mFecha;
+    }
+
+    public void setmFecha(String mFecha) {
+        this.mFecha = mFecha;
     }
 }

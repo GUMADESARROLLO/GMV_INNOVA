@@ -28,7 +28,7 @@
         android:layout_height="40dp"
         android:orientation="vertical"
         android:layout_gravity="bottom|end"
-        android:background="@color/colorPrimary">
+        android:background="@color/INN_LIGHT_MORADO">
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
