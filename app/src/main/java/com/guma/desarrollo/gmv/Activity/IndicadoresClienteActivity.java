@@ -45,7 +45,7 @@ public class IndicadoresClienteActivity extends AppCompatActivity {
 
     private float TotalPuntos;
 
-
+    PieChart pieChart;
     TextView mpVenta,mItemFact,mLimite,mCredito,mPuntos,mHistorial;
 
     TextView textView,lbl_1,lbl_2,lbl_3,lbl_4,lbl_5,lbl_6;
@@ -96,28 +96,33 @@ public class IndicadoresClienteActivity extends AppCompatActivity {
         if (obj.size()>0) {
             mpVenta.setText(Funciones.NumberFormat(Float.parseFloat(obj.get(0).getmPromedioVenta3M())));
             mItemFact.setText(Funciones.NumberFormat(Float.parseFloat(obj.get(0).getmCantidadItems3M())));
-
+            Log.d("", "mCumplimiento: " + obj.get(0).getmCumplimiento());
+            pieChart = (PieChart) findViewById(R.id.chart);
+            pieChart.getDescription().setEnabled(false);
+            pieChart.setHoleRadius(25f);
+            pieChart.setTransparentCircleAlpha(0);
+            pieChart.setDrawEntryLabels(true);
+            addDataSet(Float.parseFloat(obj.get(0).getmCumplimiento()));
         }
 
         final List<Clientes> obClientes = Clientes_model.getInfoCliente(ManagerURI.getDirDb(), IndicadoresClienteActivity.this,preferences.getString("ClsSelected","0"));
         if (obClientes.size()>0){
-            //setTitle("PASO 2 [ Cobro ] - " + obClientes.get(0).getmNombre());
-            mCredito.setText("C$ " + Funciones.NumberFormat(Float.parseFloat(obClientes.get(0).getmCredito())));
-            mLimite.setText("C$ " + Funciones.NumberFormat(Float.parseFloat(obClientes.get(0).getmDisponible())));
-
-
+            mCredito.setText("C$ " + Funciones.NumberFormat(Float.parseFloat(obClientes.get(0).getmDisponible())));
+            mLimite.setText("C$ " + Funciones.NumberFormat(Float.parseFloat(obClientes.get(0).getmCredito())));
         }
-
 
 
         btnOK.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Float disponible = Float.valueOf(obClientes.get(0).getmDisponible());
                 if (obClientes.get(0).getmMoroso().equals("S")){
                     btnOK.setText("CLIENTE MOROSO");
                     btnOK.setBackgroundResource(R.drawable.button_danger_rounded);
+                }else if (disponible <=0 ){
+                    btnOK.setText("CLIENTE SIN CREDITO");
+                    btnOK.setBackgroundResource(R.drawable.button_danger_rounded);
                 }else{
-
                     startActivity(new Intent(IndicadoresClienteActivity.this,PedidoActivity.class));
                     timer.cancel();
                     finish();
@@ -160,7 +165,32 @@ public class IndicadoresClienteActivity extends AppCompatActivity {
             textView.setText(Clock.getDiferencia(Clock.StringToDate(preferences.getString("iniTimer","0000-00-00 00:00:00"),"yyyy-mm-dd HH:mm:ss"),Clock.StringToDate(Clock.getNow(),"yyyy-mm-dd HH:mm:ss"),"Timer"));
         }
     };
+    private void addDataSet(float Cumplimiento ) {
 
+        ArrayList<PieEntry> yEntrys = new ArrayList<>();
+        ArrayList<String> xEntrys = new ArrayList<>();
+
+        float faltante = 100 - Cumplimiento;
+        if (faltante<=0){
+            yEntrys.add(new PieEntry(Cumplimiento , 1));
+        }else{
+            yEntrys.add(new PieEntry(faltante , 0));
+            yEntrys.add(new PieEntry(Cumplimiento , 1));
+        }
+
+        xEntrys.add("X");
+
+        PieDataSet pieDataSet = new PieDataSet(yEntrys, "");
+        ArrayList<Integer> colors = new ArrayList<>();
+        colors.add(Color.parseColor("#"+Integer.toHexString(getResources().getColor(R.color.button_danger))));
+        colors.add(Color.parseColor("#"+Integer.toHexString(getResources().getColor(R.color.button_primary_disabled_edge))));
+
+        pieDataSet.setColors(colors);
+        Legend legend = pieChart.getLegend();
+        legend.setEnabled(false);
+        pieChart.setData(new PieData(pieDataSet));
+        pieChart.invalidate();
+    }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event)
     {

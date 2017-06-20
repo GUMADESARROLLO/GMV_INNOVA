@@ -48,11 +48,15 @@ public class AccionesActivity extends AppCompatActivity {
         assetMgr = getResources().getAssets();
         if (bandera.equals("1")){
             findViewById(R.id.btnCV).setVisibility(View.VISIBLE);
+            findViewById(R.id.txtbtnCV).setVisibility(View.VISIBLE);
             txt2.setVisibility(View.VISIBLE);
         }if (bandera.equals("2")){
             findViewById(R.id.btnRZ).setVisibility(View.GONE);
+            findViewById(R.id.lbl2).setVisibility(View.GONE);
+            findViewById(R.id.txtbtnCV).setVisibility(View.VISIBLE);
             findViewById(R.id.btnCV).setVisibility(View.VISIBLE);
         }
+
         textView = (TextView) findViewById(R.id.idTimer);
         timer = new Timer();
 
@@ -83,7 +87,7 @@ public class AccionesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 editor.putString("INICIO",Clock.getTime()).apply();
-                startActivity(new Intent(AccionesActivity.this,ScrollingRazones.class));
+                startActivity(new Intent(AccionesActivity.this,RazonesActivity.class));
                 finish();
             }
         });

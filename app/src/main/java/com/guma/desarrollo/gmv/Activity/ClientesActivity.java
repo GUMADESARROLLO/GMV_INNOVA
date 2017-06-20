@@ -59,6 +59,7 @@ public class ClientesActivity extends AppCompatActivity implements SearchView.On
         listView = (ListView) findViewById(R.id.lstClientes);
         objects = Clientes_model.getClientes(ManagerURI.getDirDb(), ClientesActivity.this,"NOMBRE");
         lbs = new Clientes_Leads(this, objects);
+
         listView.setAdapter(lbs);
         searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         final ArrayList<String> strings = new ArrayList<>();
@@ -79,16 +80,14 @@ public class ClientesActivity extends AppCompatActivity implements SearchView.On
                 finish();
             }
         });
-
-
-
-
-
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item)    {
         int id = item.getItemId();
-        if (id == 16908332){ finish(); }
+        if (id == 16908332){
+            startActivity(new Intent(ClientesActivity.this,AgendaActivity.class));
+            finish();
+        }
         return super.onOptionsItemSelected(item);
     }
 

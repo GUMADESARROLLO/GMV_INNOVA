@@ -47,6 +47,35 @@ public class Articulos_model {
         }
     }
 
+    public static void  SaveLotes(Context context, ArrayList<Articulo> ARTI){
+        SQLiteDatabase myDataBase = null;
+        SQLiteHelper myDbHelper = null;
+        try
+        {
+            myDbHelper = new SQLiteHelper(ManagerURI.getDirDb(), context);
+            myDataBase = myDbHelper.getWritableDatabase();
+            SQLiteHelper.ExecuteSQL(ManagerURI.getDirDb(), context,"DELETE FROM LOTES");
+            for(int i=0;i<ARTI.size();i++){
+                Articulo a = ARTI.get(i);
+                ContentValues contentValues = new ContentValues();
+                contentValues.put("ARTICULO" , a.getmCodigo());
+                contentValues.put("LOTE" , a.getmLote());
+                contentValues.put("CANTIDAD" , a.getmUnidad());
+                contentValues.put("FECHA" , a.getmFecha());
+                myDataBase.insert("LOTES", null, contentValues );
+            }
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally
+        {
+            if(myDataBase != null) { myDataBase.close(); }
+            if(myDbHelper != null) { myDbHelper.close(); }
+        }
+    }
+
     public static List<Articulo> getArticulos(String basedir, Context context) {
         List<Articulo> lista = new ArrayList<>();
         SQLiteDatabase myDataBase = null;
@@ -81,6 +110,36 @@ public class Articulos_model {
         }
         return lista;
     }
+    public static List<Articulo> getLotes(String basedir, Context context,String ARTIC) {
+        List<Articulo> lista = new ArrayList<>();
+        SQLiteDatabase myDataBase = null;
+        SQLiteHelper myDbHelper = null;
+        try
+        {
+            myDbHelper = new SQLiteHelper(basedir, context);
+            myDataBase = myDbHelper.getReadableDatabase();
+            Cursor cursor = myDataBase.query(false, "LOTES", null, "ARTICULO"+ "=?", new String[] { ARTIC }, null, null, null, null);
+            if(cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                while(!cursor.isAfterLast()) {
+                    Articulo tmp = new Articulo();
+                    tmp.setmLote(cursor.getString(cursor.getColumnIndex("LOTE")));
+                    tmp.setmUnidad(cursor.getString(cursor.getColumnIndex("CANTIDAD")));
+                    tmp.setmFecha(cursor.getString(cursor.getColumnIndex("FECHA")));
+                    lista.add(tmp);
+                    cursor.moveToNext();
+                }
+            }
+        }
+        catch (Exception e) { e.printStackTrace(); }
+        finally
+        {
+            if(myDataBase != null) { myDataBase.close(); }
+            if(myDbHelper != null) { myDbHelper.close(); }
+        }
+        return lista;
+    }
+
     public static List<String> getReglas( Context context,String mArticulo) {
         //String[] lista = null;
         List<String> lista = new ArrayList<>();

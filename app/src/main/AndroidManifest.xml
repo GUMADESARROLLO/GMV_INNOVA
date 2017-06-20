@@ -124,7 +124,13 @@
         <activity
             android:name=".Activity.ScrollingRazones"
             android:label="@string/title_activity_scrolling_razones"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
+        <receiver android:name="CheckInternetBroadcast">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

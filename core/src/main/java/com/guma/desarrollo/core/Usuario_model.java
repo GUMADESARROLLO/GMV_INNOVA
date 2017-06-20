@@ -103,4 +103,35 @@ public class Usuario_model {
             if(myDbHelper != null) { myDbHelper.close(); }
         }
     }
+    public static void  SaveConsecutivo(Context context, ArrayList<Usuario> detUsuario){
+        SQLiteDatabase myDataBase = null;
+        SQLiteHelper myDbHelper = null;
+        try
+        {
+            myDbHelper = new SQLiteHelper(ManagerURI.getDirDb(), context);
+            myDataBase = myDbHelper.getWritableDatabase();
+            SQLiteHelper.ExecuteSQL(ManagerURI.getDirDb(), context,"DELETE FROM LLAVES");
+            Usuario a = detUsuario.get(0);
+
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("TIPO" , "PEDIDOS");
+            contentValues.put("SECUENCIA" , a.getmPedido());
+            myDataBase.insert("LLAVES", null, contentValues );
+            contentValues.put("TIPO" , "COBROS");
+            contentValues.put("SECUENCIA" , a.getmCobro());
+            myDataBase.insert("LLAVES", null, contentValues );
+            contentValues.put("TIPO" , "RAZON");
+            contentValues.put("SECUENCIA" , a.getmRazon());
+            myDataBase.insert("LLAVES", null, contentValues );
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally
+        {
+            if(myDataBase != null) { myDataBase.close(); }
+            if(myDbHelper != null) { myDbHelper.close(); }
+        }
+    }
 }

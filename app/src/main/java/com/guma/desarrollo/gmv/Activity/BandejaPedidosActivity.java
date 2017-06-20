@@ -84,6 +84,16 @@ public class BandejaPedidosActivity extends AppCompatActivity {
                 if (ESTADO.equals("0")) {
                     startActivity(new Intent(BandejaPedidosActivity.this, PedidoActivity.class));
                     finish();
+                }else if (ESTADO.equals("4")){
+                    List<Pedidos> comen = Pedidos_model.getAnulacion(ManagerURI.getDirDb(), BandejaPedidosActivity.this,idPedido);
+                    for(Pedidos obj2 : comen) {
+                        new Notificaciones().Alert(BandejaPedidosActivity.this,"NOTA DE ANULACION",obj2.getmAnulacion()).show();
+                    }
+                }else if (ESTADO.equals("3")){
+                    List<Pedidos> comen = Pedidos_model.getConfirmacion(ManagerURI.getDirDb(), BandejaPedidosActivity.this,idPedido);
+                    for(Pedidos obj2 : comen) {
+                        new Notificaciones().Alert(BandejaPedidosActivity.this,"NOTA DE CONFIRMACION",obj2.getmConfirmacion()).show();
+                    }
                 }
             }
         });

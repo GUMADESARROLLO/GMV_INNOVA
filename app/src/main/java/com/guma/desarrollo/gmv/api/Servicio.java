@@ -6,6 +6,7 @@ import com.guma.desarrollo.gmv.models.Respuesta_actividades;
 import com.guma.desarrollo.gmv.models.Respuesta_agenda;
 import com.guma.desarrollo.gmv.models.Respuesta_articulos;
 import com.guma.desarrollo.gmv.models.Respuesta_clientes;
+import com.guma.desarrollo.gmv.models.Respuesta_cobros;
 import com.guma.desarrollo.gmv.models.Respuesta_historial;
 import com.guma.desarrollo.gmv.models.Respuesta_indicadores;
 import com.guma.desarrollo.gmv.models.Respuesta_mora;
@@ -39,6 +40,9 @@ public interface Servicio {
     @GET("ARTICULOS")
     Call<Respuesta_articulos> obtenerListaArticulos();
 
+    @GET("LOTES")
+    Call<Respuesta_articulos> obtenerLotes();
+
     @FormUrlEncoded
     @POST("Clientes")
     Call<Respuesta_clientes> obtenerListaClientes(@Field("mVendedor") String mVendedor);
@@ -54,6 +58,10 @@ public interface Servicio {
     @FormUrlEncoded
     @POST("Login")
     Call<Respuesta_usuario> obtenerListaUsuario(@Field("usuario") String apiKey, @Field("pass") String apiKey2);
+
+    @FormUrlEncoded
+    @POST("CONSECUTIVO")
+    Call<Respuesta_usuario> obtenerConsecutivo(@Field("usuario") String apiKey);
 
     @FormUrlEncoded
     @POST("url_pedidos")
@@ -73,7 +81,7 @@ public interface Servicio {
 
     @FormUrlEncoded
     @POST("InsertCobros")
-    Call<String> InserCorbos(@Field("pCobros") String pCobros);
+    Call<Respuesta_cobros> InserCorbos(@Field("pCobros") String pCobros);
 
     @GET("Actividades")
     Call<Respuesta_actividades> obtenerListaActividades();

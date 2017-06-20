@@ -140,14 +140,13 @@ public class AgendaActivity extends AppCompatActivity  implements ConnectivityRe
                                                     startActivity(new Intent(AgendaActivity.this,RptHoyActivity.class));
                                                 } else{
                                                     if (items[which].equals(items[7])){
-                                                       cerrar();
+                                                        cerrar();
                                                     }else {
                                                         if (items[which].equals(items[8])) {
 
                                                             startActivity(new Intent(AgendaActivity.this,AcercadeActivity.class));
                                                         }else{
                                                             if (items[which].equals(items[9])){
-
                                                                 checked = false;
                                                                 editor.putBoolean("pref", false).commit();
                                                                 editor.apply();
@@ -248,7 +247,7 @@ public class AgendaActivity extends AppCompatActivity  implements ConnectivityRe
 
     private void loadData(){
 
-      /*  List<Map<String, Object>> lista = Agenda_model.getAgenda(ManagerURI.getDirDb(), AgendaActivity.this);
+        List<Map<String, Object>> lista = Agenda_model.getAgenda(ManagerURI.getDirDb(), AgendaActivity.this);
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = preferences.edit();
         if (lista.size()>0) {
@@ -272,15 +271,7 @@ public class AgendaActivity extends AppCompatActivity  implements ConnectivityRe
                     }
                 }
             }
-        }*/
-        for (Clientes obj : Clientes_model.getClientes(ManagerURI.getDirDb(), AgendaActivity.this,"NOMBRE")) {
-
-            if (obj.getmCliente().equals("00641")){
-                addProduct(0,"MASTER CLIENTE",obj.getmNombre(),obj.getmCliente());
-            }
-
         }
-
        // Clientes_model.getClientes(ManagerURI.getDirDb(), AgendaActivity.this,"NOMBRE");
     }
     private  boolean onCake(String Fecha_cumple){
@@ -376,5 +367,7 @@ public class AgendaActivity extends AppCompatActivity  implements ConnectivityRe
         avgRtt = Double.valueOf(strAvgRtt);
         return avgRtt;
     }
+    private void checkInternetActicity(){
 
+    }
 }

@@ -27,6 +27,7 @@ import com.guma.desarrollo.core.Visitas;
 import com.guma.desarrollo.gmv.api.Class_retrofit;
 import com.guma.desarrollo.gmv.api.Notificaciones;
 import com.guma.desarrollo.gmv.api.Servicio;
+import com.guma.desarrollo.gmv.models.Respuesta_cobros;
 import com.guma.desarrollo.gmv.models.Respuesta_pedidos;
 import com.guma.desarrollo.gmv.models.Respuesta_razones;
 
@@ -60,20 +61,22 @@ public class TaskUnload extends AsyncTask<Integer,Integer,String> {
 
     @Override
     protected String doInBackground(Integer... para) {
+
         List<Cobros> obj = Cobros_model.getCobros(ManagerURI.getDirDb(), cnxt,false);
+        //Log.d("", "cobrosalder: "+new Gson().toJson(obj));
         if (obj.size()>0){
-            Class_retrofit.Objfit().create(Servicio.class).InserCorbos(new Gson().toJson(obj)).enqueue(new Callback<String>() {
+            Class_retrofit.Objfit().create(Servicio.class).InserCorbos(new Gson().toJson(obj)).enqueue(new Callback<Respuesta_cobros>() {
                 @Override
-                public void onResponse(Call<String> call, Response<String> response) {
+                public void onResponse(Call<Respuesta_cobros> call, Response<Respuesta_cobros> response) {
                     if (response.isSuccessful()){
-                        if (Boolean.valueOf(response.body())){
-                            pdialog.setMessage("Iniciando.... ");
-                            SQLiteHelper.ExecuteSQL(ManagerURI.getDirDb(),cnxt,"DELETE FROM COBROS");
-                        }
+                        pdialog.setMessage("Iniciando.... ");
+                        Respuesta_cobros cobrosRespuesta = response.body();
+                        Log.d("", "cobrosalder: entroo: "+"DELETE FROM COBROS WHERE IDCOBRO IN ("+cobrosRespuesta.getResults().get(0).getmIdCobro()+")");
+                        SQLiteHelper.ExecuteSQL(ManagerURI.getDirDb(),cnxt,"DELETE FROM COBROS WHERE IDCOBRO IN ("+cobrosRespuesta.getResults().get(0).getmIdCobro()+")");
                     }
                 }
                 @Override
-                public void onFailure(Call<String> call, Throwable t) {}
+                public void onFailure(Call<Respuesta_cobros> call, Throwable t) {}
             });
         }else {
             Log.d(TAG, "doInBackground: NO HAY COBROS");
@@ -82,28 +85,24 @@ public class TaskUnload extends AsyncTask<Integer,Integer,String> {
 
         List<Pedidos> listPedidos = Pedidos_model.getInfoPedidos(ManagerURI.getDirDb(),cnxt,false);
         Gson gson = new Gson();
-        Log.d(TAG, "alderr: "+gson.toJson(listPedidos));
         if (listPedidos.size()>0) {
             Log.d("json->",gson.toJson(listPedidos));
             Class_retrofit.Objfit().create(Servicio.class).enviarPedidos(gson.toJson(listPedidos)).enqueue(new Callback<Respuesta_pedidos>() {
                 @Override
                 public void onResponse(Call<Respuesta_pedidos> call, Response<Respuesta_pedidos> response) {
+                    pdialog.setMessage("Enviando Pedidos.... ");
                     if(response.isSuccessful()){
-                        Respuesta_pedidos pedidoRespuesta = response.body();
-                        pdialog.setMessage("Enviando Pedidos.... ");
-                        Boolean var = Boolean.valueOf(pedidoRespuesta.getResults().get(0).getmEstado());
-                        if (var){
-                            new AlertDialog.Builder(cnxt).setTitle("MENSAJE").setMessage("PEDIDOS ENVIADOS, ACTUALICE SU EQUIPO..").setCancelable(false).setPositiveButton("OK",null).show();
-                        }else {
-                            new AlertDialog.Builder(cnxt).setTitle("MENSAJE").setMessage(pedidoRespuesta.getResults().get(0).getmEstado()).setCancelable(false).setPositiveButton("OK", null).show();
-                        }
+                        pdialog.setMessage("Actualizando Pedidos.... ");
+                        Respuesta_pedidos pedidosRespuesta = response.body();
+                        Pedidos_model.actualizarPedidos(cnxt, pedidosRespuesta.getResults());
+                        new AlertDialog.Builder(cnxt).setTitle("MENSAJE").setMessage("PEDIDOS ENVIADOS Y ACTUALIZADOS...").setCancelable(false).setPositiveButton("OK",null).show();
                     }else{
                         Toast.makeText(cnxt, "doInBackground ERROR AL ENVIAR PEDIDOS, ERROR: "+response.body(), Toast.LENGTH_SHORT).show();
                     }
                 }
                 @Override
                 public void onFailure(Call<Respuesta_pedidos> call, Throwable t) {
-                    Toast.makeText(cnxt, "doInBackground ERROR EN ENVIO DE PEDIDOS", Toast.LENGTH_SHORT).show();
+                    new AlertDialog.Builder(cnxt).setTitle("MENSAJE").setMessage("ERROR EN ENVIO DE PEDIDOS"+t.getMessage()).setCancelable(false).setPositiveButton("OK",null).show();
                 }
             });
         }else{
@@ -155,27 +154,6 @@ public class TaskUnload extends AsyncTask<Integer,Integer,String> {
                 }
             });
         }
-
-       /* List<Agenda> objAgenda = Agenda_model.UnloadAgenda(ManagerURI.getDirDb(), cnxt);
-        Log.d(TAG, "doInBackground: " + objAgenda.size());
-        if (objAgenda.size()>0){
-            Class_retrofit.Objfit().create(Servicio.class).unAgenda(new Gson().toJson(objAgenda)).enqueue(new Callback<String>() {
-                @Override
-                public void onResponse(Call<String> call, Response<String> response) {
-                    if (response.isSuccessful()){
-                        if (Boolean.valueOf(response.body())){
-                            Log.d(TAG, "doInBackground: se fue AGENDA");
-                        }
-                    }
-                }
-
-                @Override
-                public void onFailure(Call<String> call, Throwable t) {
-                    Log.d(TAG, "doInBackground: Nose fue AGENDA");
-                }
-            });
-        }*/
-
 
         pdialog.dismiss();
         editor.putString("lstUnload", Clock.getTimeStamp()).apply();
