@@ -179,8 +179,17 @@ public class RazonesActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            startActivity(new Intent(RazonesActivity.this,AgendaActivity.class));
-            finish();
+            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(RazonesActivity.this);
+            builder.setMessage("SE PERDERAN LOS DATOS DE LA VISITA").setTitle("¿ESTA SEGURO?")
+                    .setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            startActivity(new Intent(RazonesActivity.this,AgendaActivity.class));
+                            finish();
+                        }
+                    }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                }
+            }).create().show();
             return true;
         }
         return super.onKeyDown(keyCode, event);

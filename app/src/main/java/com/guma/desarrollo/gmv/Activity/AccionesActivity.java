@@ -64,14 +64,14 @@ public class AccionesActivity extends AppCompatActivity {
         txt2.setTypeface(Typeface.createFromAsset(assetMgr ,"fonts/roboto_medium.ttf"));
         txt3.setTypeface(Typeface.createFromAsset(assetMgr ,"fonts/roboto_medium.ttf"));
 
-        findViewById(R.id.btnCBR).setOnClickListener(new View.OnClickListener() {
+        /*findViewById(R.id.btnCBR).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 editor.putString("INICIO",Clock.getTime()).apply();
                 startActivity(new Intent(AccionesActivity.this,CobroInActivity.class));
                 finish();
             }
-        });
+        });*/
 
         findViewById(R.id.btnPD).setOnClickListener(new View.OnClickListener() {
             @Override

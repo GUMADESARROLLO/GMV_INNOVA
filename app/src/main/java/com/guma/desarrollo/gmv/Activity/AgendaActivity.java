@@ -15,6 +15,7 @@ import android.widget.ExpandableListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.google.firebase.crash.FirebaseCrash;
 import com.guma.desarrollo.core.Agenda_model;
 import com.guma.desarrollo.core.Clientes;
 import com.guma.desarrollo.core.Clientes_model;
@@ -76,6 +77,9 @@ public class AgendaActivity extends AppCompatActivity  implements ConnectivityRe
 
         checked = preferences.getBoolean("pref",false);
 
+        //FirebaseCrash.report(new Exception("My first Android non-fatal error"));
+        //FirebaseCrash.log("Activity created");
+
 
         setTitle("Ultm. Actualizacion: " + preferences.getString("lstDownload","00/00/0000"));
         simpleExpandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
@@ -106,7 +110,7 @@ public class AgendaActivity extends AppCompatActivity  implements ConnectivityRe
 
 
 
-                final CharSequence[]items = { "MIS CLIENTES","INVENTARIO","PEDIDO", "COBRO","ENVIAR","RECIBIR","REPORTE DEL DIA","CIERRE DEL DIA","ACERCA DE","SALIR"};
+                final CharSequence[]items = { "MIS CLIENTES","INVENTARIO","PEDIDO", "ENVIAR","RECIBIR","REPORTE DEL DIA","CIERRE DEL DIA","ACERCA DE","SALIR"};
                 new AlertDialog.Builder(v.getContext()).setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -123,30 +127,27 @@ public class AgendaActivity extends AppCompatActivity  implements ConnectivityRe
                                 if (items[which].equals(items[2])){
                                     startActivity(new Intent(AgendaActivity.this,BandejaPedidosActivity.class));
                                 }else{
-                                    if (items[which].equals(items[3])){
-                                        startActivity(new Intent(AgendaActivity.this,BandejaCobrosActivity.class));
-                                    }else{
-                                        if (items[which].equals(items[4])){
+                                        if (items[which].equals(items[3])){
                                             new TaskUnload(AgendaActivity.this).execute();
                                         } else {
-                                            if (items[which].equals(items[5])){
+                                            if (items[which].equals(items[4])){
                                                 if (ManagerURI.isOnlinea(AgendaActivity.this)){
                                                     new TaskDownload(AgendaActivity.this).execute(0);
                                                 } else {
                                                     Toast.makeText(AgendaActivity.this, "No Posee Cobertura de datos...", Toast.LENGTH_SHORT).show();
                                                 }
                                             }else {
-                                                if (items[which].equals(items[6])){
+                                                if (items[which].equals(items[5])){
                                                     startActivity(new Intent(AgendaActivity.this,RptHoyActivity.class));
                                                 } else{
-                                                    if (items[which].equals(items[7])){
+                                                    if (items[which].equals(items[6])){
                                                         cerrar();
                                                     }else {
-                                                        if (items[which].equals(items[8])) {
+                                                        if (items[which].equals(items[7])) {
 
                                                             startActivity(new Intent(AgendaActivity.this,AcercadeActivity.class));
                                                         }else{
-                                                            if (items[which].equals(items[9])){
+                                                            if (items[which].equals(items[8])){
                                                                 checked = false;
                                                                 editor.putBoolean("pref", false).commit();
                                                                 editor.apply();
@@ -162,7 +163,6 @@ public class AgendaActivity extends AppCompatActivity  implements ConnectivityRe
                                     }
                                 }
                             }
-                        }
                     }
                 }).create().show();
             }

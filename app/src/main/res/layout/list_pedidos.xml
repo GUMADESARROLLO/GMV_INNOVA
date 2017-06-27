@@ -6,20 +6,31 @@
     android:minHeight="?attr/listPreferredItemHeight"
     android:orientation="vertical"
     android:paddingBottom="8dp"
-    android:paddingLeft="20dp"
-    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp"
     android:paddingTop="8dp">
 
-    <TableLayout
+    <android.support.v7.widget.CardView
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
+        android:layout_gravity="center"
+        android:layout_marginLeft="0dp"
+        android:layout_marginRight="0dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        card_view:cardCornerRadius="6dp">
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
         android:layout_gravity="center_horizontal"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_margin="0dp">
         <TableRow
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            >
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="10dp">
 
             <ImageView
                 android:layout_width="50dp"
@@ -56,18 +67,35 @@
                     android:textColor="@color/black"
                     android:textSize="20sp"
                     tools:text="COBRO" />
-                <TextView
-                    android:id="@+id/lst_fecha"
-                    android:layout_height="wrap_content"
+
+                <TableRow
                     android:layout_width="fill_parent"
-                    android:textColor="@color/black"
-                    android:textSize="20sp"
-                    tools:text="FECHA" />
+                    android:layout_height="fill_parent">
+                    <TextView
+                        android:id="@+id/lst_fecha"
+                        android:layout_height="wrap_content"
+                        android:layout_width="fill_parent"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:layout_weight="1"
+                        tools:text="FECHA" />
+                    <ImageView
+                        android:id="@+id/img"
+                        android:layout_width="60dip"
+                        android:layout_height="fill_parent"
+                        android:src="@drawable/uno2"
+                        android:layout_weight="1"
+                        android:layout_marginRight="10dp"
+                        android:scaleType="center"/>
+                </TableRow>
             </LinearLayout>
         </TableRow>
         <TableRow
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginTop="12dp"
+
+            android:background="@color/INN_DARK_NARANJA">
             <TextView
                 android:layout_height="fill_parent"
                 android:layout_width="0dp"
@@ -83,13 +111,25 @@
                 android:layout_weight="1"
                 android:textAppearance="?attr/textAppearanceListItem"
                 android:text="" />
-            <ImageView
-                android:id="@+id/img"
-                android:layout_width="50dip"
+            <TextView
+                android:id="@+id/txt_ajuste"
+                android:gravity="end"
                 android:layout_height="fill_parent"
-                android:src="@drawable/uno2"
-                android:layout_marginLeft="3dip"
-                android:scaleType="center"/>
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textAppearance="?attr/textAppearanceListItem"
+                android:textColor="@color/white"
+                android:textAlignment="textEnd"
+                android:paddingEnd="8dp"
+                android:text="AJUSTES" />
+            <Spinner
+                android:id="@+id/spinner"
+                android:layout_weight="1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/white"
+                android:text="OPCIONES"/>
         </TableRow>
-</TableLayout>
+    </TableLayout>
+    </android.support.v7.widget.CardView>
 </RelativeLayout>

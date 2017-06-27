@@ -154,7 +154,6 @@ public class ResumenActivity extends AppCompatActivity {
                         }).setNegativeButton("NO",new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                finish();
                             }
                         }).show();
             }
@@ -229,8 +228,17 @@ public class ResumenActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            startActivity(new Intent(ResumenActivity.this,AgendaActivity.class));
-            finish();
+            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(ResumenActivity.this);
+            builder.setMessage("SE PERDERAN LOS DATOS DEL PEDIDO").setTitle("¿ESTA SEGURO?")
+                    .setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            startActivity(new Intent(ResumenActivity.this,AgendaActivity.class));
+                            finish();
+                        }
+                    }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                }
+            }).create().show();
             return true;
         }
         return super.onKeyDown(keyCode, event);

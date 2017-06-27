@@ -346,8 +346,16 @@ public class PedidoActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            //startActivity(new Intent(PedidoActivity.this,AgendaActivity.class));
-            finish();
+            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(PedidoActivity.this);
+            builder.setMessage("SE PERDERAN LOS DATOS DEL PEDIDO").setTitle("¿ESTA SEGURO?")
+                    .setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            finish();
+                        }
+                    }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                }
+            }).create().show();
             return true;
         }
         return super.onKeyDown(keyCode, event);
