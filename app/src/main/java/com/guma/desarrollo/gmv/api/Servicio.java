@@ -40,6 +40,9 @@ public interface Servicio {
     @GET("ARTICULOS")
     Call<Respuesta_articulos> obtenerListaArticulos();
 
+    @GET("descuentos")
+    Call<Respuesta_articulos> obtenerDescuentos();
+
     @GET("LOTES")
     Call<Respuesta_articulos> obtenerLotes();
 
@@ -56,7 +59,7 @@ public interface Servicio {
     Call<Respuesta_mora> obtenerListaClienteMora(@Field("mVendedor") String mVendedor);
 
     @FormUrlEncoded
-    @POST("Login")
+    @POST("LoginRest")
     Call<Respuesta_usuario> obtenerListaUsuario(@Field("usuario") String apiKey, @Field("pass") String apiKey2);
 
     @FormUrlEncoded
@@ -76,12 +79,20 @@ public interface Servicio {
     Call<Respuesta_pedidos> actualizarPedidos(@Field("PEDIDOS") String pedidos);
 
     @FormUrlEncoded
+    @POST("updateClientes")
+    Call<Respuesta_clientes> actualizarClientes(@Field("CLIENTES") String clientes);
+
+    @FormUrlEncoded
+    @POST("NuevosClientes")
+    Call<String> enviarClientes(@Field("mCliente") String mCliente);
+
+    @FormUrlEncoded
     @POST("Puntos")
     Call<Respuesta_puntos> obtenerFacturasPuntos(@Field("mVendedor") String mVendedor);
 
-    @FormUrlEncoded
+    /*@FormUrlEncoded
     @POST("InsertCobros")
-    Call<Respuesta_cobros> InserCorbos(@Field("pCobros") String pCobros);
+    Call<Respuesta_cobros> InserCorbos(@Field("pCobros") String pCobros);*/
 
     @GET("Actividades")
     Call<Respuesta_actividades> obtenerListaActividades();

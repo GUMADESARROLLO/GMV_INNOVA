@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.guma.desarrollo.core.Agenda;
 import com.guma.desarrollo.core.Agenda_model;
+import com.guma.desarrollo.core.Clientes;
+import com.guma.desarrollo.core.Clientes_model;
 import com.guma.desarrollo.core.Clock;
 import com.guma.desarrollo.core.Cobros;
 import com.guma.desarrollo.core.Cobros_model;
@@ -62,29 +64,10 @@ public class TaskUnload extends AsyncTask<Integer,Integer,String> {
     @Override
     protected String doInBackground(Integer... para) {
 
-        List<Cobros> obj = Cobros_model.getCobros(ManagerURI.getDirDb(), cnxt,false);
-        //Log.d("", "cobrosalder: "+new Gson().toJson(obj));
-        if (obj.size()>0){
-            Class_retrofit.Objfit().create(Servicio.class).InserCorbos(new Gson().toJson(obj)).enqueue(new Callback<Respuesta_cobros>() {
-                @Override
-                public void onResponse(Call<Respuesta_cobros> call, Response<Respuesta_cobros> response) {
-                    if (response.isSuccessful()){
-                        pdialog.setMessage("Iniciando.... ");
-                        Respuesta_cobros cobrosRespuesta = response.body();
-                        Log.d("", "cobrosalder: entroo: "+"DELETE FROM COBROS WHERE IDCOBRO IN ("+cobrosRespuesta.getResults().get(0).getmIdCobro()+")");
-                        SQLiteHelper.ExecuteSQL(ManagerURI.getDirDb(),cnxt,"DELETE FROM COBROS WHERE IDCOBRO IN ("+cobrosRespuesta.getResults().get(0).getmIdCobro()+")");
-                    }
-                }
-                @Override
-                public void onFailure(Call<Respuesta_cobros> call, Throwable t) {}
-            });
-        }else {
-            Log.d(TAG, "doInBackground: NO HAY COBROS");
-        }
-
-
         List<Pedidos> listPedidos = Pedidos_model.getInfoPedidos(ManagerURI.getDirDb(),cnxt,false);
+
         Gson gson = new Gson();
+        Log.d(TAG, "doInBackgroundPedidos: "+gson.toJson(listPedidos));
         if (listPedidos.size()>0) {
             Log.d("json->",gson.toJson(listPedidos));
             Class_retrofit.Objfit().create(Servicio.class).enviarPedidos(gson.toJson(listPedidos)).enqueue(new Callback<Respuesta_pedidos>() {
@@ -135,8 +118,6 @@ public class TaskUnload extends AsyncTask<Integer,Integer,String> {
 
         List<Razon> objRazones = Razon_model.getInfoRazon(ManagerURI.getDirDb(), cnxt,false);
         Log.d(TAG, "doInBackgroundRazones: Razones " + objRazones.size());
-        Log.d(TAG, "doInBackgroundRazones: Razones " + new Gson().toJson(objRazones));
-
         if (objRazones.size()>0){
 
             Class_retrofit.Objfit().create(Servicio.class).enviarRazones(new Gson().toJson(objRazones)).enqueue(new Callback<Respuesta_razones>() {
@@ -153,6 +134,30 @@ public class TaskUnload extends AsyncTask<Integer,Integer,String> {
                     Log.d(TAG, "doInBackgroundRazones: No se fue RAZONES");
                 }
             });
+        }
+
+        List<Clientes> objClientes = Clientes_model.getInfoCliente(ManagerURI.getDirDb(),cnxt,"");
+        Gson gson2 = new Gson();
+        if (objClientes.size()>0) {
+            Log.d("json-> NUEVOS_CLIENTES ",gson2.toJson(objClientes));
+            Class_retrofit.Objfit().create(Servicio.class).enviarClientes(gson2.toJson(objClientes)).enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    pdialog.setMessage("Enviando Nuevos Clientes.... ");
+                    if (response.isSuccessful()){
+                        pdialog.setMessage("Enviando nuevos clientes.... ");
+                        if (Boolean.valueOf(response.body())){
+                        }else{
+                        }
+                    }
+                }
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+                    Log.d(TAG, "doInBackground: No se fue CLIENTES");
+                }
+            });
+        }else{
+            Log.d(TAG, "doInBackground: NO HAY CLIENTES NUEVOS");
         }
 
         pdialog.dismiss();

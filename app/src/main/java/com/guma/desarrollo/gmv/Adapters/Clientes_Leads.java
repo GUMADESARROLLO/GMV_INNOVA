@@ -37,17 +37,19 @@ public class Clientes_Leads extends ArrayAdapter<Clientes> {
         Clientes lead = getItem(position);
 
 
-        if (lead.getmMoroso().equals("S")){
+        /*if (lead.getmMoroso().equals("S")){
             nombre.setText(lead.getmCliente().concat(" - ").concat(lead.getmNombre().concat(" [Moroso]")));
             nombre.setTextColor(convertView.getResources().getColor(R.color.button_danger));
         }else{
             nombre.setText(lead.getmCliente().concat(" - ").concat(lead.getmNombre()));
             nombre.setTextColor(convertView.getResources().getColor(R.color.black));
-        }
+        }*/
+
         String str = "Limite: " + Funciones.NumberFormat(Float.parseFloat(lead.getmCredito())).concat(" Saldo: ").concat(Funciones.NumberFormat(Float.parseFloat(lead.getmSaldo()))).concat(" Disponible: ").concat(Funciones.NumberFormat(Float.parseFloat(lead.getmDisponible())));
 
         precio.setText(str);
         codigo.setText(lead.getmDireccion());
+        nombre.setText(lead.getmNombre());
 
 
         return convertView;

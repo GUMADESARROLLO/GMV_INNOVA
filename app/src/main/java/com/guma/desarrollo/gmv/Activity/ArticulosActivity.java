@@ -26,6 +26,7 @@ import android.widget.RadioButton;
 import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TableRow;
+import android.widget.Toast;
 
 import com.guma.desarrollo.core.Articulo;
 import com.guma.desarrollo.core.Articulos_model;
@@ -41,7 +42,7 @@ import java.util.Locale;
 
 public class ArticulosActivity extends AppCompatActivity implements SearchView.OnQueryTextListener,SearchView.OnCloseListener {
     private ListView listView,listViewLotes2;
-    EditText Inputcant,InputExiste,InputPrecio;
+    EditText Inputcant,InputExiste,InputPrecio,inputIva,InputDesc;
     RadioButton radioButton;
     Spinner spinner;
     Float vLinea,SubTotalLinea,TotalFinalLinea;
@@ -80,53 +81,63 @@ public class ArticulosActivity extends AppCompatActivity implements SearchView.O
         searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         setTitle("ARTICULOS");
         final ArrayList<String> strings = new ArrayList<>();
+
+
+        Toast.makeText(this, preferences.getString("GRUPO", ""), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, preferences.getString("LISTA", ""), Toast.LENGTH_SHORT).show();
+
         if (checked2) {
+
+
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(final AdapterView<?> parent, final View view, final int position, long id) {
                     final Articulo mnotes = (Articulo) parent.getItemAtPosition(position);
-                    final String[] Reglas = mnotes.getmReglas().split(",");
-                    //Toast.makeText(ArticulosActivity.this, mnotes.getmCodigo(), Toast.LENGTH_SHORT).show();
 
+                    final String[] Reglas = Articulos_model.getDescuento(ArticulosActivity.this,preferences.getString("GRUPO", ""),mnotes.getmCodigo()).split(",");
                     LayoutInflater li = LayoutInflater.from(ArticulosActivity.this);
 
                     View promptsView = li.inflate(R.layout.input_cant, null);
                     AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ArticulosActivity.this);
 
-                    radioButton = (RadioButton)promptsView.findViewById(R.id.rbPresen);
-                    radioButton.setText(mnotes.getmUnidad());
-                    //Toast.makeText(ArticulosActivity.this, radioButton.getText(), Toast.LENGTH_SHORT).show();
-
+                    String lista = preferences.getString("LISTA", "");
+                    String grupo = preferences.getString("GRUPO", "");
+                    List<String> PrecDescuento;
+                    if (!lista.equals("")) {
+                       PrecDescuento = Articulos_model.getPrecioIva(ArticulosActivity.this, grupo, lista, mnotes.getmCodigo(),false);
+                    }else{
+                       PrecDescuento = Articulos_model.getPrecioIva(ArticulosActivity.this, grupo, lista, mnotes.getmCodigo(),true);
+                    }
+                    InputPrecio = (EditText) promptsView.findViewById(R.id.txtFrmPrecio);
+                    InputPrecio.setText(PrecDescuento.get(0).toString());
+                    String IVA =  Articulos_model.getIvaDescent(ArticulosActivity.this,grupo,lista,mnotes.getmCodigo());
                     alertDialogBuilder.setView(promptsView);
 
+
                     Inputcant = (EditText) promptsView.findViewById(R.id.txtFrmCantidad);
-                    InputPrecio = (EditText) promptsView.findViewById(R.id.txtFrmPrecio);
-                    InputPrecio.setText(mnotes.getmPrecio());
-                    spinner = (Spinner) promptsView.findViewById(R.id.sp_boni);
-                    //spinner.setAdapter(new ArrayAdapter<>(ArticulosActivity.this, android.R.layout.simple_spinner_dropdown_item,  Reglas));
+
+                    inputIva = (EditText) promptsView.findViewById(R.id.txtIva);
                     InputExiste = (EditText) promptsView.findViewById(R.id.txtFrmExistencia);
+                    InputDesc = (EditText) promptsView.findViewById(R.id.txtDescuento);
+
+
+                    InputPrecio.setEnabled(false);
+                    InputExiste.setEnabled(false);
+                    inputIva.setEnabled(false);
+                    InputDesc.setEnabled(false);
+
+                    inputIva.setText(IVA);
+                    spinner = (Spinner) promptsView.findViewById(R.id.sp_boni);
+                    
+
                     InputExiste.setText(mnotes.getmExistencia() + " [ " + mnotes.getmUnidad() + " ]");
 
-                    /*****************LISTADO DE LOTES PENDIENTE A IMPLEMENTAR***************/
-                    /*listViewLotes2 = (ListView) promptsView.findViewById(R.id.listViewLotes);
-                    objects2 = Articulos_model.getLotes(ManagerURI.getDirDb(), ReferenciasContexto.getContextArticulo(),mnotes.getmCodigo());
-                    lbl = new Lotes_Leads(ArticulosActivity.this, objects2);
-                    listViewLotes2.setAdapter(lbl);*/
 
-                    List<String> mStrings = new ArrayList<>();
-                    for (int i = 0; i < Reglas.length; i++) {
-                        mStrings.add(Reglas[i]);
-                    }
                     if (checked) {
-                        //List<String> mStrings = new ArrayList<>();
                         Inputcant.setVisibility(View.GONE);
                         promptsView.findViewById(R.id.txtInCant).setVisibility(View.GONE);
-                        TableRow tr = (TableRow)promptsView.findViewById(R.id.row2);
-                        tr.setVisibility(View.GONE);
-                        /*for (int i = 0; i < Reglas.length; i++) {
-                            mStrings.add(Reglas[i]);
-                        }
-                        spinner.setAdapter(new ArrayAdapter<>(ArticulosActivity.this, android.R.layout.simple_spinner_dropdown_item, mStrings));*/
+                        /*TableRow tr = (TableRow)promptsView.findViewById(R.id.row2);
+                        tr.setVisibility(View.GONE);*/
                     }
 
                     Inputcant.addTextChangedListener(new TextWatcher() {
@@ -142,23 +153,25 @@ public class ArticulosActivity extends AppCompatActivity implements SearchView.O
 
                         @Override
                         public void afterTextChanged(Editable s) {
-                            List<String> mStrings = new ArrayList<>();
-                            spinner.setAdapter(null);
+                            String descuento = "0";
                             if (s.length() != 0) {
-                                Log.d("", "afterTextChanged: " + s.length() + " > " + Reglas.length);
+                                //Log.d("", "afterTextChanged: " + s.length() + " > " + Reglas.length);
                                 if (Reglas.length > 0) {
-                                    Log.d("", "afterTextChanged: entro");
+                                    //Log.d("", "afterTextChanged: "+Reglas.length);
                                     for (int i = 0; i < Reglas.length; i++) {
                                         String[] frag = Reglas[i].replace("+", ",").split(",");
-
-                                        if (Integer.parseInt(frag[0]) > 0) {
-                                            if (Integer.parseInt(Inputcant.getText().toString()) >= Integer.parseInt(frag[0])) {
-                                                mStrings.add(frag[0] + "+" + frag[1]);
+                                        if (!frag[0].equals("")) {
+                                            if (Integer.parseInt(frag[0]) > 0) {
+                                                //Log.d("", "afterTextChanged: "+frag[0]);
+                                                if (Integer.parseInt(Inputcant.getText().toString()) >= Integer.parseInt(frag[0])) {
+                                                    descuento = frag[1];
+                                                }
                                             }
                                         }
-                                        spinner.setAdapter(new ArrayAdapter<>(ArticulosActivity.this, android.R.layout.simple_spinner_dropdown_item, mStrings));
                                     }
                                 }
+                                Log.d("", "afterTextChanged: descuento: "+descuento);
+                                InputDesc.setText(descuento);
                             }
                         }
                     });
@@ -169,8 +182,7 @@ public class ArticulosActivity extends AppCompatActivity implements SearchView.O
                             return keyCode == KeyEvent.KEYCODE_BACK;
                         }
                     });
-                    InputPrecio.setEnabled(false);
-                    InputExiste.setEnabled(false);
+
                     alertDialogBuilder.setCancelable(false)
                             .setPositiveButton("OK",
                                     new DialogInterface.OnClickListener() {
@@ -183,28 +195,21 @@ public class ArticulosActivity extends AppCompatActivity implements SearchView.O
                                                     if (Inputcant.length() != 0) {
                                                         Float cantida = Float.parseFloat(Inputcant.getText().toString());
                                                         if (cantida <= Exist) {
-                                                            String BONIFICADO = "0";
-                                                            if (spinner.getSelectedItem() != null) {
-                                                                BONIFICADO = spinner.getSelectedItem().toString();
-                                                            }if (radioButton.isChecked()){
-
-                                                            }else{
-                                                                cantida = cantida/Float.parseFloat(mnotes.getmUnidadMedida());
-                                                            }
-                                                            InputExiste.setText(mnotes.getmPrecio());
-                                                            //vLinea = Float.parseFloat(mnotes.getmPrecio()) * Float.parseFloat(Inputcant.getText().toString());
-                                                            vLinea = Float.parseFloat(mnotes.getmPrecio()) * cantida;
+                                                            //InputExiste.setText(InputPrecio);
+                                                            vLinea = Float.parseFloat(InputPrecio.getText().toString()) * cantida;
                                                             SubTotalLinea = Float.parseFloat(String.valueOf(vLinea * 0.15));
                                                             TotalFinalLinea = vLinea + SubTotalLinea;
                                                             strings.add(mnotes.getmName());
                                                             strings.add(mnotes.getmCodigo());
-                                                            //strings.add(Inputcant.getText().toString());
+
                                                             strings.add(cantida.toString());
                                                             strings.add(vLinea.toString());
                                                             strings.add(SubTotalLinea.toString());
                                                             strings.add(TotalFinalLinea.toString());
-                                                            strings.add(BONIFICADO);
                                                             strings.add(InputPrecio.getText().toString());
+                                                            strings.add(inputIva.getText().toString());
+                                                            strings.add(InputDesc.getText().toString());
+
                                                             getIntent().putStringArrayListExtra("myItem", strings);
                                                             setResult(RESULT_OK, getIntent());
                                                             editor.putBoolean("menu", false).apply();

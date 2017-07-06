@@ -80,8 +80,8 @@ public class ResumenActivity extends AppCompatActivity {
        final List<Map<String, Object>> list = (List<Map<String, Object>>) ints.getSerializableExtra("LIST");
         listView.setAdapter(
                 new SimpleAdapter(this, list,R.layout.list_item_resumen,
-                new String[] {"ITEMNAME", "ITEMCANTI","ITEMCODIGO","ITEMVALOR","BONIFICADO","PRECIO" },
-                new int[] { R.id.tvListItemName,R.id.Item_cant,R.id.Item_descr,R.id.Item_valor,R.id.tvListBonificado,R.id.tvListItemPrecio })
+                new String[] {"ITEMNAME", "ITEMCANTI","ITEMCODIGO","ITEMVALOR",/*"BONIFICADO",*/"PRECIO","IVA","DESCUENTO"},
+                        new int[] {R.id.tvListItemName,R.id.Item_cant,R.id.item_codigo,R.id.Item_valor,/*R.id.tbListBonificado,*/R.id.tvListItemPrecio,R.id.txtIva,R.id.txtDescuento})
         );
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = preferences.edit();
@@ -90,7 +90,7 @@ public class ResumenActivity extends AppCompatActivity {
 
         //txtObservacion = (TextView)findViewById(R.id.txtObservacion);
         //txtObservacion.setEnabled(false);
-       //txtObservacion.setText(comentario);
+        //txtObservacion.setText(comentario);
 
         timer = new Timer();
         textView = (TextView) findViewById(R.id.idTimer);
@@ -213,7 +213,9 @@ public class ResumenActivity extends AppCompatActivity {
                 tmpDetalle.setmDescripcion(obj2.get("ITEMNAME").toString());
                 tmpDetalle.setmCantidad(obj2.get("ITEMCANTI").toString());
                 tmpDetalle.setmPrecio(obj2.get("PRECIO").toString());
-                tmpDetalle.setmBonificado(obj2.get("BONIFICADO").toString());
+                //tmpDetalle.setmBonificado(obj2.get("BONIFICADO").toString());
+                tmpDetalle.setmIva(obj2.get("IVA").toString());
+                tmpDetalle.setmDescuento(obj2.get("DESCUENTO").toString());
                 mDetallePedido.add(tmpDetalle);
             }
             Pedidos_model.SaveDetallePedido(ResumenActivity.this, mDetallePedido);

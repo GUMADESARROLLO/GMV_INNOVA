@@ -13,8 +13,9 @@ public class Usuario {
     private String mCobro;
     private String mPedido;
     private String mRazon;
+    private String mCliente;
 
-    public Usuario(String mIdUser, String mUsuario, String mNombre, String mRol, String mPass, String mCobro, String mPedido, String mRazon) {
+    public Usuario(String mIdUser, String mUsuario, String mNombre, String mRol, String mPass, String mCobro, String mPedido, String mRazon, String mCliente) {
         this.mIdUser = mIdUser;
         this.mUsuario = mUsuario;
         this.mNombre = mNombre;
@@ -23,6 +24,7 @@ public class Usuario {
         this.mCobro = mCobro;
         this.mPedido = mPedido;
         this.mRazon = mRazon;
+        this.mCliente = mCliente;
     }
 
     public Usuario() {
@@ -89,5 +91,13 @@ public class Usuario {
 
     public void setmRazon(String mRazon) {
         this.mRazon = mRazon;
+    }
+
+    public String getmCliente() {
+        return mCliente;
+    }
+
+    public void setmCliente(String mCliente) {
+        this.mCliente = mCliente;
     }
 }

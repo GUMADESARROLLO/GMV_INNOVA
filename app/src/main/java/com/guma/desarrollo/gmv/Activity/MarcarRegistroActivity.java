@@ -97,6 +97,7 @@ public class MarcarRegistroActivity extends AppCompatActivity implements
         editor = preferences.edit();
         setTitle(" [ PASO 1 - Registrar Visita ] - " + preferences.getString("NameClsSelected"," --ERROR--"));
 
+
         mLatitude = (TextView) findViewById(R.id.txtlati);
         txtLati = (TextView) findViewById(R.id.lblLati);
         mLongitude = (TextView) findViewById(R.id.txtlongi);

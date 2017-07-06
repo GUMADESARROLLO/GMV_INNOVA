@@ -26,56 +26,88 @@
             android:text="ARTICULO"/>
 
     </LinearLayout>
+
     <LinearLayout
-        android:background="@color/cardview_light_background"
         android:layout_width="fill_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/cardview_light_background">
+
         <TextView
             android:id="@+id/Item_cant"
-            android:layout_height="fill_parent"
             android:layout_width="50dp"
+            android:layout_height="fill_parent"
             android:gravity="start"
             android:padding="5dp"
-            android:text="Canitdad"/>
-        <TextView
+            android:text="Canitdad" />
 
-            android:layout_height="fill_parent"
+        <TextView
             android:layout_width="50dp"
+            android:layout_height="fill_parent"
             android:gravity="center"
             android:padding="5dp"
-            android:text="X"/>
+            android:text="X" />
+
         <TextView
             android:id="@+id/tvListItemPrecio"
+            android:layout_width="90dp"
             android:layout_height="fill_parent"
-            android:layout_width="100dp"
             android:gravity="start"
             android:padding="5dp"
-            android:text="Precio"
-            />
-        <TextView
+            android:text="Precio" />
+
+        <!--<TextView
             android:id="@+id/tbListBonificado"
+            android:layout_width="80dp"
             android:layout_height="fill_parent"
-            android:layout_width="100dp"
             android:gravity="start"
             android:padding="5dp"
-            android:text="Bonificado"
-            />
+            android:text="pre" />-->
+
         <TextView
+            android:layout_width="40dp"
             android:layout_height="fill_parent"
+            android:gravity="start"
+            android:padding="5dp"
+            android:text="IVA: " />
+
+        <TextView
+            android:id="@+id/txtIva"
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:gravity="start"
+            android:padding="5dp"
+            android:text="IVA" />
+
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:gravity="start"
+            android:padding="5dp"
+            android:text="DESC: " />
+
+        <TextView
+            android:id="@+id/txtDescuento"
+            android:layout_width="60dp"
+            android:layout_height="fill_parent"
+            android:gravity="start"
+            android:padding="5dp"
+            android:text="0" />
+
+        <TextView
             android:layout_width="0dp"
+            android:layout_height="fill_parent"
             android:layout_weight="1"
             android:gravity="end"
             android:padding="5dp"
-            android:text="C$ "
+            android:text="C$ " />
 
-            />
         <TextView
             android:id="@+id/Item_valor"
-            android:layout_height="fill_parent"
             android:layout_width="70dp"
+            android:layout_height="fill_parent"
+            android:layout_marginRight="50dp"
             android:gravity="end"
             android:padding="5dp"
-            android:layout_marginRight="50dp"
             android:text="Valor"
 
             />

@@ -58,7 +58,8 @@ public class RazonesActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_razones);
+        //setContentView(R.layout.activity_razones);
+        setContentView(R.layout.activity_scrolling_razones);
         listView = (ListView) findViewById(R.id.list);
         final RazonesAdapter listAdapter;
         timer = new Timer();
@@ -70,22 +71,20 @@ public class RazonesActivity extends AppCompatActivity {
         CodCls =  preferences.getString("ClsSelected","");
 
         textView2 = (TextView) findViewById(R.id.idTimer);
-        //simpleExpandableListView = (ExpandableListView) findViewById(R.id.simpleExpandableListViewRazon);
-        //listAdapter = new ActividadesAdapter(RazonActivity.this,deptList);
-        //simpleExpandableListView.setAdapter(listAdapter);
 
-        //listAdapter = new RazonesAdapter(RazonesActivity.this,deptList);
         datos = Actividades_model.getActividades(ManagerURI.getDirDb(), RazonesActivity.this);
 
         rows = new ArrayList<>(datos.size());
         for (int i = 0; i < datos.size(); i++) {
             Row row = new Row();
+            Log.d("", "alderverificar: "+datos.get(i).getmIdAE());
             row.setTitle(datos.get(i).getmActividad());
             row.setSubtitle(datos.get(i).getmCategoria());
             row.setSubsubtitle(datos.get(i).getmIdAE());
             row.setChecked(false);
             rows.add(row);
         }
+
         listView.setAdapter(new CustomArrayAdapter(this, rows));
 
         findViewById(R.id.btnSaveRazones).setOnClickListener(new View.OnClickListener() {

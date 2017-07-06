@@ -5,14 +5,14 @@ package com.guma.desarrollo.core;
  */
 
 public class Clientes {
-    String mCliente,mNombre,mDireccion,mRuc,mPuntos,mMoroso,mCredito,mSaldo,mDisponible,mCumple;
+    String mCliente,mNombre,mDireccion,mRuc,mPuntos,mMoroso,mCredito,mSaldo,mDisponible,mCumple,mTelefono,mDepartamento,mMunicipio,mCorreo,mEstado,mVendedor,mGrupo,mLista;
     int mMes;
 
     public Clientes(){
 
     }
 
-    public Clientes(String mCliente, String mNombre, String mDireccion, String mRuc, String mPuntos, String mMoroso, String mCredito, String mSaldo, String mDisponible, String mCumple, int mMes) {
+    public Clientes(String mCliente, String mNombre, String mDireccion, String mRuc, String mPuntos, String mMoroso, String mCredito, String mSaldo, String mDisponible, String mCumple, String mTelefono, String mDepartamento, String mMunicipio, String mCorreo, String mEstado, String mVendedor, String mGrupo, String mLista, int mMes) {
         this.mCliente = mCliente;
         this.mNombre = mNombre;
         this.mDireccion = mDireccion;
@@ -23,6 +23,14 @@ public class Clientes {
         this.mSaldo = mSaldo;
         this.mDisponible = mDisponible;
         this.mCumple = mCumple;
+        this.mTelefono = mTelefono;
+        this.mDepartamento = mDepartamento;
+        this.mMunicipio = mMunicipio;
+        this.mCorreo = mCorreo;
+        this.mEstado = mEstado;
+        this.mVendedor = mVendedor;
+        this.mGrupo = mGrupo;
+        this.mLista = mLista;
         this.mMes = mMes;
     }
 
@@ -112,5 +120,69 @@ public class Clientes {
 
     public void setmMes(int mMes) {
         this.mMes = mMes;
+    }
+
+    public String getmTelefono() {
+        return mTelefono;
+    }
+
+    public void setmTelefono(String mTelefono) {
+        this.mTelefono = mTelefono;
+    }
+
+    public String getmDepartamento() {
+        return mDepartamento;
+    }
+
+    public void setmDepartamento(String mDepartamento) {
+        this.mDepartamento = mDepartamento;
+    }
+
+    public String getmMunicipio() {
+        return mMunicipio;
+    }
+
+    public void setmMunicipio(String mMunicipio) {
+        this.mMunicipio = mMunicipio;
+    }
+
+    public String getmCorreo() {
+        return mCorreo;
+    }
+
+    public void setmCorreo(String mCorreo) {
+        this.mCorreo = mCorreo;
+    }
+
+    public String getmEstado() {
+        return mEstado;
+    }
+
+    public void setmEstado(String mEstado) {
+        this.mEstado = mEstado;
+    }
+
+    public String getmVendedor() {
+        return mVendedor;
+    }
+
+    public void setmVendedor(String mVendedor) {
+        this.mVendedor = mVendedor;
+    }
+
+    public String getmGrupo() {
+        return mGrupo;
+    }
+
+    public void setmGrupo(String mGrupo) {
+        this.mGrupo = mGrupo;
+    }
+
+    public String getmLista() {
+        return mLista;
+    }
+
+    public void setmLista(String mLista) {
+        this.mLista = mLista;
     }
 }

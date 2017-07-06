@@ -70,6 +70,8 @@ public class Pedidos_model {
                 contentValues.put("CANTIDAD" , a.getmCantidad());
                 contentValues.put("TOTAL" , a.getmPrecio());
                 contentValues.put("BONIFICADO" , a.getmBonificado());
+                contentValues.put("IVA" , a.getmIva());
+                contentValues.put("DESCUENTO" , a.getmDescuento());
 
                 myDataBase.insert("PEDIDO_DETALLE", null, contentValues );
             }
@@ -122,6 +124,8 @@ public class Pedidos_model {
                         tmp.getDetalles().put("CANT"+i,cursor2.getString(cursor2.getColumnIndex("CANTIDAD")));
                         tmp.getDetalles().put("TOTAL"+i,cursor2.getString(cursor2.getColumnIndex("TOTAL")));
                         tmp.getDetalles().put("BONI"+i,cursor2.getString(cursor2.getColumnIndex("BONIFICADO")));
+                        tmp.getDetalles().put("IVA"+i,cursor2.getString(cursor2.getColumnIndex("IVA")));
+                        tmp.getDetalles().put("DESCUE"+i,cursor2.getString(cursor2.getColumnIndex("DESCUENTO")));
                         i++;
                         cursor2.moveToNext();
                     }

@@ -34,7 +34,7 @@ public class Lotes_Leads extends ArrayAdapter<Articulo> {
 
         Articulo lead = getItem(position);
 
-        nombre.setText("LOTE: "+lead.getmLote());
+
         cantidad.setText("EXISTENCIA: "+lead.getmUnidad());
         fecha.setText("FECHA: "+lead.getmFecha());
 
