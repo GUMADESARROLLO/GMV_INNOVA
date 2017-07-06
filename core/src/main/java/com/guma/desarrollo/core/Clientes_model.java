@@ -121,7 +121,7 @@ public class Clientes_model {
         {
             myDbHelper = new SQLiteHelper(ManagerURI.getDirDb(), context);
             myDataBase = myDbHelper.getWritableDatabase();
-            SQLiteHelper.ExecuteSQL(ManagerURI.getDirDb(), context,"DELETE FROM CLIENTES");
+            SQLiteHelper.ExecuteSQL(ManagerURI.getDirDb(), context,"DELETE FROM CLIENTES WHERE ESTADO NOT IN('0','1')");
             for(int i=0;i<Indica.size();i++){
                 Clientes a = Indica.get(i);
                 ContentValues contentValues = new ContentValues();
@@ -129,15 +129,12 @@ public class Clientes_model {
                 contentValues.put("NOMBRE" , a.getmNombre());
                 contentValues.put("DIRECCION" , a.getmDireccion());
                 contentValues.put("RUC" , a.getmRuc());
-                contentValues.put("PUNTOS" , a.getmPuntos());
-                contentValues.put("MOROSO" , a.getmMoroso());
                 contentValues.put("CREDITO" , a.getmCredito());
                 contentValues.put("SALDO" , a.getmSaldo());
                 contentValues.put("DISPONIBLE" , a.getmDisponible());
-                contentValues.put("CUMPLE" , a.getmCumple());
-                contentValues.put("Mes" , a.getmMes());
+                contentValues.put("GRUPO" , a.getmGrupo());
+                contentValues.put("LISTA" , a.getmLista());
                 myDataBase.insert("CLIENTES", null, contentValues );
-
             }
         }
         catch (Exception e) {
@@ -210,6 +207,49 @@ public class Clientes_model {
             if(myDbHelper != null) { myDbHelper.close(); }
         }
         return lista;
+    }
+    public static void  SaveCliente(Context context, ArrayList<Clientes> Indica,Integer ID){
+        SQLiteDatabase myDataBase = null;
+        SQLiteHelper myDbHelper = null;
+        try
+        {
+            myDbHelper = new SQLiteHelper(ManagerURI.getDirDb(), context);
+            myDataBase = myDbHelper.getWritableDatabase();
+
+            for(int i=0;i<Indica.size();i++){
+                Clientes a = Indica.get(i);
+                ContentValues contentValues = new ContentValues();
+                contentValues.put("CLIENTE" , "NV-"+a.getmCliente());
+                contentValues.put("NOMBRE" , a.getmNombre());
+                contentValues.put("DIRECCION" , a.getmDireccion());
+                contentValues.put("RUC" , a.getmRuc());
+                contentValues.put("TELEFONO" , a.getmTelefono());
+                contentValues.put("DEPARTAMENTO" , a.getmDepartamento());
+                contentValues.put("MUNICIPIO" , a.getmMunicipio());
+                contentValues.put("CORREO" , a.getmCorreo());
+                contentValues.put("ESTADO" , "0");
+                contentValues.put("MOROSO" , "N");
+                contentValues.put("PUNTOS" , "0");
+                contentValues.put("CREDITO" , "999999");
+                contentValues.put("SALDO" , "999999");
+                contentValues.put("DISPONIBLE" , "999999");
+                contentValues.put("VENDEDOR" , a.getmVendedor());
+
+                myDataBase.insert("CLIENTES", null, contentValues );
+
+                ContentValues cv = new ContentValues();
+                cv.put("SECUENCIA",ID);
+                myDataBase.update("LLAVES",cv,"TIPO= 'CLIENTE'",null);
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally
+        {
+            if(myDataBase != null) { myDataBase.close(); }
+            if(myDbHelper != null) { myDbHelper.close(); }
+        }
     }
     public static void  SaveFacturas(Context context, ArrayList<Facturas> Indica){
         SQLiteDatabase myDataBase = null;
@@ -312,12 +352,18 @@ public class Clientes_model {
         List<Clientes> lista = new ArrayList<>();
         SQLiteDatabase myDataBase = null;
         SQLiteHelper myDbHelper = null;
+        Cursor cursor;
         try
         {
             myDbHelper = new SQLiteHelper(basedir, context);
             myDataBase = myDbHelper.getReadableDatabase();
 
-            Cursor cursor = myDataBase.query(true, "CLIENTES", null, "CLIENTE"+ "=?", new String[] { IdCliente }, null, null, null, null);
+            if (!IdCliente.equals("")){
+                cursor = myDataBase.query(true, "CLIENTES", null, "CLIENTE"+ "=?", new String[] { IdCliente }, null, null, null, null);
+            }else{
+                cursor = myDataBase.query(true, "CLIENTES", null, "ESTADO"+ "=?", new String[] { "0" }, null, null, null, null);
+            }
+
             Log.d(TAG, "getAgenda: "+ IdCliente + " " +cursor.getCount());
             if(cursor.getCount() > 0) {
 
@@ -335,7 +381,13 @@ public class Clientes_model {
                     tmp.setmSaldo(cursor.getString(cursor.getColumnIndex("SALDO")));
                     tmp.setmDisponible(cursor.getString(cursor.getColumnIndex("DISPONIBLE")));
                     tmp.setmCumple(cursor.getString(cursor.getColumnIndex("CUMPLE")));
-                    Log.d("", "alderPrubea: "+cursor.getString(cursor.getColumnIndex("CUMPLE")));
+                    tmp.setmTelefono(cursor.getString(cursor.getColumnIndex("TELEFONO")));
+                    tmp.setmDepartamento(cursor.getString(cursor.getColumnIndex("DEPARTAMENTO")));
+                    tmp.setmMunicipio(cursor.getString(cursor.getColumnIndex("MUNICIPIO")));
+                    tmp.setmEstado(cursor.getString(cursor.getColumnIndex("ESTADO")));
+                    tmp.setmCorreo(cursor.getString(cursor.getColumnIndex("CORREO")));
+                    tmp.setmVendedor(cursor.getString(cursor.getColumnIndex("VENDEDOR")));
+
                     lista.add(tmp);
                     cursor.moveToNext();
                 }
@@ -349,15 +401,21 @@ public class Clientes_model {
         }
         return lista;
     }
-    public static List<Clientes> getClientes(String basedir, Context context, String Order) {
+    public static List<Clientes> getClientes(String basedir, Context context, String Order,Boolean nuevos) {
         List<Clientes> lista = new ArrayList<>();
         SQLiteDatabase myDataBase = null;
         SQLiteHelper myDbHelper = null;
+        Cursor cursor;
         try
         {
             myDbHelper = new SQLiteHelper(basedir, context);
             myDataBase = myDbHelper.getReadableDatabase();
-            Cursor cursor = myDataBase.query(true, "CLIENTES", null, null, null, null, null, Order, null);
+
+            if (nuevos){
+                cursor = myDataBase.query(true, "CLIENTES", null, "ESTADO"+ "=?", new String[] { "0" }, null, null, null, null);
+            }else {
+                cursor = myDataBase.query(true, "CLIENTES", null, null, null, null, null, Order, null);
+            }
             if(cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 while(!cursor.isAfterLast()) {
@@ -368,12 +426,11 @@ public class Clientes_model {
                     tmp.setmCumple(cursor.getString(cursor.getColumnIndex("CUMPLE")));
                     tmp.setmMoroso(cursor.getString(cursor.getColumnIndex("MOROSO")));
                     tmp.setmMes(cursor.getInt(cursor.getColumnIndex("Mes")));
-
+                    tmp.setmGrupo(cursor.getString(cursor.getColumnIndex("GRUPO")));
+                    tmp.setmLista(cursor.getString(cursor.getColumnIndex("LISTA")));
                     tmp.setmCredito(cursor.getString(cursor.getColumnIndex("CREDITO")));
                     tmp.setmSaldo(cursor.getString(cursor.getColumnIndex("SALDO")));
                     tmp.setmDisponible(cursor.getString(cursor.getColumnIndex("DISPONIBLE")));
-
-
 
                     lista.add(tmp);
                     cursor.moveToNext();
@@ -388,4 +445,84 @@ public class Clientes_model {
         }
         return lista;
     }
+    public static int getIDtemporal(String basedir, Context context) {
+
+        Integer ID = null;
+        SQLiteDatabase myDataBase = null;
+        SQLiteHelper myDbHelper = null;
+        try
+        {
+            myDbHelper = new SQLiteHelper(basedir, context);
+            myDataBase = myDbHelper.getReadableDatabase();
+            Cursor cursor = myDataBase.query(true, "LLAVES", null, "TIPO"+ "=?", new String[] { "CLIENTE" }, null, null, null, null);
+            if(cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                while(!cursor.isAfterLast()) {
+                    ID = cursor.getInt(cursor.getColumnIndex("SECUENCIA"));
+
+                    cursor.moveToNext();
+                }
+            }
+        }
+        catch (Exception e) { e.printStackTrace(); }
+        finally
+        {
+            if(myDataBase != null) { myDataBase.close(); }
+            if(myDbHelper != null) { myDbHelper.close(); }
+        }
+        return ID;
+    }
+    public static void  BorrarClientesNuevos(Context context, ArrayList<Clientes> CLIENTES){
+        SQLiteDatabase myDataBase = null;
+        SQLiteHelper myDbHelper = null;
+        try
+        {
+            myDbHelper = new SQLiteHelper(ManagerURI.getDirDb(), context);
+            myDataBase = myDbHelper.getWritableDatabase();
+
+            for(int i=0;i<CLIENTES.size();i++){
+                Clientes a = CLIENTES.get(i);
+                Log.d(TAG, "BorrarClientesNuevos: "+a.getmCliente()+" "+a.getmVendedor());
+                SQLiteHelper.ExecuteSQL(ManagerURI.getDirDb(),context,"DELETE FROM CLIENTES WHERE CLIENTE = '"+a.getmCliente()+"' " +" AND VENDEDOR = '"+a.getmVendedor()+"'");
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally
+        {
+            if(myDataBase != null) { myDataBase.close(); }
+            if(myDbHelper != null) { myDbHelper.close(); }
+        }
+    }
+    public static List<Clientes> getClientesNuevos(String basedir, Context context) {
+        List<Clientes> lista = new ArrayList<>();
+        SQLiteDatabase myDataBase = null;
+        SQLiteHelper myDbHelper = null;
+        try
+        {
+            myDbHelper = new SQLiteHelper(basedir, context);
+            myDataBase = myDbHelper.getReadableDatabase();
+            Cursor cursor = myDataBase.query(true, "CLIENTES", null, "ESTADO"+ "=?", new String[] { "0" }, null, null, null, null);
+            if(cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                while(!cursor.isAfterLast()) {
+                    Clientes tmp = new Clientes();
+                    tmp.setmCliente(cursor.getString(cursor.getColumnIndex("CLIENTE")));
+                    tmp.setmNombre(cursor.getString(cursor.getColumnIndex("NOMBRE")));
+                    tmp.setmVendedor(cursor.getString(cursor.getColumnIndex("VENDEDOR")));
+                    lista.add(tmp);
+                    cursor.moveToNext();
+                }
+            }
+        }
+        catch (Exception e) { e.printStackTrace(); }
+        finally
+        {
+            if(myDataBase != null) { myDataBase.close(); }
+            if(myDbHelper != null) { myDbHelper.close(); }
+        }
+        return lista;
+    }
+
 }

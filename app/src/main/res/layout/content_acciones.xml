@@ -46,31 +46,21 @@
             android:layout_height="fill_parent"
             android:layout_margin="10dp">
             <ImageView
-                android:id="@+id/btnCBR"
-                android:layout_height="200dp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:src="@drawable/ico2" />
-
-            <ImageView
                 android:id="@+id/btnPD"
                 android:layout_height="200dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:src="@drawable/ico3" />
+            <ImageView
+                android:id="@+id/btnRZ"
+                android:layout_height="200dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:src="@drawable/ico4" />
         </TableRow>
         <TableRow
             android:layout_width="fill_parent"
             android:layout_height="fill_parent">
-            <TextView
-                android:id="@+id/txtCBR"
-                android:gravity="center"
-                android:layout_height="fill_parent"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:textColor="@color/black"
-                android:textSize="27sp"
-                android:text="COBRO" />
             <TextView
                 android:id="@+id/lbl1"
                 android:gravity="center"
@@ -80,16 +70,20 @@
                 android:textColor="@color/black"
                 android:textSize="27sp"
                 android:text="PEDIDO" />
+            <TextView
+                android:id="@+id/lbl2"
+                android:gravity="center"
+                android:layout_height="fill_parent"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textColor="@color/black"
+                android:textSize="27sp"
+                android:text="RAZON" />
         </TableRow>
         <TableRow
             android:layout_width="fill_parent"
             android:layout_height="fill_parent">
-            <ImageView
-                android:id="@+id/btnRZ"
-                android:layout_height="200dp"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:src="@drawable/ico4" />
+
             <ImageView
                 android:id="@+id/btnCV"
                 android:layout_height="200dp"
@@ -100,15 +94,7 @@
         <TableRow
             android:layout_width="fill_parent"
             android:layout_height="fill_parent">
-            <TextView
-                android:id="@+id/lbl2"
-                android:gravity="center"
-                android:layout_height="fill_parent"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:textColor="@color/black"
-                android:textSize="27sp"
-                android:text="RAZON" />
+
             <TextView
                 android:id="@+id/txtbtnCV"
                 android:gravity="center"

@@ -49,19 +49,47 @@
         <TextView
             android:id="@+id/tvListItemPrecio"
             android:layout_height="fill_parent"
-            android:layout_width="100dp"
+            android:layout_width="90dp"
             android:gravity="start"
             android:padding="5dp"
             android:text="Precio"
             />
-        <TextView
+        <!--<TextView
             android:id="@+id/tvListBonificado"
             android:layout_height="fill_parent"
             android:layout_width="100dp"
             android:gravity="start"
             android:padding="5dp"
             android:text="Bonificado"
-            />
+            />-->
+        <TextView
+            android:layout_width="40dp"
+            android:layout_height="fill_parent"
+            android:gravity="start"
+            android:padding="5dp"
+            android:text="IVA: " />
+
+        <TextView
+            android:id="@+id/txtIva"
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:gravity="start"
+            android:padding="5dp"
+            android:text="IVA" />
+        <TextView
+            android:layout_width="50dp"
+            android:layout_height="fill_parent"
+            android:gravity="start"
+            android:padding="5dp"
+            android:text="DESC: " />
+
+        <TextView
+            android:id="@+id/txtDescuento"
+            android:layout_width="60dp"
+            android:layout_height="fill_parent"
+            android:gravity="start"
+            android:padding="5dp"
+            android:text="0" />
         <TextView
             android:layout_height="fill_parent"
             android:layout_width="0dp"
@@ -78,9 +106,7 @@
             android:gravity="end"
             android:padding="5dp"
             android:layout_marginRight="50dp"
-            android:text="Valor"
-
-            />
+            android:text="Valor"/>
 
     </LinearLayout>
 </LinearLayout>

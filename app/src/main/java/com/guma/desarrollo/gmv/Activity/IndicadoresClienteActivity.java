@@ -116,17 +116,18 @@ public class IndicadoresClienteActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Float disponible = Float.valueOf(obClientes.get(0).getmDisponible());
-                if (obClientes.get(0).getmMoroso().equals("S")){
+                /*if (obClientes.get(0).getmMoroso().equals("S")){
                     btnOK.setText("CLIENTE MOROSO");
                     btnOK.setBackgroundResource(R.drawable.button_danger_rounded);
-                }else if (disponible <=0 ){
+                }else*/
+                /*if (disponible <=0 ){
                     btnOK.setText("CLIENTE SIN CREDITO");
                     btnOK.setBackgroundResource(R.drawable.button_danger_rounded);
-                }else{
+                }else{*/
                     startActivity(new Intent(IndicadoresClienteActivity.this,PedidoActivity.class));
                     timer.cancel();
                     finish();
-                }
+                //}
             }
         });
 

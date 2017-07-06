@@ -49,7 +49,6 @@ public class LoginActivity extends AppCompatActivity  {
         editor = PreferenceManager.getDefaultSharedPreferences(this).edit();
         checked = preferences.getBoolean("pref", false);
 
-
         findViewById(R.id.sign_in_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,9 +74,6 @@ public class LoginActivity extends AppCompatActivity  {
                         startActivity(new Intent(LoginActivity.this,AgendaActivity.class));
                         finish();
                     }else{
-
-                        //pdialog = ProgressDialog.show(LoginActivity.this, "", "Usuario no encontrado. Buscando en el servidor...", true);
-                        //pdialog.dismiss();
                         new TaskLogin().execute();
                     }
                 }
@@ -99,8 +95,6 @@ public class LoginActivity extends AppCompatActivity  {
                 public void onResponse(Call<Respuesta_usuario> call, Response<Respuesta_usuario> response) {
                     if(response.isSuccessful()){
 
-                        /*TaskConsecutivos task = new TaskConsecutivos();
-                        task.execute();*/
                         Log.d("", "alderlogin: "+response.body().getResults().get(0).getmIdUser());
                         if (response.body().getResults().get(0).getmIdUser().isEmpty()){
                             pdialog.dismiss();
@@ -123,6 +117,7 @@ public class LoginActivity extends AppCompatActivity  {
                             tmpUser.setmPedido(usuarioRespuesta.getResults().get(0).getmPedido());
                             tmpUser.setmCobro(usuarioRespuesta.getResults().get(0).getmCobro());
                             tmpUser.setmRazon(usuarioRespuesta.getResults().get(0).getmRazon());
+                            tmpUser.setmCliente(usuarioRespuesta.getResults().get(0).getmCliente());
                             mDetalleUser.add(tmpUser);
                             Usuario_model.SaveUsuario(LoginActivity.this, mDetalleUser);
 
@@ -147,7 +142,7 @@ public class LoginActivity extends AppCompatActivity  {
             return null;
         }
     }
-    private class TaskConsecutivos extends AsyncTask<String,String,String>{
+    /*private class TaskConsecutivos extends AsyncTask<String,String,String>{
         @Override
         protected String doInBackground(String... params) {
             Class_retrofit.Objfit().create(Servicio.class).obtenerConsecutivo(useri).enqueue(new Callback<Respuesta_usuario>() {
@@ -155,13 +150,14 @@ public class LoginActivity extends AppCompatActivity  {
                 public void onResponse(Call<Respuesta_usuario> call, Response<Respuesta_usuario> response) {
                     if(response.isSuccessful()){
                         Respuesta_usuario usuarioRespuesta = response.body();
-                        pdialog = ProgressDialog.show(LoginActivity.this, "", "Cargando consecutivos de pedidos, cobros y razon...", true);
+                        pdialog = ProgressDialog.show(LoginActivity.this, "", "Cargando consecutivos de pedidos, cobros, razon y clientes...", true);
                         Usuario tmpUser = new Usuario();
                         tmpUser.setmPedido(usuarioRespuesta.getResults().get(0).getmPedido());
                         tmpUser.setmCobro(usuarioRespuesta.getResults().get(0).getmCobro());
                         tmpUser.setmRazon(usuarioRespuesta.getResults().get(0).getmRazon());
+                        tmpUser.setmCliente(usuarioRespuesta.getResults().get(0).getmCliente());
 
-
+                        Log.d("asdasdas", "onResponse: entroooooo ");
                         mDetalleUser.add(tmpUser);
                         Usuario_model.SaveConsecutivo(LoginActivity.this, mDetalleUser);
                         pdialog = ProgressDialog.show(LoginActivity.this, "", "Consecutivos Guardados!...", true);
@@ -180,5 +176,5 @@ public class LoginActivity extends AppCompatActivity  {
             });
             return null;
         }
-    }
+    }*/
 }

@@ -93,6 +93,7 @@ public class Usuario_model {
 
                 myDataBase.insert("USUARIOS", null, contentValues );
             }
+            SaveConsecutivo(context,detUsuario);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -123,7 +124,9 @@ public class Usuario_model {
             contentValues.put("TIPO" , "RAZON");
             contentValues.put("SECUENCIA" , a.getmRazon());
             myDataBase.insert("LLAVES", null, contentValues );
-
+            contentValues.put("TIPO" , "CLIENTE");
+            contentValues.put("SECUENCIA" , a.getmCliente());
+            myDataBase.insert("LLAVES", null, contentValues );
         }
         catch (Exception e) {
             e.printStackTrace();

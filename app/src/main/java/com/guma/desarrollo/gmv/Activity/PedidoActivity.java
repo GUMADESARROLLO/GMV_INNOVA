@@ -86,6 +86,8 @@ public class PedidoActivity extends AppCompatActivity {
 
         String bandera = preferences.getString("BANDERA", "0");
 
+        Toast.makeText(this, preferences.getString("GRUPO", ""), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, preferences.getString("LISTA", ""), Toast.LENGTH_SHORT).show();
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -109,7 +111,6 @@ public class PedidoActivity extends AppCompatActivity {
             public boolean onItemLongClick(final AdapterView<?> parent, View view, int position, long id) {
                 showInputBox(parent,list,position);
                 return true;
-                //return  false;
             }
         });
         findViewById(R.id.txtSendPedido).setOnClickListener(new View.OnClickListener() {
@@ -229,6 +230,7 @@ public class PedidoActivity extends AppCompatActivity {
                 List<String> mStrings = new ArrayList<>();
                 spinner.setAdapter(null);
 
+                Log.d("", "afterTextChanged: ekisde");
                 if (s.length() != 0) {
                     Log.d("", "alder: "+Reglas2[0]);
                     if (Reglas2.length >= 1) {
@@ -284,11 +286,12 @@ public class PedidoActivity extends AppCompatActivity {
         float vLine = 0;
         listView.setAdapter(
                 new SimpleAdapter(
-                        this,
-                        list,
-                        R.layout.list_item_carrito, new String[] {"ITEMNAME", "ITEMCANTI","ITEMCODIGO","ITEMVALOR","BONIFICADO","PRECIO" },
-                        new int[] {R.id.tvListItemName,R.id.Item_cant,R.id.item_codigo,R.id.Item_valor,R.id.tbListBonificado,R.id.tvListItemPrecio}));
-
+                            this,
+                            list,
+                            R.layout.list_item_carrito, new String[] {"ITEMNAME", "ITEMCANTI","ITEMCODIGO","ITEMVALOR",/*"BONIFICADO",*/"PRECIO","IVA","DESCUENTO"},
+                            new int[] {R.id.tvListItemName,R.id.Item_cant,R.id.item_codigo,R.id.Item_valor,/*R.id.tbListBonificado,*/R.id.tvListItemPrecio,R.id.txtIva,R.id.txtDescuento}
+                            )
+                        );
 
         for (Map<String, Object> obj : list){
             //Log.d("carajo",obj.get("ITEMNAME").toString()+ " "+ obj.get("ITEMVALOR").toString());
@@ -336,8 +339,10 @@ public class PedidoActivity extends AppCompatActivity {
             map.put("ITEMVALOR",  data.getStringArrayListExtra("myItem").get(3));
             map.put("ITEMSUBTOTAL", data.getStringArrayListExtra("myItem").get(4));
             map.put("ITEMVALORTOTAL", Funciones.NumberFormat(Float.parseFloat(data.getStringArrayListExtra("myItem").get(5))));
-            map.put("BONIFICADO", data.getStringArrayListExtra("myItem").get(6));
-            map.put("PRECIO", Funciones.NumberFormat(Float.parseFloat(data.getStringArrayListExtra("myItem").get(7))));
+            map.put("PRECIO", Funciones.NumberFormat(Float.parseFloat(data.getStringArrayListExtra("myItem").get(6))));
+            map.put("IVA", data.getStringArrayListExtra("myItem").get(7));
+            map.put("DESCUENTO", data.getStringArrayListExtra("myItem").get(8));
+            //Toast.makeText(this, data.getStringArrayListExtra("myItem").size(), Toast.LENGTH_SHORT).show();
 
             list.add(map);
             Refresh();
@@ -346,8 +351,16 @@ public class PedidoActivity extends AppCompatActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
-            //startActivity(new Intent(PedidoActivity.this,AgendaActivity.class));
-            finish();
+            android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(PedidoActivity.this);
+            builder.setMessage("SE PERDERAN LOS DATOS DEL PEDIDO").setTitle("¿ESTA SEGURO?")
+                    .setPositiveButton("SI", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            finish();
+                        }
+                    }).setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                }
+            }).create().show();
             return true;
         }
         return super.onKeyDown(keyCode, event);

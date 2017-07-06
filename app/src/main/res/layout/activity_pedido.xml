@@ -110,10 +110,11 @@
                 <FrameLayout
                     android:background="@drawable/inn_btn_morado"
                     android:layout_width="match_parent"
-                    android:layout_height="50dp" >
+                    android:layout_height="50dp"
+                    android:id="@+id/txtSendPedido">
                     <Button
                         style="@style/captionOnly"
-                        android:id="@+id/txtSendPedido"
+
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"

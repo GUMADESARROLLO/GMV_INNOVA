@@ -18,6 +18,7 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.formatter.IFillFormatter;
 import com.guma.desarrollo.core.Clientes;
 import com.guma.desarrollo.core.Clientes_model;
 import com.guma.desarrollo.core.ManagerURI;
@@ -55,9 +56,13 @@ public class ClientesActivity extends AppCompatActivity implements SearchView.On
         setSupportActionBar(toolbar);
         if (getSupportActionBar() != null){ getSupportActionBar().setDisplayHomeAsUpEnabled(true); }
         setTitle("CARTERA DE CLIENTES");
+
+        if (preferences.getBoolean("nuevos",false)){
+            setTitle("NUEVOS CLIENTES");
+        }
         ReferenciasContexto.setContextArticulo(this);
         listView = (ListView) findViewById(R.id.lstClientes);
-        objects = Clientes_model.getClientes(ManagerURI.getDirDb(), ClientesActivity.this,"NOMBRE");
+        objects = Clientes_model.getClientes(ManagerURI.getDirDb(), ClientesActivity.this,"NOMBRE",preferences.getBoolean("nuevos",false));
         lbs = new Clientes_Leads(this, objects);
 
         listView.setAdapter(lbs);
@@ -73,6 +78,7 @@ public class ClientesActivity extends AppCompatActivity implements SearchView.On
                 strings.add(mCLientes.getmCliente());
 
                 editor.putString("ClsSelected",mCLientes.getmCliente());
+                editor.putString("GRUPO",lbs.getItem(i).getmGrupo());
                 editor.putString("NameClsSelected",mCLientes.getmNombre());
                 editor.apply();
                 editor.putString("BANDERA", "0").apply();

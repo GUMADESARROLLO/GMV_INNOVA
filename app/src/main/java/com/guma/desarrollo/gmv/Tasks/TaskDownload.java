@@ -7,31 +7,22 @@ import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.guma.desarrollo.core.Actividades_model;
-import com.guma.desarrollo.core.Agenda_model;
 import com.guma.desarrollo.core.Articulos_model;
+import com.guma.desarrollo.core.Clientes;
 import com.guma.desarrollo.core.Clientes_model;
 import com.guma.desarrollo.core.Clock;
 import com.guma.desarrollo.core.ManagerURI;
-import com.guma.desarrollo.core.Pedidos;
-import com.guma.desarrollo.core.Pedidos_model;
-import com.guma.desarrollo.gmv.Activity.ReferenciasContexto;
 import com.guma.desarrollo.gmv.api.Class_retrofit;
 import com.guma.desarrollo.gmv.api.Servicio;
 import com.guma.desarrollo.gmv.models.Respuesta_actividades;
-import com.guma.desarrollo.gmv.models.Respuesta_agenda;
 import com.guma.desarrollo.gmv.models.Respuesta_articulos;
 import com.guma.desarrollo.gmv.models.Respuesta_clientes;
 import com.guma.desarrollo.gmv.models.Respuesta_historial;
-import com.guma.desarrollo.gmv.models.Respuesta_indicadores;
-import com.guma.desarrollo.gmv.models.Respuesta_mora;
-import com.guma.desarrollo.gmv.models.Respuesta_pedidos;
 import com.guma.desarrollo.gmv.models.Respuesta_puntos;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -66,6 +57,7 @@ public class TaskDownload extends AsyncTask<Integer,Integer,String> {
 
     @Override
     protected String doInBackground(Integer... params) {
+
         Usuario = preferences.getString("VENDEDOR","0");
         Class_retrofit.Objfit()
                 .create(Servicio.class)
@@ -92,30 +84,28 @@ public class TaskDownload extends AsyncTask<Integer,Integer,String> {
 
         Class_retrofit.Objfit()
                 .create(Servicio.class)
-                .obtenerLotes()
+                .obtenerDescuentos()
                 .enqueue(new Callback<Respuesta_articulos>() {
                     @Override
                     public void onResponse(Call<Respuesta_articulos> call, Response<Respuesta_articulos> response) {
                         if(response.isSuccessful()){
-                            pdialog.setMessage("Lotes.... ");
-                            Respuesta_articulos articulolote = response.body();
-                            Log.d(TAG, "onResponse: Lotes " + articulolote.getCount());
-                            Log.d(TAG, "onResponse: Lotes " + response.body().getResults().get(0).getmCodigo());
-                            Articulos_model.SaveLotes(cnxt,articulolote.getResults());
+                            pdialog.setMessage("Descuentos.... ");
+                            Respuesta_articulos articuloRespuesta = response.body();
+                            Log.d(TAG, "onResponse: Descuentos " + articuloRespuesta.getCount());
+                            Articulos_model.SaveArticulos(cnxt,articuloRespuesta.getResults());
+                            Articulos_model.SaveDescuentos(cnxt,articuloRespuesta.getResults());
                         }else{
                             pdialog.dismiss();
-                            Log.d(TAG, "onResponse: noSuccessful Lotes" + response.errorBody() );
+                            Log.d(TAG, "onResponse: noSuccessful Descuentos" + response.errorBody() );
                         }
                     }
                     @Override
                     public void onFailure(Call<Respuesta_articulos> call, Throwable t) {
-                        Log.d(TAG, "onResponse: Failure Lotes" + t.getMessage() );
+                        Log.d(TAG, "onResponse: Failure Descuentos" + t.getMessage() );
                         pdialog.dismiss();
                     }
                 });
 
-        /*Actividades*/
-        //Toast.makeText(cnxt, "Antes de ...", Toast.LENGTH_LONG).show();
         Class_retrofit.Objfit()
                 .create(Servicio.class)
                 .obtenerListaActividades()
@@ -139,32 +129,9 @@ public class TaskDownload extends AsyncTask<Integer,Integer,String> {
                     }
                 });
 
-        Class_retrofit.Objfit()
-                .create(Servicio.class)
-                .obtenerListaClienteMora(Usuario)
-                .enqueue(new Callback<Respuesta_mora>() {
-                    @Override
-                    public void onResponse(Call<Respuesta_mora> call, Response<Respuesta_mora> response) {
-                        if(response.isSuccessful()){
-                            pdialog.setMessage("Puntos.... ");
-                            Respuesta_mora moraRespuesta = response.body();
-                            Log.d(TAG, "onResponse: Mora " + moraRespuesta.getCount());
-                            Clientes_model.SaveMora(cnxt,moraRespuesta.getResults());
-                        }else{
-                            pdialog.dismiss();
-                            Log.d(TAG, "onResponse: noSuccessful Mora " + response.errorBody() );
-                        }
-                    }
 
-                    @Override
-                    public void onFailure(Call<Respuesta_mora> call, Throwable t) {
-                        pdialog.dismiss();
-                        Log.d(TAG, "onResponse: Failure Mora " + t.getMessage() );
-                    }
-                });
-
-
-        List<Pedidos> listPedidos = Pedidos_model.getInfoPedidos(ManagerURI.getDirDb(),cnxt,false);
+        /**************PENDIENTE************/
+        /*List<Pedidos> listPedidos = Pedidos_model.getInfoPedidos(ManagerURI.getDirDb(),cnxt,false);
 
         Gson gson = new Gson();
         Log.d("", "alderekisde: "+ gson.toJson(listPedidos));
@@ -185,37 +152,14 @@ public class TaskDownload extends AsyncTask<Integer,Integer,String> {
                                 Log.d("", "onResponse: noSuccessful PEDIDOS " + response.errorBody());
                             }
                         }
-
                         @Override
                         public void onFailure(Call<Respuesta_pedidos> call, Throwable t) {
                             Log.d("", "onResponse: Failure pedidos: " + t.getMessage());
                         }
                     });
-        }
+        }*/
 
-        Class_retrofit.Objfit()
-                .create(Servicio.class)
-                .obtenerListaClienteIndicadores(Usuario)
-                .enqueue(new Callback<Respuesta_indicadores>() {
-                    @Override
-                    public void onResponse(Call<Respuesta_indicadores> call, Response<Respuesta_indicadores> response) {
-                        if(response.isSuccessful()){
-                            pdialog.setMessage("Informacion de Clientes.... ");
-                            Respuesta_indicadores IndicadorRespuesta = response.body();
 
-                            Log.d(TAG, "onResponse: Indicadores " + IndicadorRespuesta.getCount());
-                            Clientes_model.SaveIndicadores(cnxt,IndicadorRespuesta.getResults());
-                        }else{
-                            Log.d(TAG, "onResponse: noSuccessful Indicadores " + response.errorBody() );
-                        }
-                    }
-                    @Override
-                    public void onFailure(Call<Respuesta_indicadores> call, Throwable t) {
-                        pdialog.dismiss();
-                        Log.d(TAG, "onResponse: Failure Indicadores " + t.getMessage() );
-
-                    }
-                });
         Class_retrofit.Objfit().
                 create(Servicio.class).
                 obtenerListaClientes(Usuario).
@@ -241,7 +185,7 @@ public class TaskDownload extends AsyncTask<Integer,Integer,String> {
                     }
                 });
 
-
+                /***************************PENDIENTE LA VISTA*/
         Class_retrofit.Objfit().create(Servicio.class)
                 .obtenerFacturasPuntos(Usuario)
                 .enqueue(new Callback<Respuesta_puntos>() {
@@ -250,15 +194,13 @@ public class TaskDownload extends AsyncTask<Integer,Integer,String> {
                         if(response.isSuccessful()){
                             pdialog.setMessage("Cargado Puntos.... ");
                             Respuesta_puntos clpuntos = response.body();
+                            Log.d(TAG, "onResponse: Puntos " + clpuntos.getCount());
                             Clientes_model.SaveFacturas(cnxt,clpuntos.getResults());
                         }else{
                             pdialog.dismiss();
                             Log.d(TAG, "onResponse: noSuccessful Facturas " + response.errorBody() );
                         }
-
                     }
-
-
                     @Override
                     public void onFailure(Call<Respuesta_puntos> call, Throwable t) {
                         pdialog.dismiss();
@@ -266,33 +208,7 @@ public class TaskDownload extends AsyncTask<Integer,Integer,String> {
                     }
                 });
 
-
-        Log.d(TAG, "onResponse: Agenda el usuario " + Usuario);
-        Class_retrofit.Objfit().create(Servicio.class)
-                .Agenda(Usuario)
-                .enqueue(new Callback<Respuesta_agenda>() {
-                    @Override
-                    public void onResponse(Call<Respuesta_agenda> call, Response<Respuesta_agenda> response) {
-                        if(response.isSuccessful()){
-                            pdialog.setMessage("Cargado Puntos.... ");
-                            Respuesta_agenda clpuntos = response.body();
-                            Log.d(TAG, "onResponse: Agenda " + clpuntos.getCount());
-                            Log.d(TAG, "onResponse Alder: "+response.body().getResults().get(0).getmLunes());
-                            /*Log.d(TAG, "onResponse: Agenda " + clpuntos.getCount());*/
-                            Agenda_model.Save_Agenda(cnxt,clpuntos.getResults());
-                        }else{
-                            pdialog.dismiss();
-                            Log.d(TAG, "onResponse: noSuccessful Agenda " + response.errorBody() );
-                        }
-
-                    }
-                    @Override
-                    public void onFailure(Call<Respuesta_agenda> call, Throwable t) {
-                        pdialog.dismiss();
-                        Log.d(TAG, "onResponse: Failure Agenda " + t.getMessage() );
-                    }
-                });
-
+        /****************PENDIENTE LA VISTA*************************/
         Class_retrofit.Objfit().create(Servicio.class)
                 .obtHistorial(Usuario)
                 .enqueue(new Callback<Respuesta_historial>() {
@@ -319,6 +235,38 @@ public class TaskDownload extends AsyncTask<Integer,Integer,String> {
                         Log.d(TAG, "onResponse: Failure Historial " + t.getMessage() );
                     }
                 });
+
+        List<Clientes> listClientes = Clientes_model.getClientesNuevos(ManagerURI.getDirDb(),cnxt);
+
+        Gson gsonClientes = new Gson();
+        Log.d("", "alderekisdecLIENTES: "+ gsonClientes.toJson(listClientes));
+        if (listClientes.size()>0) {
+            Class_retrofit.Objfit()
+                    .create(Servicio.class)
+                    .actualizarClientes(gsonClientes.toJson(listClientes))
+                    .enqueue(new Callback<Respuesta_clientes>() {
+                        @Override
+                        public void onResponse(Call<Respuesta_clientes> call, Response<Respuesta_clientes> response) {
+                            if (response.isSuccessful()) {
+                                pdialog.setMessage("Eliminando clientes ya ingresados....");
+                                Respuesta_clientes respuesta_clientes = response.body();
+
+                                Log.d("", "alderekisdecLIENTES: "+ respuesta_clientes.getResults().get(0).getmCliente());
+
+                                Clientes_model.BorrarClientesNuevos(cnxt, respuesta_clientes.getResults());
+                            } else {
+                                Log.d("", "onResponse: noSuccessful CLIENTES " + response.errorBody());
+                            }
+                        }
+                        @Override
+                        public void onFailure(Call<Respuesta_clientes> call, Throwable t) {
+                            Log.d("", "onResponse: Failure clientes: " + t.getMessage());
+                        }
+                    });
+        }
+
+        pdialog.dismiss();
+
 
         editor.putString("lstDownload", Clock.getTimeStamp());
         editor.apply();

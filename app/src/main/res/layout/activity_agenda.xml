@@ -21,7 +21,8 @@
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
-    <include layout="@layout/content_agenda" />
+    <!--<include layout="@layout/content_agenda" />-->
+    <include layout="@layout/content_clientes" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -37,13 +38,13 @@
             android:layout_height="fill_parent"
             android:layout_margin="10dp">
             <ImageView
-                android:visibility="gone"
-                android:id="@+id/imgCump"
+
+                android:id="@+id/imgNew"
                 android:layout_height="35dp"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:tint="@color/INN_LIGHT_NARANJA"
-                android:src="@drawable/ic_cake_white_24dp"
+                android:src="@drawable/ic_action_add_person"
                 />
             <ImageView
                 android:id="@+id/imgMenu"

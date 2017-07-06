@@ -11,7 +11,9 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ExpandableListView;
+import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -23,6 +25,7 @@ import com.guma.desarrollo.core.Cobros_model;
 import com.guma.desarrollo.core.ManagerURI;
 import com.guma.desarrollo.core.Pedidos_model;
 import com.guma.desarrollo.core.Razon_model;
+import com.guma.desarrollo.gmv.Adapters.Clientes_Leads;
 import com.guma.desarrollo.gmv.Adapters.CustomAdapter;
 import com.guma.desarrollo.gmv.ChildInfo;
 import com.guma.desarrollo.gmv.GroupInfo;
@@ -48,8 +51,10 @@ public class AgendaActivity extends AppCompatActivity  implements ConnectivityRe
     private ArrayList<GroupInfo> deptList = new ArrayList<>();
 
     private CustomAdapter listAdapter;
-    private ExpandableListView simpleExpandableListView;
+    private ListView ListView;
     private Menu menu;
+    private List<Clientes> objects;
+    private Clientes_Leads lbs;
 
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
@@ -66,37 +71,47 @@ public class AgendaActivity extends AppCompatActivity  implements ConnectivityRe
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         loadData();
-        simpleExpandableListView = (ExpandableListView) findViewById(R.id.simpleExpandableListView);
-        listAdapter = new CustomAdapter(AgendaActivity.this, deptList);
-        simpleExpandableListView.setAdapter(listAdapter);
-        ReferenciasContexto.setContextArticulo(AgendaActivity.this);
-
+        setTitle("Ultm. Actualizacion: " + preferences.getString("lstDownload","00/00/0000"));
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         editor = preferences.edit();
 
+        ListView = (ListView) findViewById(R.id.lstClientes);
+        objects = Clientes_model.getClientes(ManagerURI.getDirDb(), AgendaActivity.this,"NOMBRE",false);
+        lbs = new Clientes_Leads(this, objects);
+        ListView.setAdapter(lbs);
+
+        ReferenciasContexto.setContextArticulo(AgendaActivity.this);
+
         checked = preferences.getBoolean("pref",false);
-
-
-        setTitle("Ultm. Actualizacion: " + preferences.getString("lstDownload","00/00/0000"));
-        simpleExpandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+        ListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                GroupInfo headerInfo = deptList.get(groupPosition);
-                ChildInfo detailInfo =  headerInfo.getProductList().get(childPosition);
-                editor.putString("ClsSelected",detailInfo.getCodigo());
-                editor.putString("NameClsSelected",detailInfo.getName());
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                final Clientes mCLientes = (Clientes) adapterView.getItemAtPosition(i);
+
+                editor.putString("ClsSelected",mCLientes.getmCliente());
+                editor.putString("NameClsSelected",mCLientes.getmNombre());
+                if (mCLientes.getmCliente().equals("CL008227")){
+                    editor.putString("LISTA",lbs.getItem(i).getmLista());
+                    editor.putString("GRUPO","CENTROLAC");
+                }else if (lbs.getItem(i).getmGrupo().equals("MAYORISTAS")){
+                    editor.putString("LISTA",lbs.getItem(i).getmLista());
+                    editor.putString("GRUPO",lbs.getItem(i).getmGrupo());
+                }else{
+                    editor.putString("LISTA",lbs.getItem(i).getmLista());
+                    editor.putString("GRUPO",lbs.getItem(i).getmGrupo());
+                }
                 editor.apply();
                 editor.putString("BANDERA", "0").apply();
                 startActivity(new Intent(AgendaActivity.this,MarcarRegistroActivity.class));
                 finish();
-                return false;
             }
         });
 
-        findViewById(R.id.imgCump).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.imgNew).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(AgendaActivity.this,CumpleannoActivity.class));
+                startActivity(new Intent(AgendaActivity.this,NewClienteActivity.class));
             }
         });
 
@@ -106,12 +121,13 @@ public class AgendaActivity extends AppCompatActivity  implements ConnectivityRe
 
 
 
-                final CharSequence[]items = { "MIS CLIENTES","INVENTARIO","PEDIDO", "COBRO","ENVIAR","RECIBIR","REPORTE DEL DIA","CIERRE DEL DIA","ACERCA DE","SALIR"};
+                final CharSequence[]items = { "NUEVOS CLIENTES","INVENTARIO","PEDIDO", "ENVIAR","RECIBIR","REPORTE DEL DIA","CIERRE DEL DIA","ACERCA DE","SALIR"};
                 new AlertDialog.Builder(v.getContext()).setItems(items, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
                         if (items[which].equals(items[0])){
+                            editor.putBoolean("nuevos", true).apply();
                             startActivityForResult(new Intent(AgendaActivity.this,ClientesActivity.class),0);
                             finish();
                         }else{
@@ -123,30 +139,27 @@ public class AgendaActivity extends AppCompatActivity  implements ConnectivityRe
                                 if (items[which].equals(items[2])){
                                     startActivity(new Intent(AgendaActivity.this,BandejaPedidosActivity.class));
                                 }else{
-                                    if (items[which].equals(items[3])){
-                                        startActivity(new Intent(AgendaActivity.this,BandejaCobrosActivity.class));
-                                    }else{
-                                        if (items[which].equals(items[4])){
+                                        if (items[which].equals(items[3])){
                                             new TaskUnload(AgendaActivity.this).execute();
                                         } else {
-                                            if (items[which].equals(items[5])){
+                                            if (items[which].equals(items[4])){
                                                 if (ManagerURI.isOnlinea(AgendaActivity.this)){
                                                     new TaskDownload(AgendaActivity.this).execute(0);
                                                 } else {
                                                     Toast.makeText(AgendaActivity.this, "No Posee Cobertura de datos...", Toast.LENGTH_SHORT).show();
                                                 }
                                             }else {
-                                                if (items[which].equals(items[6])){
+                                                if (items[which].equals(items[5])){
                                                     startActivity(new Intent(AgendaActivity.this,RptHoyActivity.class));
                                                 } else{
-                                                    if (items[which].equals(items[7])){
+                                                    if (items[which].equals(items[6])){
                                                         cerrar();
                                                     }else {
-                                                        if (items[which].equals(items[8])) {
+                                                        if (items[which].equals(items[7])) {
 
                                                             startActivity(new Intent(AgendaActivity.this,AcercadeActivity.class));
                                                         }else{
-                                                            if (items[which].equals(items[9])){
+                                                            if (items[which].equals(items[8])){
                                                                 checked = false;
                                                                 editor.putBoolean("pref", false).commit();
                                                                 editor.apply();
@@ -162,12 +175,11 @@ public class AgendaActivity extends AppCompatActivity  implements ConnectivityRe
                                     }
                                 }
                             }
-                        }
                     }
                 }).create().show();
             }
         });
-        expandAll();
+        //expandAll();
        // AutoTask();
     }
 
@@ -199,7 +211,7 @@ public class AgendaActivity extends AppCompatActivity  implements ConnectivityRe
     protected void onResume() {
         super.onResume();
         setTitle("Ultm. Actualizacion: " + preferences.getString("lstDownload","00/00/0000"));
-        expandAll();
+        //expandAll();
         AutoTask(preferences.getBoolean("ntData",false));
         MyApplication.getInstance().setConnectivityListener(this);
     }
@@ -232,7 +244,7 @@ public class AgendaActivity extends AppCompatActivity  implements ConnectivityRe
         this.menu = menu;
         return true;
     }
-    private void expandAll() {
+    /*private void expandAll() {
         int count = listAdapter.getGroupCount();
         for (int i = 0; i < count; i++){
             simpleExpandableListView.expandGroup(i);
@@ -243,7 +255,7 @@ public class AgendaActivity extends AppCompatActivity  implements ConnectivityRe
         for (int i = 0; i < count; i++){
             simpleExpandableListView.collapseGroup(i);
         }
-    }
+    }*/
 
     private void loadData(){
 

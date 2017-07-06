@@ -12,23 +12,36 @@ public class Articulo {
     private String mExistencia;
     private String mUnidad;
     private String mPrecio;
-    private String mPuntos;
     private String mReglas;
-    private String mUnidadMedida;
-    private String mLote;
+    private String mDescuento;
     private String mFecha;
+    private String mClasificacion;
+    private String mIva;
+    private String mMinimo;
+    private String mMaximo;
+    private String mNlp1;
+    private String mNlp2;
+    private String mNlp3;
+    private String mNlp4;
 
-    public Articulo(String mCodigo, String mName, String mExistencia, String mUnidad, String mPrecio, String mPuntos, String mReglas, String mUnidadMedida, String mLote, String mFecha) {
+
+    public Articulo(String mCodigo, String mName, String mExistencia, String mUnidad, String mPrecio, String mReglas, String mDescuento, String mFecha, String mClasificacion, String mIva, String mMinimo, String mMaximo, String mNlp1, String mNlp2, String mNlp3, String mNlp4) {
         this.mCodigo = mCodigo;
         this.mName = mName;
         this.mExistencia = mExistencia;
         this.mUnidad = mUnidad;
         this.mPrecio = mPrecio;
-        this.mPuntos = mPuntos;
         this.mReglas = mReglas;
-        this.mUnidadMedida = mUnidadMedida;
-        this.mLote = mLote;
+        this.mDescuento = mDescuento;
         this.mFecha = mFecha;
+        this.mClasificacion = mClasificacion;
+        this.mIva = mIva;
+        this.mMinimo = mMinimo;
+        this.mMaximo = mMaximo;
+        this.mNlp1 = mNlp1;
+        this.mNlp2 = mNlp2;
+        this.mNlp3 = mNlp3;
+        this.mNlp4 = mNlp4;
     }
 
     public Articulo(){
@@ -75,14 +88,6 @@ public class Articulo {
         this.mPrecio = mPrecio;
     }
 
-    public String getmPuntos() {
-        return mPuntos;
-    }
-
-    public void setmPuntos(String mPuntos) {
-        this.mPuntos = mPuntos;
-    }
-
     public String getmReglas() {
         return mReglas;
     }
@@ -91,27 +96,83 @@ public class Articulo {
         this.mReglas = mReglas;
     }
 
-    public String getmUnidadMedida() {
-        return mUnidadMedida;
-    }
-
-    public void setmUnidadMedida(String mUnidadMedida) {
-        this.mUnidadMedida = mUnidadMedida;
-    }
-
-    public String getmLote() {
-        return mLote;
-    }
-
-    public void setmLote(String mLote) {
-        this.mLote = mLote;
-    }
-
     public String getmFecha() {
         return mFecha;
     }
 
     public void setmFecha(String mFecha) {
         this.mFecha = mFecha;
+    }
+
+    public String getmClasificacion() {
+        return mClasificacion;
+    }
+
+    public void setmClasificacion(String mClasificacion) {
+        this.mClasificacion = mClasificacion;
+    }
+
+    public String getmIva() {
+        return mIva;
+    }
+
+    public void setmIva(String mIva) {
+        this.mIva = mIva;
+    }
+
+    public String getmMinimo() {
+        return mMinimo;
+    }
+
+    public void setmMinimo(String mMinimo) {
+        this.mMinimo = mMinimo;
+    }
+
+    public String getmMaximo() {
+        return mMaximo;
+    }
+
+    public void setmMaximo(String mMaximo) {
+        this.mMaximo = mMaximo;
+    }
+
+    public String getmNlp1() {
+        return mNlp1;
+    }
+
+    public void setmNlp1(String mNlp1) {
+        this.mNlp1 = mNlp1;
+    }
+
+    public String getmNlp2() {
+        return mNlp2;
+    }
+
+    public void setmNlp2(String mNlp2) {
+        this.mNlp2 = mNlp2;
+    }
+
+    public String getmNlp3() {
+        return mNlp3;
+    }
+
+    public void setmNlp3(String mNlp3) {
+        this.mNlp3 = mNlp3;
+    }
+
+    public String getmNlp4() {
+        return mNlp4;
+    }
+
+    public void setmNlp4(String mNlp4) {
+        this.mNlp4 = mNlp4;
+    }
+
+    public String getmDescuento() {
+        return mDescuento;
+    }
+
+    public void setmDescuento(String mDescuento) {
+        this.mDescuento = mDescuento;
     }
 }

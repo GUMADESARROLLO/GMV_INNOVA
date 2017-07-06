@@ -44,7 +44,7 @@ public class Articulo_Leads extends ArrayAdapter<Articulo> {
         Articulo lead = getItem(position);
 
         nombre.setText(lead.getmName());
-        precio.setText(lead.getmPrecio());
+        precio.setText(lead.getmNlp2());
         codigo.setText(lead.getmCodigo());
 
 

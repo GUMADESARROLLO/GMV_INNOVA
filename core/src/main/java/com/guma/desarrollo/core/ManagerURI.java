@@ -28,7 +28,7 @@ public class ManagerURI {
     //private static String SERVER = "165.98.75.45:80";//SERVIDOR TIPITAPA
     //private static String SERVER = "192.168.1.155:8080";//LOCAL LP
 
-    private static String URL_Base= "http://"+ SERVER + "/gmv_rest_innova/index.php/";
+    private static String URL_Base= "http://"+ SERVER + "/GMV_WEB_INNOVA/index.php/";
     private static String  DIR_DB = "/data/data/com.guma.desarrollo.gmvinnova/";
     public static String getURL_Base() {
         return URL_Base;

@@ -14,12 +14,27 @@
     tools:context="com.guma.desarrollo.gmv.Activity.ScrollingRazones"
     tools:showIn="@layout/activity_scrolling_razones">
 
-    <ListView
+    <!--<ListView
         android:dividerHeight="1dp"
         android:layout_marginTop="10dp"
         android:id="@+id/list"
         android:layout_width="match_parent"
-        android:layout_height="700dp"/>
+        android:layout_height="700dp"/>-->
+    <ListView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/list"
+        android:layout_width="match_parent"
+        android:layout_height="730dp"
+        android:cacheColorHint="@android:color/transparent"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="8dp"
+        android:scrollbarStyle="outsideOverlay"
+        android:paddingBottom="8dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="15dp" >
+        >
+    </ListView>
 </LinearLayout>
 
 
