@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.guma.desarrollo.core.Clientes;
 import com.guma.desarrollo.core.Clientes_model;
+import com.guma.desarrollo.core.Clock;
 import com.guma.desarrollo.core.ManagerURI;
 import com.guma.desarrollo.gmv.R;
 import com.guma.desarrollo.gmv.api.Notificaciones;
@@ -81,26 +82,27 @@ public class NewClienteActivity extends AppCompatActivity {
                     new Notificaciones().snackieBar(NewClienteActivity.this,"Nombre invalido ó demasiado corto...", Color.RED, Color.WHITE, Color.YELLOW).show();
                 }else if (mdepartamento.equals("SELECCIONA UN DEPARTAMENTO...")) {
                     new Notificaciones().snackieBar(NewClienteActivity.this,"Favor seleccione un departamento...", Color.RED, Color.WHITE, Color.YELLOW).show();
-                }else if (TextUtils.isEmpty(telefono.getText())) {
-                    new Notificaciones().snackieBar(NewClienteActivity.this,"Favor ingrese un telefono...", Color.RED, Color.WHITE, Color.YELLOW).show();
+                }else if (TextUtils.isEmpty(telefono.getText()) || telefono.length()<8) {
+                    new Notificaciones().snackieBar(NewClienteActivity.this,"Favor ingrese un telefono valido...", Color.RED, Color.WHITE, Color.YELLOW).show();
                 }else if (TextUtils.isEmpty(direccion.getText())|| direccion.length()<10) {
                     new Notificaciones().snackieBar(NewClienteActivity.this,"Direccion invalida ó demasiada corta...", Color.RED, Color.WHITE, Color.YELLOW).show();
                 }else{
 
                     Integer ID = Clientes_model.getIDtemporal(ManagerURI.getDirDb(), NewClienteActivity.this);
 
-
-                    Log.d("", "alderekisde: "+"OBTENIDO ="+ID);
                     Clientes tmp = new Clientes();
-                    tmp.setmCliente(ID.toString());
+                    tmp.setmCliente("NV"+preferences.getString("VENDEDOR","")+"-"+ID.toString());
                     tmp.setmNombre(nombre.getText().toString());
                     tmp.setmRuc(ruc.getText().toString());
                     tmp.setmDepartamento(mdepartamento);
                     tmp.setmMunicipio(municipio.getText().toString());
                     tmp.setmTelefono(telefono.getText().toString());
                     tmp.setmCorreo(correo.getText().toString());
+                    tmp.setmGrupo("");
+                    tmp.setmLista("");
                     tmp.setmDireccion(direccion.getText().toString());
                     tmp.setmVendedor(preferences.getString("VENDEDOR", "00"));
+                    tmp.setmFecha(Clock.getTimeStamp());
                     mCliente.add(tmp);
 
                     ID++;

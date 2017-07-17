@@ -67,8 +67,6 @@ public class CustomAdapter extends BaseExpandableListAdapter {
         childItem.setText(detailInfo.getCodigo().concat(" - ").concat(detailInfo.getName()));
 
 
-
-
         return view;
     }
 

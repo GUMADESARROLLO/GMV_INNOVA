@@ -1,14 +1,10 @@
 package com.guma.desarrollo.gmv.Activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -20,13 +16,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.guma.desarrollo.core.Funciones;
 import com.guma.desarrollo.core.ManagerURI;
 import com.guma.desarrollo.core.Pedidos;
 import com.guma.desarrollo.core.Pedidos_model;
 import com.guma.desarrollo.gmv.Adapters.Pedidos_Leads;
-import com.guma.desarrollo.gmv.Pedido;
 import com.guma.desarrollo.gmv.R;
 import com.guma.desarrollo.gmv.api.Notificaciones;
 
@@ -63,10 +57,10 @@ public class BandejaPedidosActivity extends AppCompatActivity {
                 fList.add(obj);
                 mCalTotal += Float.parseFloat(obj.getmPrecio());
             }
-            //Toast.makeText(this, fList.get(0).toString(), Toast.LENGTH_SHORT).show();
             mTotal.setText("C$ " + Funciones.NumberFormat(mCalTotal));
-            listView.setAdapter(new Pedidos_Leads(this, fList));
+            listView.setAdapter(new Pedidos_Leads(BandejaPedidosActivity.this, fList));
         }
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -75,16 +69,23 @@ public class BandejaPedidosActivity extends AppCompatActivity {
                 String idPedido = ((Pedidos) adapterView.getItemAtPosition(i)).getmIdPedido();
                 String Cliente = ((Pedidos) adapterView.getItemAtPosition(i)).getmNombre();
                 String idCliente = ((Pedidos) adapterView.getItemAtPosition(i)).getmCliente();
-                String ESTADO= ((Pedidos) adapterView.getItemAtPosition(i)).getmEstado();
+                final String ESTADO= ((Pedidos) adapterView.getItemAtPosition(i)).getmEstado();
 
                 editor.putString("IDPEDIDO",idPedido);
                 editor.putString("CLIENTE",Cliente);
                 editor.putString("ClsSelected",idCliente);
                 editor.apply();
-                if (ESTADO.equals("0")) {
+
+
+
+
+                Log.d("", "onItemClick: alder -> "+adapterView.getItemIdAtPosition(i));
+
+               /*if (ESTADO.equals("0")) {
                     startActivity(new Intent(BandejaPedidosActivity.this, PedidoActivity.class));
                     finish();
-                }else if (ESTADO.equals("4")){
+                }else*/
+                if (ESTADO.equals("4")){
                     List<Pedidos> comen = Pedidos_model.getAnulacion(ManagerURI.getDirDb(), BandejaPedidosActivity.this,idPedido);
                     for(Pedidos obj2 : comen) {
                         new Notificaciones().Alert(BandejaPedidosActivity.this,"NOTA DE ANULACION",obj2.getmAnulacion()).show();
@@ -98,14 +99,18 @@ public class BandejaPedidosActivity extends AppCompatActivity {
             }
         });
     }
+
     public boolean onOptionsItemSelected(MenuItem item)    {
         int id = item.getItemId();
         if (id == 16908332){ finish(); }
+        startActivity(new Intent(BandejaPedidosActivity.this,AgendaActivity.class));
+        finish();
         return super.onOptionsItemSelected(item);
     }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+            startActivity(new Intent(BandejaPedidosActivity.this,AgendaActivity.class));
             finish();
             return true;
         }

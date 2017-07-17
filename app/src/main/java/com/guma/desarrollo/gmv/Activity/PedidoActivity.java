@@ -35,7 +35,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.guma.desarrollo.core.Articulo;
 import com.guma.desarrollo.core.Articulos_model;
+import com.guma.desarrollo.core.Clientes;
+import com.guma.desarrollo.core.Clientes_model;
 import com.guma.desarrollo.core.Clock;
 import com.guma.desarrollo.core.Funciones;
 import com.guma.desarrollo.core.ManagerURI;
@@ -55,13 +58,11 @@ import java.util.TimerTask;
 public class PedidoActivity extends AppCompatActivity {
     private ListView listView;
     List<Map<String, Object>> list;
-    TextView Total,txtCount,txtItemName,txtItemCant,txtItemCod,txtItemValor,txtBonificado,txtPrecio;
-    EditText Inputcant,Exist;
+    TextView Total,txtCount;
+    EditText Inputcant,Exist,txtIVA,Descuento,InputDesc;
     ArrayList<Pedidos> fList;
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
-    Spinner spinner;
-
 
     TextView textView;
     Timer timer;
@@ -86,8 +87,8 @@ public class PedidoActivity extends AppCompatActivity {
 
         String bandera = preferences.getString("BANDERA", "0");
 
-        Toast.makeText(this, preferences.getString("GRUPO", ""), Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, preferences.getString("LISTA", ""), Toast.LENGTH_SHORT).show();
+        /*Toast.makeText(this, preferences.getString("GRUPO", ""), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, preferences.getString("LISTA", ""), Toast.LENGTH_SHORT).show();*/
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -101,7 +102,6 @@ public class PedidoActivity extends AppCompatActivity {
                             }
                         }).setNegativeButton("No", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-
                     }
                 }).create().show();
             }
@@ -116,25 +116,36 @@ public class PedidoActivity extends AppCompatActivity {
         findViewById(R.id.txtSendPedido).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*Double Credito = null;
+
+                List<Clientes> Limite = Clientes_model.getCredito(ManagerURI.getDirDb(), PedidoActivity.this,preferences.getString("ClsSelected", ""));
+                for(Clientes obj2 : Limite) {
+                    Credito = Double.valueOf(obj2.getmCredito());
+                }*/
+
                 if (list.size()!=0){
+                    Double Totall = Double.valueOf(Total.getText().toString().replace("TOTAL C$ ","").replace(",",""));
                     AlertDialog.Builder builder = new AlertDialog.Builder(PedidoActivity.this);
-                    builder.setMessage("¿Confirma la transaccion?")
-                            .setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    Intent send = new Intent(PedidoActivity.this,ResumenActivity.class);
-                                    send.putExtra("LIST", (Serializable) list);
-                                    //editor.putString("COMENTARIO", txtComent.getText().toString()).apply();
+                    /*if (Totall>Credito){
+                        new Notificaciones().Alert(PedidoActivity.this,"AVISO","LIMITE DE CLIENTE EXCEDIDO ("+Credito+")").setCancelable(false).setPositiveButton("OK", null).show();
+                    }else {*/
+                        builder.setMessage("¿Confirma la transaccion?")
+                                .setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        Intent send = new Intent(PedidoActivity.this, ResumenActivity.class);
+                                        send.putExtra("LIST", (Serializable) list);
+                                        //String comentario = preferences.getString("COMENTARIO", "")+" "+txtCount.getText();
+                                        editor.putString("COMENTARIO", preferences.getString("COMENTARIO", "") + " " + txtCount.getText()).apply();
+                                        startActivity(send);
+                                        timer.cancel();
+                                        finish();
+                                    }
+                                }).setNegativeButton("No", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
 
-                                    startActivity(send);
-                                    timer.cancel();
-                                    finish();
-                                }
-                            }).setNegativeButton("No", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-
-                        }
-                    }).create().show();
-
+                            }
+                        }).create().show();
+                    //}
                 }else{
                     new Notificaciones().Alert(PedidoActivity.this,"PEDIDO VACIO","INGRESE ARTICULOS AL PEDIDO...").setCancelable(false).setPositiveButton("OK", null).show();
                 }
@@ -152,19 +163,13 @@ public class PedidoActivity extends AppCompatActivity {
                     map.put("ITEMNAME", obj2.getmDescripcion());
                     map.put("ITEMCODIGO", obj2.getmArticulo());
                     map.put("PRECIO", Funciones.NumberFormat(Float.parseFloat(obj2.getmPrecio().replace(",",""))));
-                    //map.put("PRECIO", obj2.getmPrecio());
                     map.put("ITEMCANTI", obj2.getmCantidad());
                     map.put("BONIFICADO", obj2.getmBonificado());
-                    //map.put("ITEMVALOR", Funciones.NumberFormat(Float.parseFloat(obj2.getmCantidad())*Float.parseFloat(obj2.getmPrecio())));
                     map.put("ITEMVALOR", Funciones.NumberFormat(Float.parseFloat(obj2.getmCantidad())*Float.parseFloat(obj2.getmPrecio().replace(",",""))));
-                    //map.put("ITEMVALOR", obj2.getmCantidad());
+                    map.put("IVA", obj2.getmIva());
+                    map.put("DESCUENTO", obj2.getmDescuento());
                     list.add(map);
                 }
-                /*Agregar comentario*/
-            List<Pedidos> comen = Pedidos_model.getComentario(ManagerURI.getDirDb(), PedidoActivity.this,IdPedido);
-            for(Pedidos obj2 : comen) {
-               // txtComent.setText(obj2.getmComentario());
-            }
             Refresh();
         }
 
@@ -203,53 +208,60 @@ public class PedidoActivity extends AppCompatActivity {
 
         Inputcant = (EditText) dialogo.findViewById(R.id.txtFrmCantidad);
         Exist = (EditText) dialogo.findViewById(R.id.txtFrmExistencia);
+        txtIVA = (EditText) dialogo.findViewById(R.id.txtIva);
+        InputDesc = (EditText) dialogo.findViewById(R.id.txtDescuento);
+
         Inputcant.setText(list2.get(index).get("ITEMCANTI").toString().replace(".0",""));
-        spinner = (Spinner) dialogo.findViewById(R.id.sp_boni);
+        InputDesc.setText(list2.get(index).get("DESCUENTO").toString());
         Button bt = (Button)dialogo.findViewById(R.id.btnDone);
+        
         final Map<String, Object> map = new HashMap<>();
         map.put("ITEMNAME", list2.get(index).get("ITEMNAME").toString());
         map.put("ITEMCODIGO", list2.get(index).get("ITEMCODIGO").toString());
         map.put("PRECIO", list2.get(index).get("PRECIO").toString());
 
-        List<String> Reglas = Articulos_model.getReglas(PedidoActivity.this, list2.get(index).get("ITEMCODIGO").toString());
-        final String[] Reglas2 = Reglas.get(0).split(",");
-        Exist.setText(Reglas.get(1).toString());
-        List<String> mStrings = new ArrayList<>();
-        mStrings.add(list2.get(index).get("BONIFICADO").toString());
-        spinner.setAdapter(new ArrayAdapter<>(PedidoActivity.this, android.R.layout.simple_spinner_dropdown_item, mStrings));
+        String lista = preferences.getString("LISTA", "");
+        String grupo = preferences.getString("GRUPO", "");
+
+        final String[] Reglas = Articulos_model.getDescuento(PedidoActivity.this,grupo,list2.get(index).get("ITEMCODIGO").toString()).split(",");
+
+        String IVA =  Articulos_model.getIvaDescent(PedidoActivity.this,grupo,lista,list2.get(index).get("ITEMCODIGO").toString());
+        List<Articulo> obj2 = Articulos_model.getExistencia(PedidoActivity.this, list2.get(index).get("ITEMCODIGO").toString());
+
+        Exist.setEnabled(false);
+        txtIVA.setEnabled(false);
+        InputDesc.setEnabled(false);
+
+
+        txtIVA.setText(IVA);
+
+        Exist.setText(obj2.get(0).getmExistencia()+ " [ " +obj2.get(0).getmUnidad()+ " ]");
+
         Inputcant.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                //Toast.makeText(PedidoActivity.this, "adadas", Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
             }
             @Override
             public void afterTextChanged(Editable s) {
-                List<String> mStrings = new ArrayList<>();
-                spinner.setAdapter(null);
-
-                Log.d("", "afterTextChanged: ekisde");
+                String descuento = "0";
                 if (s.length() != 0) {
-                    Log.d("", "alder: "+Reglas2[0]);
-                    if (Reglas2.length >= 1) {
-                        if (!Reglas2[0].equals("0")){
-                            for (int i = 0; i < Reglas2.length; i++) {
-                                String[] frag = Reglas2[i].replace("+", ",").split(",");
-                                if (Integer.parseInt(Inputcant.getText().toString().replace(".","")) >= Integer.parseInt(frag[0])) {
-                                    mStrings.add(frag[0] + "+" + frag[1]);
+                    if (Reglas.length > 0) {
+                        for (int i = 0; i < Reglas.length; i++) {
+                            String[] frag = Reglas[i].replace("+", ",").split(",");
+                            if (!frag[0].equals("")) {
+                                if (Integer.parseInt(frag[0]) > 0) {
+                                    if (Integer.parseInt(Inputcant.getText().toString()) >= Integer.parseInt(frag[0])) {
+                                        descuento = frag[1];
+                                    }
                                 }
                             }
                         }
-                    }else{
-                        mStrings.add("0");
                     }
-                    if (mStrings.size()==0){
-                        mStrings.add("0");
-                        spinner.setAdapter(null);
-                    }
-                    spinner.setAdapter(new ArrayAdapter<>(PedidoActivity.this, android.R.layout.simple_spinner_dropdown_item, mStrings));
+                    Log.d("", "afterTextChanged: descuento: "+descuento);
+                    InputDesc.setText(descuento);
                 }
             }
         });
@@ -264,11 +276,9 @@ public class PedidoActivity extends AppCompatActivity {
                     Float numero = Float.valueOf(Inputcant.getText().toString());
                     Float precio = Float.valueOf(list2.get(index).get("PRECIO").toString().replace(",","."));
                     if (numero>0) {
-                        //map.put("BONIFICADO", list2.get(index).get("BONIFICADO").toString());
                         map.put("ITEMCANTI", Inputcant.getText().toString());
-                        map.put("BONIFICADO", spinner.getSelectedItem().toString());
-
-                        //map.put("ITEMVALOR", Float.parseFloat(list2.get(index).get("PRECIO").toString()) * numero);
+                        map.put("IVA", txtIVA.getText().toString());
+                        map.put("DESCUENTO", InputDesc.getText().toString());
                         map.put("ITEMVALOR", precio * numero);
                         list.add(index, map);
                         list.remove(index + 1);
@@ -294,7 +304,6 @@ public class PedidoActivity extends AppCompatActivity {
                         );
 
         for (Map<String, Object> obj : list){
-            //Log.d("carajo",obj.get("ITEMNAME").toString()+ " "+ obj.get("ITEMVALOR").toString());
             vLine     += Float.parseFloat(obj.get("ITEMVALOR").toString().replace(",",""));
         }
         Total.setText("TOTAL C$ "+ Funciones.NumberFormat(vLine));
@@ -308,23 +317,28 @@ public class PedidoActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+
         if (id == R.id.accion_new) {
             LayoutInflater li = LayoutInflater.from(PedidoActivity.this);
-            View promptsView = li.inflate(R.layout.input_observacion, null);
+            final View promptsView = li.inflate(R.layout.input_observacion, null);
             AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(PedidoActivity.this);
             alertDialogBuilder.setView(promptsView);
+            final TextView comentario = (TextView)promptsView.findViewById(R.id.txtObservaciones);
+            comentario.setText(preferences.getString("COMENTARIO",""));
             alertDialogBuilder
                     .setCancelable(false)
-                    .setPositiveButton("OK",null)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            editor.putString("COMENTARIO",comentario.getText().toString()).apply();
+                        }
+                    })
                     .setNegativeButton("Cancel",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
                                     dialog.cancel();
                                 }
                             }).create().show();
-
-
-
         }
         return super.onOptionsItemSelected(item);
     }
@@ -342,7 +356,6 @@ public class PedidoActivity extends AppCompatActivity {
             map.put("PRECIO", Funciones.NumberFormat(Float.parseFloat(data.getStringArrayListExtra("myItem").get(6))));
             map.put("IVA", data.getStringArrayListExtra("myItem").get(7));
             map.put("DESCUENTO", data.getStringArrayListExtra("myItem").get(8));
-            //Toast.makeText(this, data.getStringArrayListExtra("myItem").size(), Toast.LENGTH_SHORT).show();
 
             list.add(map);
             Refresh();
@@ -355,6 +368,9 @@ public class PedidoActivity extends AppCompatActivity {
             builder.setMessage("SE PERDERAN LOS DATOS DEL PEDIDO").setTitle("¿ESTA SEGURO?")
                     .setPositiveButton("SI", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
+                            editor.putString("NUEVOCL","0").apply();
+                            editor.putString("COMENTARIO","").apply();
+                            startActivity(new Intent(PedidoActivity.this,AgendaActivity.class));
                             finish();
                         }
                     }).setNegativeButton("NO", new DialogInterface.OnClickListener() {

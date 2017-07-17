@@ -217,23 +217,23 @@ public class Articulos_model {
         return lista;
     }
 
-    public static List<String> getReglas( Context context,String mArticulo) {
-        //String[] lista = null;
-        List<String> lista = new ArrayList<>();
+    public  static List<Articulo> getExistencia( Context context,String mArticulo) {
+        List<Articulo> lista = new ArrayList<>();
         SQLiteDatabase myDataBase = null;
         SQLiteHelper myDbHelper = null;
         try
         {
+            Log.d("", "getExistencia: "+mArticulo);
             myDbHelper = new SQLiteHelper(ManagerURI.getDirDb(), context);
             myDataBase = myDbHelper.getReadableDatabase();
-            Cursor cursor = myDataBase.query(true, "ARTICULOS", new String[] { "REGLAS","EXISTENCIA" }, "ARTICULO"+ "=?", new String[] { mArticulo }, null, null, null, null);
+            Cursor cursor = myDataBase.query(true, "ARTICULOS", new String[] { "EXISTENCIA","UNIDAD" }, "ARTICULO"+ "=?", new String[] { mArticulo }, null, null, null, null);
             if(cursor.getCount() > 0) {
                 cursor.moveToFirst();
                 while(!cursor.isAfterLast()) {
                     Articulo tmp = new Articulo();
-                    //lista = cursor.getString(cursor.getColumnIndex("REGLAS"));
-                    lista.add(0,cursor.getString(cursor.getColumnIndex("REGLAS")));
-                    lista.add(1,cursor.getString(cursor.getColumnIndex("EXISTENCIA")));
+                    tmp.setmExistencia(cursor.getString(cursor.getColumnIndex("EXISTENCIA")));
+                    tmp.setmUnidad(cursor.getString(cursor.getColumnIndex("UNIDAD")));
+                    lista.add(tmp);
                     cursor.moveToNext();
                 }
             }

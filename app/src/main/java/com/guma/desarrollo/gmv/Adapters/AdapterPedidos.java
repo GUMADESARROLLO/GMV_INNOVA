@@ -48,8 +48,6 @@ public class AdapterPedidos extends RecyclerView.Adapter<AdapterPedidos.PedidosV
         holder.codigo.setText(pdd.getCliente());
         holder.estado.setText(st);
 
-
-
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,8 +66,8 @@ public class AdapterPedidos extends RecyclerView.Adapter<AdapterPedidos.PedidosV
         public PedidosViewHolder(View itemView) {
             super(itemView);
             name = (TextView) itemView.findViewById(R.id.txt_id_pedido);
-            codigo = (TextView) itemView.findViewById(R.id.txt_id_cliente);
-            estado = (TextView) itemView.findViewById(R.id.txt_id_estado);
+            //codigo = (TextView) itemView.findViewById(R.id.txt_id_cliente);
+            //estado = (TextView) itemView.findViewById(R.id.txt_id_estado);
 
         }
     }

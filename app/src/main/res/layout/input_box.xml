@@ -35,21 +35,40 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:layout_margin="0dp">
+
             <TextView
-                android:id="@+id/textView1"
-                android:layout_height="fill_parent"
                 android:layout_width="0dp"
+                android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:text="Bonificado: "
+                android:text="Iva: "
                 android:textAppearance="?android:attr/textAppearanceLarge" />
 
-            <Spinner
-                android:textAlignment="textEnd"
-                android:id="@+id/sp_boni"
-                android:layout_height="fill_parent"
+            <EditText
+                android:id="@+id/txtIva"
                 android:layout_width="0dp"
+                android:layout_height="fill_parent"
                 android:layout_weight="1"
-                android:spinnerMode="dropdown" />
+                android:inputType="text" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_margin="0dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:text="Descuento: "
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+
+            <EditText
+                android:id="@+id/txtDescuento"
+                android:layout_width="0dp"
+                android:layout_height="fill_parent"
+                android:layout_weight="1"
+                android:inputType="text" />
         </TableRow>
         <TableRow
             android:layout_width="fill_parent"

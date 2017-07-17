@@ -5,14 +5,14 @@ package com.guma.desarrollo.core;
  */
 
 public class Clientes {
-    String mCliente,mNombre,mDireccion,mRuc,mPuntos,mMoroso,mCredito,mSaldo,mDisponible,mCumple,mTelefono,mDepartamento,mMunicipio,mCorreo,mEstado,mVendedor,mGrupo,mLista;
+    String mCliente,mNombre,mDireccion,mRuc,mPuntos,mMoroso,mCredito,mSaldo,mDisponible,mCumple,mTelefono,mDepartamento,mMunicipio,mCorreo,mEstado,mVendedor,mGrupo,mLista,mFecha;
     int mMes;
 
     public Clientes(){
 
     }
 
-    public Clientes(String mCliente, String mNombre, String mDireccion, String mRuc, String mPuntos, String mMoroso, String mCredito, String mSaldo, String mDisponible, String mCumple, String mTelefono, String mDepartamento, String mMunicipio, String mCorreo, String mEstado, String mVendedor, String mGrupo, String mLista, int mMes) {
+    public Clientes(String mCliente, String mNombre, String mDireccion, String mRuc, String mPuntos, String mMoroso, String mCredito, String mSaldo, String mDisponible, String mCumple, String mTelefono, String mDepartamento, String mMunicipio, String mCorreo, String mEstado, String mVendedor, String mGrupo, String mLista, String mFecha, int mMes) {
         this.mCliente = mCliente;
         this.mNombre = mNombre;
         this.mDireccion = mDireccion;
@@ -31,6 +31,7 @@ public class Clientes {
         this.mVendedor = mVendedor;
         this.mGrupo = mGrupo;
         this.mLista = mLista;
+        this.mFecha = mFecha;
         this.mMes = mMes;
     }
 
@@ -184,5 +185,13 @@ public class Clientes {
 
     public void setmLista(String mLista) {
         this.mLista = mLista;
+    }
+
+    public String getmFecha() {
+        return mFecha;
+    }
+
+    public void setmFecha(String mFecha) {
+        this.mFecha = mFecha;
     }
 }

@@ -20,7 +20,7 @@
     <string name="title_activity_bandeja_cobros">BandejaCobrosActivity</string>
     <string name="title_activity_rpt_hoy">RptHoyActivity</string>
     <string name="resumen_direccion">Km 19 1/2 Caretera Vieja a Tipitapa, Tipitapa 15100</string>
-    <string name="resumen_empresa">INNOVA INDUSTRIA S.A </string>
+    <string name="resumen_empresa">INNOVA INDUSTRIAS S.A </string>
 
     <string name="app_label">Buscar</string>
     <string name="search_hint">Buscar</string>

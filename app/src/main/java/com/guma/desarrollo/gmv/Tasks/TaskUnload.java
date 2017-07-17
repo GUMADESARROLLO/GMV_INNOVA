@@ -126,7 +126,6 @@ public class TaskUnload extends AsyncTask<Integer,Integer,String> {
                     if (response.isSuccessful()){
                         Respuesta_razones razonesRespuesta = response.body();
                         SQLiteHelper.ExecuteSQL(ManagerURI.getDirDb(),cnxt,"UPDATE RAZON SET SEND = 1;");
-                        Log.d(TAG, "doInBackground: SE ENVIOOO ");
                     }
                 }
                 @Override
@@ -147,6 +146,7 @@ public class TaskUnload extends AsyncTask<Integer,Integer,String> {
                     if (response.isSuccessful()){
                         pdialog.setMessage("Enviando nuevos clientes.... ");
                         if (Boolean.valueOf(response.body())){
+
                         }else{
                         }
                     }

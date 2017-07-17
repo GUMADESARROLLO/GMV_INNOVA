@@ -12,13 +12,13 @@ import java.util.Map;
  */
 
 public class Pedidos {
-    String mIdPedido,mVendedor,mCliente,mNombre,mFecha,mArticulo,mDescripcion,mCantidad,mPrecio,mBonificado,mEstado,mComentario,mAnulacion,mConfirmacion,mIva,mDescuento;
+    String mIdPedido,mVendedor,mCliente,mNombre,mFecha,mArticulo,mDescripcion,mCantidad,mPrecio,mBonificado,mEstado,mComentario,mAnulacion,mConfirmacion,mIva,mDescuento,mNuevo;
 
     JSONObject detalles = new JSONObject();
     ArrayList<HashMap<String, String>> contactList = null;
 
 
-    public Pedidos(String mIdPedido, String mVendedor, String mCliente, String mNombre, String mFecha, String mArticulo, String mDescripcion, String mCantidad, String mPrecio, String mBonificado, String mEstado, String mComentario, String mAnulacion, String mConfirmacion, String mIva, String mDescuento, JSONObject detalles, ArrayList<HashMap<String, String>> contactList) {
+    public Pedidos(String mIdPedido, String mVendedor, String mCliente, String mNombre, String mFecha, String mArticulo, String mDescripcion, String mCantidad, String mPrecio, String mBonificado, String mEstado, String mComentario, String mAnulacion, String mConfirmacion, String mIva, String mDescuento, String mNuevo, JSONObject detalles, ArrayList<HashMap<String, String>> contactList) {
         this.mIdPedido = mIdPedido;
         this.mVendedor = mVendedor;
         this.mCliente = mCliente;
@@ -35,6 +35,7 @@ public class Pedidos {
         this.mConfirmacion = mConfirmacion;
         this.mIva = mIva;
         this.mDescuento = mDescuento;
+        this.mNuevo = mNuevo;
         this.detalles = detalles;
         this.contactList = contactList;
     }
@@ -183,5 +184,13 @@ public class Pedidos {
 
     public void setmDescuento(String mDescuento) {
         this.mDescuento = mDescuento;
+    }
+
+    public String getmNuevo() {
+        return mNuevo;
+    }
+
+    public void setmNuevo(String mNuevo) {
+        this.mNuevo = mNuevo;
     }
 }

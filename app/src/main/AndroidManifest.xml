@@ -104,7 +104,8 @@
             android:label="@string/title_activity_facturas"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activity.RazonActivity" />
-        <activity android:name=".Activity.RazonesActivity" />
+        <activity android:name=".Activity.RazonesActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity android:name=".Activity.listview_row" />
         <activity
             android:name=".Activity.CrearAgendaActivity"

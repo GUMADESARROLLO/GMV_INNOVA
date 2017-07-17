@@ -5,8 +5,6 @@ import java.util.List;
 //import com.danielme.blog.demo.listviewcheckbox.R;
 
 import android.content.Context;
-import android.content.res.AssetManager;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -26,44 +24,38 @@ import com.guma.desarrollo.gmv.R;
  */
 
 public class CustomArrayAdapter extends ArrayAdapter<Row> implements View.OnClickListener {
-
     private LayoutInflater layoutInflater;
-    private AssetManager assetMgr;
-
-    TextView textViewTitle,textViewSubtitle,textViewSubSubTitle;
-    CheckBox checkBox;
     public CustomArrayAdapter(Context context, List<Row> objects){
         super(context, 0, objects);
         layoutInflater=LayoutInflater.from(context);
-        assetMgr = context.getResources().getAssets();
     }
 
     @NonNull
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        Holder holder = null;
         if (convertView ==null)
         {
+            holder = new Holder();
             convertView = layoutInflater.inflate(R.layout.listview_row, parent, false);
-            textViewTitle=((TextView) convertView.findViewById(R.id.textViewTitle));
-            textViewSubtitle=((TextView) convertView.findViewById(R.id.textViewSubtitle));
-            textViewSubSubTitle=((TextView) convertView.findViewById(R.id.textViewSubSubtitle));
-            checkBox = ((CheckBox) convertView.findViewById(R.id.checkBox));
+            holder.setTextViewTitle((TextView) convertView.findViewById(R.id.textViewTitle));
+            holder.setTextViewSubtitle((TextView) convertView.findViewById(R.id.textViewSubtitle));
+            holder.setTextViewSubSubTitle((TextView) convertView.findViewById(R.id.textViewSubSubtitle));
+            holder.setCheckBox((CheckBox) convertView.findViewById(R.id.checkBox));
+            convertView.setTag(holder);
         }
-
-
+        else
+        {
+            holder = (Holder) convertView.getTag();
+        }
         final Row row = getItem(position);
-        textViewTitle.setText(row.getTitle());
-        textViewSubSubTitle.setText(row.getSubtitle());
-        textViewSubSubTitle.setText(row.getSubsubtitle());
-
-        textViewTitle.setTypeface(Typeface.createFromAsset(assetMgr ,"fonts/roboto_bold.ttf"));
-        textViewSubtitle.setTypeface(Typeface.createFromAsset(assetMgr ,"fonts/roboto_light_italic.ttf"));
-        textViewSubSubTitle.setTypeface(Typeface.createFromAsset(assetMgr ,"fonts/roboto_light_italic.ttf"));
-
-        checkBox.setTag(position);
-        checkBox.setChecked(row.isChecked());
-        checkBox.setOnClickListener(this);
-
+        holder.getTextViewTitle().setText(row.getTitle());
+        holder.getTextViewSubtitle().setText(row.getSubtitle());
+        holder.getTextViewSubSubTitle().setText(row.getSubsubtitle());
+        holder.getCheckBox().setTag(position);
+        holder.getCheckBox().setChecked(row.isChecked());
+        holder.getCheckBox().setOnClickListener(this);
+        changeBackground(CustomArrayAdapter.this.getContext(),holder.getCheckBox());
         return convertView;
     }
 
@@ -72,7 +64,67 @@ public class CustomArrayAdapter extends ArrayAdapter<Row> implements View.OnClic
         CheckBox checkBox = (CheckBox) v;
         int position = (Integer) v.getTag();
         getItem(position).setChecked(checkBox.isChecked());
+        changeBackground(CustomArrayAdapter.this.getContext(), checkBox);
+        //String msg = this.getContext().getString(R.string.check_toast, position, checkBox.isChecked());
+        //Toast.makeText(this.getContext(), msg, Toast.LENGTH_SHORT).show();;
     }
 
+    private void changeBackground(Context context, CheckBox checkBox) {
+        View row = (View) checkBox.getParent();
+        Drawable drawable = context.getResources().getDrawable(
+                R.drawable.listview_selector_checked);
+        if (checkBox.isChecked()) {
+            drawable = context.getResources().getDrawable(
+                    R.drawable.listview_selector_checked);
+        } else {
+            drawable = context.getResources().getDrawable(
+                    R.drawable.listview_selector);
+        }
+        row.setBackgroundDrawable(drawable);
+    }
+    static class Holder {
+        TextView textViewTitle;
+        TextView textViewSubtitle;
+        TextView textViewSubSubTitle;
+        CheckBox checkBox;
+
+        public TextView getTextViewTitle()
+        {
+            return textViewTitle;
+        }
+
+        public void setTextViewTitle(TextView textViewTitle)
+        {
+            this.textViewTitle = textViewTitle;
+        }
+
+        public TextView getTextViewSubtitle()
+        {
+            return textViewSubtitle;
+        }
+
+        public void setTextViewSubtitle(TextView textViewSubtitle)
+        {
+            this.textViewSubtitle = textViewSubtitle;
+        }
+
+        public TextView getTextViewSubSubTitle() {
+            return textViewSubSubTitle;
+        }
+
+        public void setTextViewSubSubTitle(TextView textViewSubSubTitle) {
+            this.textViewSubSubTitle = textViewSubSubTitle;
+        }
+
+        public CheckBox getCheckBox()
+        {
+            return checkBox;
+        }
+        public void setCheckBox(CheckBox checkBox)
+        {
+            this.checkBox = checkBox;
+        }
+
+    }
 
 }

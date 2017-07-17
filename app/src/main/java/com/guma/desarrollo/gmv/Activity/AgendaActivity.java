@@ -138,6 +138,7 @@ public class AgendaActivity extends AppCompatActivity  implements ConnectivityRe
                             }else{
                                 if (items[which].equals(items[2])){
                                     startActivity(new Intent(AgendaActivity.this,BandejaPedidosActivity.class));
+                                    finish();
                                 }else{
                                         if (items[which].equals(items[3])){
                                             new TaskUnload(AgendaActivity.this).execute();
@@ -196,6 +197,7 @@ public class AgendaActivity extends AppCompatActivity  implements ConnectivityRe
         Pedidos_model.borrar(AgendaActivity.this,ManagerURI.getDirDb());
         Cobros_model.borrar(AgendaActivity.this);
         Razon_model.borrar(AgendaActivity.this);
+        Clientes_model.borrarClientesNuevos(AgendaActivity.this);
         new Notificaciones().Alert(AgendaActivity.this,"AVISO","CIERRE DEL DIA COMPLETO...").setCancelable(false).setPositiveButton("OK", null).show();
     }
 
