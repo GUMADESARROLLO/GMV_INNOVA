@@ -83,12 +83,10 @@ public class ArticulosActivity extends AppCompatActivity implements SearchView.O
         final ArrayList<String> strings = new ArrayList<>();
 
 
-        Toast.makeText(this, preferences.getString("GRUPO", ""), Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, preferences.getString("LISTA", ""), Toast.LENGTH_SHORT).show();
+        /*Toast.makeText(this, preferences.getString("GRUPO", ""), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, preferences.getString("LISTA", ""), Toast.LENGTH_SHORT).show();*/
 
         if (checked2) {
-
-
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(final AdapterView<?> parent, final View view, final int position, long id) {
@@ -127,7 +125,7 @@ public class ArticulosActivity extends AppCompatActivity implements SearchView.O
                     InputDesc.setEnabled(false);
 
                     inputIva.setText(IVA);
-                    spinner = (Spinner) promptsView.findViewById(R.id.sp_boni);
+                    //spinner = (Spinner) promptsView.findViewById(R.id.sp_boni);
                     
 
                     InputExiste.setText(mnotes.getmExistencia() + " [ " + mnotes.getmUnidad() + " ]");
@@ -155,14 +153,11 @@ public class ArticulosActivity extends AppCompatActivity implements SearchView.O
                         public void afterTextChanged(Editable s) {
                             String descuento = "0";
                             if (s.length() != 0) {
-                                //Log.d("", "afterTextChanged: " + s.length() + " > " + Reglas.length);
                                 if (Reglas.length > 0) {
-                                    //Log.d("", "afterTextChanged: "+Reglas.length);
                                     for (int i = 0; i < Reglas.length; i++) {
                                         String[] frag = Reglas[i].replace("+", ",").split(",");
                                         if (!frag[0].equals("")) {
                                             if (Integer.parseInt(frag[0]) > 0) {
-                                                //Log.d("", "afterTextChanged: "+frag[0]);
                                                 if (Integer.parseInt(Inputcant.getText().toString()) >= Integer.parseInt(frag[0])) {
                                                     descuento = frag[1];
                                                 }
@@ -190,9 +185,11 @@ public class ArticulosActivity extends AppCompatActivity implements SearchView.O
                                             if (!checked) {
                                                 Float Precio = Float.parseFloat(mnotes.getmExistencia());
                                                 Float Exist = Float.parseFloat(mnotes.getmExistencia());
+                                            if (!InputPrecio.getText().toString().equals("0.00")){
+                                                if (Precio != 0.00) {
+                                                    if (Inputcant.length() != 0 && !Inputcant.getText().toString().equals("0")) {
 
-                                                if (Precio != 0.0) {
-                                                    if (Inputcant.length() != 0) {
+                                                        Log.d("", "onClickStri: " + Inputcant.getText().toString());
                                                         Float cantida = Float.parseFloat(Inputcant.getText().toString());
                                                         if (cantida <= Exist) {
                                                             //InputExiste.setText(InputPrecio);
@@ -241,6 +238,14 @@ public class ArticulosActivity extends AppCompatActivity implements SearchView.O
 
 
                                                 }
+                                            }else{
+                                                new Notificaciones().Alert(ArticulosActivity.this, "ERROR", "ARTICULO SIN PRECIO, FAVOR ACTUALICE")
+                                                        .setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                                    }
+                                                }).show();
+                                            }
                                             } else {
                                                 dialog.cancel();
                                             }

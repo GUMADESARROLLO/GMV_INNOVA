@@ -80,8 +80,10 @@ public class ClientesActivity extends AppCompatActivity implements SearchView.On
                 editor.putString("ClsSelected",mCLientes.getmCliente());
                 editor.putString("GRUPO",lbs.getItem(i).getmGrupo());
                 editor.putString("NameClsSelected",mCLientes.getmNombre());
+                editor.putString("BANDERA", "0");
+                editor.putString("NUEVOCL", "1");
                 editor.apply();
-                editor.putString("BANDERA", "0").apply();
+
                 startActivity(new Intent(ClientesActivity.this,MarcarRegistroActivity.class));
                 finish();
             }

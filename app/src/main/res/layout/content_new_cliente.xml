@@ -43,7 +43,7 @@
                     android:textAlignment="textStart" />
             </TableRow>
 
-            <TableRow android:layout_marginTop="10dp">
+            <TableRow android:layout_marginTop="14dp">
 
                 <ImageView
                     android:layout_width="45dp"
@@ -62,7 +62,7 @@
                     android:text=""/>
             </TableRow>
 
-            <TableRow android:layout_marginTop="10dp">
+            <TableRow android:layout_marginTop="34dp">
 
                 <ImageView
                     android:layout_width="45dp"
@@ -74,6 +74,7 @@
 
                 <Spinner
                     android:id="@+id/txtDepartamento"
+                    android:background="@drawable/border"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:textAlignment="textStart"
@@ -100,7 +101,7 @@
                     android:textAlignment="textStart" />
             </TableRow>
 
-            <TableRow android:layout_marginTop="10dp">
+            <TableRow android:layout_marginTop="14dp">
                 <ImageView
                     android:layout_width="45dp"
                     android:layout_height="45dp"
@@ -118,7 +119,7 @@
                     android:padding="3dip"
                     android:text="" />
             </TableRow>
-            <TableRow android:layout_marginTop="10dp">
+            <TableRow android:layout_marginTop="14dp">
 
                 <ImageView
                     android:layout_width="45dp"
@@ -150,8 +151,8 @@
                     android:id="@+id/txtDireccion"
                     android:textAlignment="textStart"
                     android:hint="DIRECCION"
-                    android:lines="4"
-                    android:maxLines="4"
+                    android:lines="6"
+                    android:maxLines="6"
                     android:padding="0dp"
                     android:text=""
                      />

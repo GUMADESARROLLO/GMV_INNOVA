@@ -15,12 +15,15 @@ import com.guma.desarrollo.core.Clientes;
 import com.guma.desarrollo.core.Clientes_model;
 import com.guma.desarrollo.core.Clock;
 import com.guma.desarrollo.core.ManagerURI;
+import com.guma.desarrollo.core.Pedidos;
+import com.guma.desarrollo.core.Pedidos_model;
 import com.guma.desarrollo.gmv.api.Class_retrofit;
 import com.guma.desarrollo.gmv.api.Servicio;
 import com.guma.desarrollo.gmv.models.Respuesta_actividades;
 import com.guma.desarrollo.gmv.models.Respuesta_articulos;
 import com.guma.desarrollo.gmv.models.Respuesta_clientes;
 import com.guma.desarrollo.gmv.models.Respuesta_historial;
+import com.guma.desarrollo.gmv.models.Respuesta_pedidos;
 import com.guma.desarrollo.gmv.models.Respuesta_puntos;
 
 import java.util.List;
@@ -131,7 +134,7 @@ public class TaskDownload extends AsyncTask<Integer,Integer,String> {
 
 
         /**************PENDIENTE************/
-        /*List<Pedidos> listPedidos = Pedidos_model.getInfoPedidos(ManagerURI.getDirDb(),cnxt,false);
+        List<Pedidos> listPedidos = Pedidos_model.getInfoPedidos(ManagerURI.getDirDb(),cnxt,false);
 
         Gson gson = new Gson();
         Log.d("", "alderekisde: "+ gson.toJson(listPedidos));
@@ -157,7 +160,7 @@ public class TaskDownload extends AsyncTask<Integer,Integer,String> {
                             Log.d("", "onResponse: Failure pedidos: " + t.getMessage());
                         }
                     });
-        }*/
+        }
 
 
         Class_retrofit.Objfit().

@@ -101,7 +101,7 @@ public class Razon_model {
         {
             myDbHelper = new SQLiteHelper(basedir, context);
             myDataBase = myDbHelper.getReadableDatabase();
-            Log.d(TAG, "doInBackgroundRazones: "+all);
+            //Log.d(TAG, "doInBackgroundRazones: "+all);
             if (all){
                 cursor = myDataBase.query(true,"RAZON", null, null, null, null, null, null, null);
             }else{

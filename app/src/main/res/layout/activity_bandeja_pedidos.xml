@@ -23,7 +23,8 @@
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"></ScrollView>
+        android:layout_height="wrap_content">
+    </ScrollView>
     <include layout="@layout/content_bandeja_pedidos" />
     <LinearLayout
         android:layout_width="match_parent"

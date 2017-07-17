@@ -9,8 +9,12 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
@@ -48,11 +52,11 @@ public class RazonesActivity extends AppCompatActivity {
     List<Actividad> datos;
     private ListView listView;
     private ArrayList<CategoriaInfo> deptList = new ArrayList<>();
-    TextView textView,textView2;
+    TextView textView2;
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
     private String CodCls,IdRazon;
-    EditText etObservacion;
+
     Timer timer;
 
     @Override
@@ -61,6 +65,8 @@ public class RazonesActivity extends AppCompatActivity {
         //setContentView(R.layout.activity_razones);
         setContentView(R.layout.activity_scrolling_razones);
         listView = (ListView) findViewById(R.id.list);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
         final RazonesAdapter listAdapter;
         timer = new Timer();
 
@@ -77,11 +83,12 @@ public class RazonesActivity extends AppCompatActivity {
         rows = new ArrayList<>(datos.size());
         for (int i = 0; i < datos.size(); i++) {
             Row row = new Row();
-            Log.d("", "alderverificar: "+datos.get(i).getmIdAE());
             row.setTitle(datos.get(i).getmActividad());
             row.setSubtitle(datos.get(i).getmCategoria());
             row.setSubsubtitle(datos.get(i).getmIdAE());
             row.setChecked(false);
+
+            Log.d("", "onCreateRazones: "+datos.get(i).getmIdAE());
             rows.add(row);
         }
 
@@ -119,11 +126,11 @@ public class RazonesActivity extends AppCompatActivity {
                                             int key = SQLiteHelper.getId(ManagerURI.getDirDb(), RazonesActivity.this, "RAZON");
                                             IdRazon = preferences.getString("VENDEDOR", "00") + "R" + Clock.getIdDate() + String.valueOf(key);
                                             ra.setmIdRazon(IdRazon);
-                                            ra.setmVendedor("F09");
+                                            ra.setmVendedor(preferences.getString("VENDEDOR",""));
                                             ra.setmCliente(preferences.getString("ClsSelected",""));
                                             ra.setmNombre(preferences.getString("NameClsSelected"," --ERROR--"));
                                             ra.setmFecha(Clock.getNow());
-                                            ra.setmObservacion(etObservacion.getText().toString());
+                                            ra.setmObservacion(preferences.getString("COMENTARIO",""));
                                             ra.setmSend("0");
 
                                             for (int i = 0; i < lv.getAdapter().getCount(); i++)
@@ -146,6 +153,7 @@ public class RazonesActivity extends AppCompatActivity {
 
                                             /*FIN GUARDAR*/
                                             startActivity(new Intent(RazonesActivity.this,AccionesActivity.class));
+                                            editor.putString("COMENTARIO","").apply();
                                             editor.putString("BANDERA","2").apply();
                                             finish();
                                         }
@@ -176,12 +184,46 @@ public class RazonesActivity extends AppCompatActivity {
         }
     };
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_pedidos, menu);
+        return true;
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if (id == R.id.accion_new) {
+            LayoutInflater li = LayoutInflater.from(RazonesActivity.this);
+            final View promptsView = li.inflate(R.layout.input_observacion, null);
+            android.app.AlertDialog.Builder alertDialogBuilder = new android.app.AlertDialog.Builder(RazonesActivity.this);
+            alertDialogBuilder.setView(promptsView);
+            final TextView comentario = (TextView)promptsView.findViewById(R.id.txtObservaciones);
+            comentario.setText(preferences.getString("COMENTARIO",""));
+            alertDialogBuilder
+                    .setCancelable(false)
+                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            editor.putString("COMENTARIO",comentario.getText().toString()).apply();
+                        }
+                    })
+                    .setNegativeButton("Cancel",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            }).create().show();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(RazonesActivity.this);
             builder.setMessage("SE PERDERAN LOS DATOS DE LA VISITA").setTitle("¿ESTA SEGURO?")
                     .setPositiveButton("SI", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
+                            editor.putString("COMENTARIO","").apply();
                             startActivity(new Intent(RazonesActivity.this,AgendaActivity.class));
                             finish();
                         }

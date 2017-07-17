@@ -39,6 +39,7 @@ public class Pedidos_model {
                 contentValues.put("MONTO" , a.getmPrecio());
                 contentValues.put("ESTADO" , a.getmEstado());
                 contentValues.put("DESCRIPCION" , a.getmComentario());
+                contentValues.put("NUEVO" , a.getmNuevo());
 
                 myDataBase.insert("PEDIDO", null, contentValues );
             }
@@ -69,7 +70,7 @@ public class Pedidos_model {
                 contentValues.put("DESCRIPCION" , a.getmDescripcion());
                 contentValues.put("CANTIDAD" , a.getmCantidad());
                 contentValues.put("TOTAL" , a.getmPrecio());
-                contentValues.put("BONIFICADO" , a.getmBonificado());
+                //contentValues.put("BONIFICADO" , a.getmBonificado());
                 contentValues.put("IVA" , a.getmIva());
                 contentValues.put("DESCUENTO" , a.getmDescuento());
 
@@ -114,6 +115,7 @@ public class Pedidos_model {
                     tmp.setmFecha(cursor.getString(cursor.getColumnIndex("FECHA_CREADA")));
                     tmp.setmEstado(cursor.getString(cursor.getColumnIndex("ESTADO")));
                     tmp.setmComentario(cursor.getString(cursor.getColumnIndex("DESCRIPCION")));
+                    tmp.setmNuevo(cursor.getString(cursor.getColumnIndex("NUEVO")));
                     Cursor cursor2 = myDataBase.query(false, "PEDIDO_DETALLE", null, "IDPEDIDO"+ "=?", new String[] { cursor.getString(cursor.getColumnIndex("IDPEDIDO")) }, null, null, null, null);
                     cursor2.moveToFirst();
 
@@ -162,7 +164,8 @@ public class Pedidos_model {
                     tmp.setmDescripcion(cursor.getString(cursor.getColumnIndex("DESCRIPCION")));
                     tmp.setmCantidad(cursor.getString(cursor.getColumnIndex("CANTIDAD")));
                     tmp.setmPrecio(cursor.getString(cursor.getColumnIndex("TOTAL")));
-                    tmp.setmBonificado(cursor.getString(cursor.getColumnIndex("BONIFICADO")));
+                    tmp.setmIva(cursor.getString(cursor.getColumnIndex("IVA")));
+                    tmp.setmDescuento(cursor.getString(cursor.getColumnIndex("DESCUENTO")));
                     lista.add(tmp);
                     cursor.moveToNext();
                 }
@@ -268,7 +271,7 @@ public class Pedidos_model {
 
             for(int i=0;i<PEDIDOS.size();i++){
                 Pedidos a = PEDIDOS.get(i);
-                Log.d("guardando","UPDATE PEDIDO SET ESTADO = '"+a.getmEstado()+"', ANULACION = '"+a.getmAnulacion()+"', CONFIRMACION = '"+a.getmConfirmacion()+"'  WHERE IDPEDIDO = '"+a.getmIdPedido()+"'");
+                //Log.d("guardando","UPDATE PEDIDO SET ESTADO = '"+a.getmEstado()+"', ANULACION = '"+a.getmAnulacion()+"', CONFIRMACION = '"+a.getmConfirmacion()+"'  WHERE IDPEDIDO = '"+a.getmIdPedido()+"'");
                 SQLiteHelper.ExecuteSQL(ManagerURI.getDirDb(),context,"UPDATE PEDIDO SET ESTADO = '"+a.getmEstado()+"', ANULACION = '"+a.getmAnulacion()+"', CONFIRMACION = '"+a.getmConfirmacion()+"'  WHERE IDPEDIDO = '"+a.getmIdPedido()+"'");
             }
         }

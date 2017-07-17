@@ -12,7 +12,6 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -29,12 +28,7 @@ import com.guma.desarrollo.core.Pedidos_model;
 import com.guma.desarrollo.core.SQLiteHelper;
 import com.guma.desarrollo.gmv.R;
 
-import org.w3c.dom.Text;
-
-import java.sql.Time;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.Timer;
@@ -64,7 +58,6 @@ public class ResumenActivity extends AppCompatActivity {
         setTitle("RESUMEN");
         Intent ints = getIntent();
         assetMgr = getResources().getAssets();
-        // tbPedido,tlCodPedido,tlVendedor,tlCodVendedor
         tlNombre =  (TextView)findViewById(R.id.text1);
         tlDireccion = (TextView)findViewById(R.id.text2);
         txtDescripcion = (TextView)findViewById(R.id.idtTitulo);
@@ -88,9 +81,6 @@ public class ResumenActivity extends AppCompatActivity {
         CodCls =  preferences.getString("ClsSelected","");
         comentario =  preferences.getString("COMENTARIO","");
 
-        //txtObservacion = (TextView)findViewById(R.id.txtObservacion);
-        //txtObservacion.setEnabled(false);
-        //txtObservacion.setText(comentario);
 
         timer = new Timer();
         textView = (TextView) findViewById(R.id.idTimer);
@@ -116,7 +106,7 @@ public class ResumenActivity extends AppCompatActivity {
         }, 0, 1000);
         if (!idPedido.equals("")){
 
-            Atendio.setText("LE ATENDIO: "+preferences.getString("VENDEDOR",""));
+            Atendio.setText("LE ATENDIO: "+preferences.getString("NOMBRE",""));
             txtidPedido.setText(idPedido);
             bandera = "1";
             timer.cancel();
@@ -125,9 +115,10 @@ public class ResumenActivity extends AppCompatActivity {
         }else{
 
             int key = SQLiteHelper.getIdTemporal(ManagerURI.getDirDb(),ResumenActivity.this,"PEDIDOS");
-            idPedido = "F09-" + "P"+ Clock.getIdDate()+String.valueOf(key);
+            //idPedido = preferences.getString("VENDEDOR", "00") + "P"+ Clock.getIdDate()+String.valueOf(key);
+            idPedido = preferences.getString("VENDEDOR", "00")+"P"+String.valueOf(key);
             txtidPedido.setText("Nº PEDIDO: "+idPedido);
-            Atendio.setText("LE ATENDIO: "+preferences.getString("VENDEDOR",""));
+            Atendio.setText("LE ATENDIO: "+preferences.getString("NOMBRE",""));
         }
         for (Map<String, Object> obj : list){
             vLine     += Float.parseFloat(obj.get("ITEMVALOR").toString().replace(",",""));
@@ -178,18 +169,21 @@ public class ResumenActivity extends AppCompatActivity {
                 tmpDetalle.setmDescripcion(obj2.get("ITEMNAME").toString());
                 tmpDetalle.setmCantidad(obj2.get("ITEMCANTI").toString());
                 tmpDetalle.setmPrecio(obj2.get("PRECIO").toString());
-                tmpDetalle.setmBonificado(obj2.get("BONIFICADO").toString());
+                tmpDetalle.setmIva(obj2.get("IVA").toString());
+                tmpDetalle.setmDescuento(obj2.get("DESCUENTO").toString());
+
                 mDetallePedido.add(tmpDetalle);
             }
             SQLiteHelper.ExecuteSQL(ManagerURI.getDirDb(),ResumenActivity.this,"UPDATE PEDIDO SET MONTO = "+total+" WHERE IDPEDIDO = '"+idPedido+"'");
             SQLiteHelper.ExecuteSQL(ManagerURI.getDirDb(),ResumenActivity.this,"UPDATE PEDIDO SET DESCRIPCION = '"+comentario+"' WHERE IDPEDIDO = '"+idPedido+"'");
             Pedidos_model.SaveDetallePedido(ResumenActivity.this, mDetallePedido);
 
+            editor.putString("COMENTARIO", "").apply();
             startActivity(new Intent(ResumenActivity.this,BandejaPedidosActivity.class).addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP));
             finish();
         }else{
             int key = SQLiteHelper.getId(ManagerURI.getDirDb(), ResumenActivity.this, "PEDIDOS");
-            idPedido = preferences.getString("VENDEDOR", "00") + "P" + Clock.getIdDate() + String.valueOf(key);
+            idPedido = preferences.getString("VENDEDOR", "00") + "P" + String.valueOf(key);
             Float nTotal = 0.0f;
             for (Map<String, Object> obj : list) {
                 nTotal += Float.parseFloat(obj.get("ITEMVALOR").toString());
@@ -203,6 +197,7 @@ public class ResumenActivity extends AppCompatActivity {
             tmp.setmPrecio(String.valueOf(nTotal));
             tmp.setmEstado("0");
             tmp.setmComentario(comentario);
+            tmp.setmNuevo(preferences.getString("NUEVOCL", "0"));
             mPedido.add(tmp);
 
             Pedidos_model.SavePedido(ResumenActivity.this, mPedido);
@@ -213,7 +208,6 @@ public class ResumenActivity extends AppCompatActivity {
                 tmpDetalle.setmDescripcion(obj2.get("ITEMNAME").toString());
                 tmpDetalle.setmCantidad(obj2.get("ITEMCANTI").toString());
                 tmpDetalle.setmPrecio(obj2.get("PRECIO").toString());
-                //tmpDetalle.setmBonificado(obj2.get("BONIFICADO").toString());
                 tmpDetalle.setmIva(obj2.get("IVA").toString());
                 tmpDetalle.setmDescuento(obj2.get("DESCUENTO").toString());
                 mDetallePedido.add(tmpDetalle);
@@ -221,6 +215,8 @@ public class ResumenActivity extends AppCompatActivity {
             Pedidos_model.SaveDetallePedido(ResumenActivity.this, mDetallePedido);
             editor.putString("FINAL",Clock.getTime()).apply();
             Agenda_model.SaveLog(ResumenActivity.this,"PEDIDO","TIPO VISITA: PEDIDO: "+idPedido);
+            editor.putString("NUEVOCL","0").apply();
+            editor.putString("COMENTARIO", "").apply();
             editor.putString("BANDERA", "2").apply();
             startActivity(new Intent(ResumenActivity.this,AccionesActivity.class));
             timer.cancel();
@@ -234,6 +230,8 @@ public class ResumenActivity extends AppCompatActivity {
             builder.setMessage("SE PERDERAN LOS DATOS DEL PEDIDO").setTitle("¿ESTA SEGURO?")
                     .setPositiveButton("SI", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
+                            editor.putString("COMENTARIO","").apply();
+                            editor.putString("NUEVOCL","0").apply();
                             startActivity(new Intent(ResumenActivity.this,AgendaActivity.class));
                             finish();
                         }

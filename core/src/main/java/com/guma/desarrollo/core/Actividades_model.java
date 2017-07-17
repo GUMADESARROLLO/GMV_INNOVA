@@ -28,7 +28,6 @@ public class Actividades_model {
                 contentValues.put("IdAE" , a.getmIdAE());
                 contentValues.put("Categoria" , a.getmCategoria());
                 contentValues.put("Actividad" , a.getmActividad());
-                //contentValues.put("X", a.getChecked()? 1 : 0);
                 myDataBase.insert("ACTIVIDAD", null, contentValues );
             }
         }

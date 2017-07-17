@@ -97,11 +97,11 @@ public class IndicadoresClienteActivity extends AppCompatActivity {
             mpVenta.setText(Funciones.NumberFormat(Float.parseFloat(obj.get(0).getmPromedioVenta3M())));
             mItemFact.setText(Funciones.NumberFormat(Float.parseFloat(obj.get(0).getmCantidadItems3M())));
             Log.d("", "mCumplimiento: " + obj.get(0).getmCumplimiento());
-            pieChart = (PieChart) findViewById(R.id.chart);
+            /*pieChart = (PieChart) findViewById(R.id.chart);
             pieChart.getDescription().setEnabled(false);
             pieChart.setHoleRadius(25f);
             pieChart.setTransparentCircleAlpha(0);
-            pieChart.setDrawEntryLabels(true);
+            pieChart.setDrawEntryLabels(true);*/
             addDataSet(Float.parseFloat(obj.get(0).getmCumplimiento()));
         }
 
