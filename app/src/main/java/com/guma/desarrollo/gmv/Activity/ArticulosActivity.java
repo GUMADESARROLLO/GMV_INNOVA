@@ -100,14 +100,17 @@ public class ArticulosActivity extends AppCompatActivity implements SearchView.O
 
                     String lista = preferences.getString("LISTA", "");
                     String grupo = preferences.getString("GRUPO", "");
-                    List<String> PrecDescuento;
+                    //List<String> PrecDescuento;
+                    String PrecDescuento;
                     if (!lista.equals("")) {
                        PrecDescuento = Articulos_model.getPrecioIva(ArticulosActivity.this, grupo, lista, mnotes.getmCodigo(),false);
                     }else{
                        PrecDescuento = Articulos_model.getPrecioIva(ArticulosActivity.this, grupo, lista, mnotes.getmCodigo(),true);
                     }
+
                     InputPrecio = (EditText) promptsView.findViewById(R.id.txtFrmPrecio);
-                    InputPrecio.setText(PrecDescuento.get(0).toString());
+                    //InputPrecio.setText(PrecDescuento.get(0));
+                    InputPrecio.setText(PrecDescuento);
                     String IVA =  Articulos_model.getIvaDescent(ArticulosActivity.this,grupo,lista,mnotes.getmCodigo());
                     alertDialogBuilder.setView(promptsView);
 
@@ -125,8 +128,7 @@ public class ArticulosActivity extends AppCompatActivity implements SearchView.O
                     InputDesc.setEnabled(false);
 
                     inputIva.setText(IVA);
-                    //spinner = (Spinner) promptsView.findViewById(R.id.sp_boni);
-                    
+
 
                     InputExiste.setText(mnotes.getmExistencia() + " [ " + mnotes.getmUnidad() + " ]");
 
@@ -134,8 +136,6 @@ public class ArticulosActivity extends AppCompatActivity implements SearchView.O
                     if (checked) {
                         Inputcant.setVisibility(View.GONE);
                         promptsView.findViewById(R.id.txtInCant).setVisibility(View.GONE);
-                        /*TableRow tr = (TableRow)promptsView.findViewById(R.id.row2);
-                        tr.setVisibility(View.GONE);*/
                     }
 
                     Inputcant.addTextChangedListener(new TextWatcher() {
@@ -189,20 +189,22 @@ public class ArticulosActivity extends AppCompatActivity implements SearchView.O
                                                 if (Precio != 0.00) {
                                                     if (Inputcant.length() != 0 && !Inputcant.getText().toString().equals("0")) {
 
-                                                        Log.d("", "onClickStri: " + Inputcant.getText().toString());
+                                                       // Log.d("", "onClickStri: " + Inputcant.getText().toString());
                                                         Float cantida = Float.parseFloat(Inputcant.getText().toString());
-                                                        if (cantida <= Exist) {
+
                                                             //InputExiste.setText(InputPrecio);
                                                             vLinea = Float.parseFloat(InputPrecio.getText().toString()) * cantida;
                                                             SubTotalLinea = Float.parseFloat(String.valueOf(vLinea * 0.15));
                                                             TotalFinalLinea = vLinea + SubTotalLinea;
                                                             strings.add(mnotes.getmName());
                                                             strings.add(mnotes.getmCodigo());
-
                                                             strings.add(cantida.toString());
                                                             strings.add(vLinea.toString());
                                                             strings.add(SubTotalLinea.toString());
-                                                            strings.add(TotalFinalLinea.toString());
+                                                            Float mFinal = Float.parseFloat(TotalFinalLinea.toString());
+                                                            Float mDescF = Float.parseFloat(InputDesc.getText().toString())/100;
+                                                            Float mVFinal = mFinal - (mFinal * mDescF);
+                                                            strings.add(mVFinal.toString());
                                                             strings.add(InputPrecio.getText().toString());
                                                             strings.add(inputIva.getText().toString());
                                                             strings.add(InputDesc.getText().toString());
@@ -212,14 +214,7 @@ public class ArticulosActivity extends AppCompatActivity implements SearchView.O
                                                             editor.putBoolean("menu", false).apply();
                                                             editor.putBoolean("mostrar", true).apply();
                                                             finish();
-                                                        } else {
-                                                            new Notificaciones().Alert(ArticulosActivity.this, "ERROR", "LA EXISTENCIA ACTUAL ES: " + Exist.toString())
-                                                                    .setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                                                @Override
-                                                                public void onClick(DialogInterface dialogInterface, int i) {
-                                                                }
-                                                            }).show();
-                                                        }
+
                                                     } else {
                                                         new Notificaciones().Alert(ArticulosActivity.this, "ERROR", "INGRESE UNA CANTIDAD POR FAVOR")
                                                                 .setCancelable(false).setPositiveButton("OK", new DialogInterface.OnClickListener() {

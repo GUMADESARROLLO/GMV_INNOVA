@@ -29,7 +29,6 @@ public class Articulos_model {
                 contentValues.put("DESCRIPCION" , a.getmName());
                 contentValues.put("EXISTENCIA" , a.getmExistencia());
                 contentValues.put("UNIDAD" , a.getmUnidad());
-                contentValues.put("UNIDAD" , a.getmUnidad());
                 contentValues.put("NLP1" , a.getmNlp1());
                 contentValues.put("NLP2" , a.getmNlp2());
                 contentValues.put("NLP3" , a.getmNlp3());
@@ -80,12 +79,14 @@ public class Articulos_model {
         }
     }
 
-    public static List<String> getPrecioIva( Context context,String grupo, String listaPrecio,String articulo,boolean precio) {
-        List<String> lista = new ArrayList<>();
+    //public static List<String> getPrecioIva( Context context,String grupo, String listaPrecio,String articulo,boolean precio) {
+        //List<String> lista = new ArrayList<>();
+    public static String getPrecioIva( Context context,String grupo, String listaPrecio,String articulo,boolean precio) {
+        String lista = "0";
         SQLiteDatabase myDataBase = null;
         SQLiteHelper myDbHelper = null;
         Cursor cursor = null;
-        String columna = "";
+        String columna;
         try
         {
             Log.d("", "getPrecioIva: "+articulo);
@@ -102,12 +103,13 @@ public class Articulos_model {
                 cursor.moveToFirst();
                 while(!cursor.isAfterLast()) {
                     Log.d("", "getPrecioIva: "+cursor.getColumnIndex(columna));
-                    lista.add(0,cursor.getString(cursor.getColumnIndex(columna)));
+                    //lista.add(0,cursor.getString(cursor.getColumnIndex(columna)));
+                    lista = cursor.getString(cursor.getColumnIndex(columna));
                     cursor.moveToNext();
                 }
-            }else{
-                lista.add(0,"error al obtener precio");
-            }
+            }/*else{
+                lista.add(0,"0");
+            }*/
         }
         catch (Exception e) { e.printStackTrace(); }
         finally

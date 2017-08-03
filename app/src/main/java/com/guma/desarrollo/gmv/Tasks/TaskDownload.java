@@ -72,6 +72,8 @@ public class TaskDownload extends AsyncTask<Integer,Integer,String> {
                             pdialog.setMessage("Articulos.... ");
                             Respuesta_articulos articuloRespuesta = response.body();
                             Log.d(TAG, "onResponse: Articulos " + articuloRespuesta.getCount());
+                            Log.d(TAG, "onResponse: Articulos " + articuloRespuesta.getResults().get(0).getmCodigo()+" --- "+articuloRespuesta.getResults().get(0).getmPrecio());
+
                             Articulos_model.SaveArticulos(cnxt,articuloRespuesta.getResults());
                         }else{
                             pdialog.dismiss();
@@ -95,7 +97,7 @@ public class TaskDownload extends AsyncTask<Integer,Integer,String> {
                             pdialog.setMessage("Descuentos.... ");
                             Respuesta_articulos articuloRespuesta = response.body();
                             Log.d(TAG, "onResponse: Descuentos " + articuloRespuesta.getCount());
-                            Articulos_model.SaveArticulos(cnxt,articuloRespuesta.getResults());
+                            //Articulos_model.SaveArticulos(cnxt,articuloRespuesta.getResults());
                             Articulos_model.SaveDescuentos(cnxt,articuloRespuesta.getResults());
                         }else{
                             pdialog.dismiss();

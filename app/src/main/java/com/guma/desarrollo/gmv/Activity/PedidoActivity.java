@@ -87,8 +87,6 @@ public class PedidoActivity extends AppCompatActivity {
 
         String bandera = preferences.getString("BANDERA", "0");
 
-        /*Toast.makeText(this, preferences.getString("GRUPO", ""), Toast.LENGTH_SHORT).show();
-        Toast.makeText(this, preferences.getString("LISTA", ""), Toast.LENGTH_SHORT).show();*/
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -116,25 +114,14 @@ public class PedidoActivity extends AppCompatActivity {
         findViewById(R.id.txtSendPedido).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*Double Credito = null;
-
-                List<Clientes> Limite = Clientes_model.getCredito(ManagerURI.getDirDb(), PedidoActivity.this,preferences.getString("ClsSelected", ""));
-                for(Clientes obj2 : Limite) {
-                    Credito = Double.valueOf(obj2.getmCredito());
-                }*/
-
                 if (list.size()!=0){
                     Double Totall = Double.valueOf(Total.getText().toString().replace("TOTAL C$ ","").replace(",",""));
                     AlertDialog.Builder builder = new AlertDialog.Builder(PedidoActivity.this);
-                    /*if (Totall>Credito){
-                        new Notificaciones().Alert(PedidoActivity.this,"AVISO","LIMITE DE CLIENTE EXCEDIDO ("+Credito+")").setCancelable(false).setPositiveButton("OK", null).show();
-                    }else {*/
                         builder.setMessage("¿Confirma la transaccion?")
                                 .setPositiveButton("Si", new DialogInterface.OnClickListener() {
                                     public void onClick(DialogInterface dialog, int id) {
                                         Intent send = new Intent(PedidoActivity.this, ResumenActivity.class);
                                         send.putExtra("LIST", (Serializable) list);
-                                        //String comentario = preferences.getString("COMENTARIO", "")+" "+txtCount.getText();
                                         editor.putString("COMENTARIO", preferences.getString("COMENTARIO", "") + " " + txtCount.getText()).apply();
                                         startActivity(send);
                                         timer.cancel();
@@ -165,9 +152,13 @@ public class PedidoActivity extends AppCompatActivity {
                     map.put("PRECIO", Funciones.NumberFormat(Float.parseFloat(obj2.getmPrecio().replace(",",""))));
                     map.put("ITEMCANTI", obj2.getmCantidad());
                     map.put("BONIFICADO", obj2.getmBonificado());
-                    map.put("ITEMVALOR", Funciones.NumberFormat(Float.parseFloat(obj2.getmCantidad())*Float.parseFloat(obj2.getmPrecio().replace(",",""))));
                     map.put("IVA", obj2.getmIva());
                     map.put("DESCUENTO", obj2.getmDescuento());
+                    Float SubTotal = Float.parseFloat(obj2.getmCantidad())*Float.parseFloat(obj2.getmPrecio().replace(",",""));
+                    Float iva = SubTotal * (Float.parseFloat( obj2.getmIva().replace(",",""))/100);
+                    Float descuento = SubTotal * (Float.parseFloat( obj2.getmDescuento().replace(",",""))/100);
+                    map.put("ITEMVALOR",(SubTotal + iva) - descuento);
+
                     list.add(map);
                 }
             Refresh();
@@ -270,7 +261,7 @@ public class PedidoActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String cadena = Inputcant.getText().toString();
 
-                if (cadena.equals("")) {
+                if (cadena.equals("") || (Integer.valueOf(cadena)<1)) {
                     new Notificaciones().Alert(PedidoActivity.this,"AVISO","VALOR MINIMO ES 1").show();
                 }else{
                     Float numero = Float.valueOf(Inputcant.getText().toString());
@@ -279,7 +270,13 @@ public class PedidoActivity extends AppCompatActivity {
                         map.put("ITEMCANTI", Inputcant.getText().toString());
                         map.put("IVA", txtIVA.getText().toString());
                         map.put("DESCUENTO", InputDesc.getText().toString());
-                        map.put("ITEMVALOR", precio * numero);
+
+                        Float SubTotal = precio * numero;
+                        Float iva = SubTotal * (Float.parseFloat(txtIVA.getText().toString())/100);
+                        Float descuento = SubTotal * (Float.parseFloat(InputDesc.getText().toString())/100);
+                        map.put("ITEMVALOR", (SubTotal + iva) - descuento);
+
+
                         list.add(index, map);
                         list.remove(index + 1);
                         Refresh();
@@ -350,12 +347,18 @@ public class PedidoActivity extends AppCompatActivity {
             map.put("ITEMNAME", data.getStringArrayListExtra("myItem").get(0));
             map.put("ITEMCODIGO", data.getStringArrayListExtra("myItem").get(1));
             map.put("ITEMCANTI",  data.getStringArrayListExtra("myItem").get(2));
-            map.put("ITEMVALOR",  data.getStringArrayListExtra("myItem").get(3));
+            //map.put("ITEMVALOR",  data.getStringArrayListExtra("myItem").get(3));
             map.put("ITEMSUBTOTAL", data.getStringArrayListExtra("myItem").get(4));
             map.put("ITEMVALORTOTAL", Funciones.NumberFormat(Float.parseFloat(data.getStringArrayListExtra("myItem").get(5))));
             map.put("PRECIO", Funciones.NumberFormat(Float.parseFloat(data.getStringArrayListExtra("myItem").get(6))));
             map.put("IVA", data.getStringArrayListExtra("myItem").get(7));
             map.put("DESCUENTO", data.getStringArrayListExtra("myItem").get(8));
+
+            Float SubTotal = Float.parseFloat(data.getStringArrayListExtra("myItem").get(3).replace(",",""));
+            Float iva = SubTotal * (Float.parseFloat(data.getStringArrayListExtra("myItem").get(7).replace(",",""))/100);
+            Float descuento = SubTotal * (Float.parseFloat(data.getStringArrayListExtra("myItem").get(8).replace(",",""))/100);
+            map.put("ITEMVALOR",  (SubTotal + iva) - descuento);
+            //vLine     += (SubTotal + iva) - descuento;
 
             list.add(map);
             Refresh();
