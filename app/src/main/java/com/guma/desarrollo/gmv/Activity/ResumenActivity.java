@@ -121,7 +121,11 @@ public class ResumenActivity extends AppCompatActivity {
             Atendio.setText("LE ATENDIO: "+preferences.getString("NOMBRE",""));
         }
         for (Map<String, Object> obj : list){
+            /*Float SubTotal = Float.parseFloat(obj.get("ITEMVALOR").toString().replace(",",""));
+            Float iva = SubTotal * (Float.parseFloat(obj.get("IVA").toString().replace(",",""))/100);
+            Float descuento = SubTotal * (Float.parseFloat(obj.get("DESCUENTO").toString().replace(",",""))/100);*/
             vLine     += Float.parseFloat(obj.get("ITEMVALOR").toString().replace(",",""));
+            //vLine     += (SubTotal + iva) - descuento;
         }
         Total.setText("TOTAL C$ "+ String.valueOf(vLine));
         countArti.setText(listView.getCount() +" Articulo");
