@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".Activity.ImvActivity"
+    tools:showIn="@layout/activity_imv">
+    <TabHost
+        android:id="@android:id/tabhost"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+            <TableLayout
+                android:padding="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_margin="10dp">
+                    <TextView
+                        android:id="@+id/tcls"
+                        android:gravity="center"
+                        android:layout_height="fill_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="0" />
+                    <TextView
+                        android:id="@+id/tVnts"
+                        android:gravity="center"
+                        android:layout_height="fill_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="0" />
+                    <TextView
+                        android:id="@+id/pItem"
+                        android:gravity="center"
+                        android:layout_height="fill_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="0" />
+                    <TextView
+                        android:id="@+id/pFactura"
+                        android:gravity="center"
+                        android:layout_height="fill_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="0" />
+                </TableRow>
+                <TableRow
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:layout_margin="10dp">
+                    <TextView
+                        android:gravity="center"
+                        android:layout_height="fill_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:text="CLIENTES"/>
+                    <TextView
+                        android:gravity="center"
+                        android:layout_height="fill_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:text="TOTAL VENTA" />
+                    <TextView
+                        android:gravity="center"
+                        android:layout_height="fill_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:text="PROMEDIO DE ITEM"/>
+                    <TextView
+                        android:gravity="center"
+                        android:layout_height="fill_parent"
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:text="PROMEDIO POR FACTURA" />
+                </TableRow>
+            </TableLayout>
+
+            <TabWidget android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@android:id/tabs" />
+
+            <FrameLayout
+
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@android:id/tabcontent" >
+
+                <LinearLayout
+                    android:id="@+id/tab1"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+                    <TableLayout
+                        android:background="@color/INN_DARK_MORADO_two"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal">
+                        <TableRow
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_margin="10dp">
+                            <TextView
+                                android:textColor="@color/white"
+                                android:gravity="center"
+                                android:layout_height="fill_parent"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:text="ARTICULO" />
+                            <TextView
+                                android:textColor="@color/white"
+                                android:gravity="center"
+                                android:layout_height="fill_parent"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:text="DESCRIPCION" />
+                            <TextView
+                                android:textColor="@color/white"
+                                android:gravity="center"
+                                android:layout_height="fill_parent"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:text="VENTA" />
+                            <TextView
+                                android:textColor="@color/white"
+                                android:gravity="center"
+                                android:layout_height="fill_parent"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:text="FACTURAS" />
+                        </TableRow>
+                    </TableLayout>
+                    <ListView
+                        android:id="@+id/lstVentas"
+                        android:gravity="center"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"/>
+                </LinearLayout>
+
+                <LinearLayout android:id="@+id/tab2"
+                    android:orientation="vertical"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" >
+
+                    <TableLayout
+                        android:background="@color/INN_DARK_MORADO_two"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal">
+                        <TableRow
+                            android:layout_width="fill_parent"
+                            android:layout_height="fill_parent"
+                            android:layout_margin="10dp">
+                            <TextView
+                                android:textColor="@color/white"
+                                android:gravity="center"
+                                android:layout_height="fill_parent"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:text="COD CLIENTE" />
+                            <TextView
+                                android:textColor="@color/white"
+                                android:gravity="center"
+                                android:layout_height="fill_parent"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:text="CLIENTE" />
+                            <TextView
+                                android:textColor="@color/white"
+                                android:gravity="center"
+                                android:layout_height="fill_parent"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:text="VENTA" />
+                            <TextView
+                                android:textColor="@color/white"
+                                android:gravity="center"
+                                android:layout_height="fill_parent"
+                                android:layout_width="0dp"
+                                android:layout_weight="1"
+                                android:textAppearance="?android:attr/textAppearanceLarge"
+                                android:text="FACTURAS" />
+                        </TableRow>
+                    </TableLayout>
+                    <ListView
+                        android:id="@+id/lstClientes"
+                        android:gravity="center"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"/>
+                </LinearLayout>
+            </FrameLayout>
+        </LinearLayout>
+    </TabHost>
+
+</LinearLayout>

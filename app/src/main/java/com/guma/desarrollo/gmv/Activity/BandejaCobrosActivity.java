@@ -55,6 +55,7 @@ public class BandejaCobrosActivity extends AppCompatActivity {
 
         List<Cobros> lstObj = Cobros_model.getCobros(ManagerURI.getDirDb(), BandejaCobrosActivity.this,false);
 
+
         if (lstObj.size() == 0){
             findViewById(R.id.imgMoneyOff) .setVisibility(View.VISIBLE);
             findViewById(R.id.txtMoneyOff) .setVisibility(View.VISIBLE);

@@ -83,6 +83,98 @@ public class Clientes_model {
         }
         return lista;
     }
+    public static List<Imv> getImvVendedor(String basedir, Context context) {
+        List<Imv> lista = new ArrayList<>();
+        SQLiteDatabase myDataBase = null;
+        SQLiteHelper myDbHelper = null;
+        try
+        {
+            myDbHelper = new SQLiteHelper(basedir, context);
+            myDataBase = myDbHelper.getReadableDatabase();
+            Cursor cursor = myDataBase.query(true, "IMV_VENDEDOR", null, null, null, null, null, null, null);
+            if(cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                while(!cursor.isAfterLast()) {
+                    Imv tmp = new Imv();
+                    tmp.setmVendedor1(cursor.getString(cursor.getColumnIndex("VENDEDOR")));
+                    tmp.setmNombre(cursor.getString(cursor.getColumnIndex("NOMBRE")));
+                    tmp.setmNumCliente(cursor.getString(cursor.getColumnIndex("NUMCLIENTE")));
+                    tmp.setmTotalVenta1(cursor.getString(cursor.getColumnIndex("TOTALVENTA")));
+                    tmp.setmPromItem(cursor.getString(cursor.getColumnIndex("PROMITEM")));
+                    tmp.setmPRomedioFactura(cursor.getString(cursor.getColumnIndex("PROMEDIOFACTURA")));
+                    lista.add(tmp);
+                    cursor.moveToNext();
+                }
+            }
+        }
+        catch (Exception e) { e.printStackTrace(); }
+        finally
+        {
+            if(myDataBase != null) { myDataBase.close(); }
+            if(myDbHelper != null) { myDbHelper.close(); }
+        }
+        return lista;
+    }
+    public static List<Imv> getVntsArticulos(String basedir, Context context) {
+        List<Imv> lista = new ArrayList<>();
+        SQLiteDatabase myDataBase = null;
+        SQLiteHelper myDbHelper = null;
+        try
+        {
+            myDbHelper = new SQLiteHelper(basedir, context);
+            myDataBase = myDbHelper.getReadableDatabase();
+            Cursor cursor = myDataBase.query(true, "ViewVntsArticulos", null, null, null, null, null, null, null);
+            if(cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                while(!cursor.isAfterLast()) {
+                    Imv tmp = new Imv();
+                    tmp.setmArticulo(cursor.getString(cursor.getColumnIndex("ARTICULO")));
+                    tmp.setmDescripcion(cursor.getString(cursor.getColumnIndex("DESCRIPCION")));
+                    tmp.setmTotalVenta1(cursor.getString(cursor.getColumnIndex("VENTA")));
+                    tmp.setmFactura(cursor.getString(cursor.getColumnIndex("FACTURA")));
+                    lista.add(tmp);
+                    cursor.moveToNext();
+                }
+            }
+        }
+        catch (Exception e) { e.printStackTrace(); }
+        finally
+        {
+            if(myDataBase != null) { myDataBase.close(); }
+            if(myDbHelper != null) { myDbHelper.close(); }
+        }
+        return lista;
+    }
+    public static List<Imv> getVntsClientes(String basedir, Context context) {
+        List<Imv> lista = new ArrayList<>();
+        SQLiteDatabase myDataBase = null;
+        SQLiteHelper myDbHelper = null;
+        try
+        {
+            myDbHelper = new SQLiteHelper(basedir, context);
+            myDataBase = myDbHelper.getReadableDatabase();
+            Cursor cursor = myDataBase.query(true, "ViewVntsClientes", null, null, null, null, null, null, null);
+            if(cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                while(!cursor.isAfterLast()) {
+                    Imv tmp = new Imv();
+                    tmp.setmCodCliente(cursor.getString(cursor.getColumnIndex("CODCLIENTE")));
+                    tmp.setmCliente(cursor.getString(cursor.getColumnIndex("CLIENTE")));
+                    tmp.setmTotalVenta2(cursor.getString(cursor.getColumnIndex("VENTA")));
+                    tmp.setmFactura(cursor.getString(cursor.getColumnIndex("FACTURA")));
+                    lista.add(tmp);
+                    cursor.moveToNext();
+                }
+            }
+        }
+        catch (Exception e) { e.printStackTrace(); }
+        finally
+        {
+            if(myDataBase != null) { myDataBase.close(); }
+            if(myDbHelper != null) { myDbHelper.close(); }
+        }
+        return lista;
+    }
     public static void  borrarClientesNuevos(Context context){
         SQLiteDatabase myDataBase = null;
         SQLiteHelper myDbHelper = null;
@@ -123,6 +215,51 @@ public class Clientes_model {
                 contentValues.put("ITEM3M" , a.getmCantidadItems3M());
                 contentValues.put("CUMPLIMIENTO" , a.getmCumplimiento());
                 myDataBase.insert("CLIENTES_INDICADORES", null, contentValues );
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        finally
+        {
+            if(myDataBase != null) { myDataBase.close(); }
+            if(myDbHelper != null) { myDbHelper.close(); }
+        }
+    }
+    public static void SaveImV(Context context, ArrayList<Imv> Indica){
+        SQLiteDatabase myDataBase = null;
+        SQLiteHelper myDbHelper = null;
+        try
+        {
+            myDbHelper = new SQLiteHelper(ManagerURI.getDirDb(), context);
+            myDataBase = myDbHelper.getWritableDatabase();
+            SQLiteHelper.ExecuteSQL(ManagerURI.getDirDb(), context,"DELETE FROM IMV_VENDEDOR");
+            SQLiteHelper.ExecuteSQL(ManagerURI.getDirDb(), context,"DELETE FROM IMV_DETALLES");
+
+            Imv a = Indica.get(0);
+            ContentValues contentValues = new ContentValues();
+            contentValues.put("VENDEDOR" , a.getmVendedor1());
+            contentValues.put("NOMBRE" , a.getmNombre());
+            contentValues.put("NUMCLIENTE" , a.getmNumCliente());
+            contentValues.put("TOTALVENTA" , a.getmTotalVenta1());
+            contentValues.put("PROMITEM" , a.getmPromItem());
+            contentValues.put("PROMEDIOFACTURA" , a.getmPRomedioFactura());
+            myDataBase.insert("IMV_VENDEDOR", null, contentValues );
+
+            for(int i=1;i<Indica.size();i++){
+                Imv b = Indica.get(i);
+                ContentValues insetValor = new ContentValues();
+                insetValor.put("FECHA" , b.getmFecha());
+                insetValor.put("FACTURA" , b.getmFactura());
+                insetValor.put("CODCLIENTE" , b.getmCodCliente());
+                insetValor.put("CANTIDAD" , b.getmCantidad());
+                insetValor.put("TOTALVENTA" , b.getmTotalVenta2());
+                insetValor.put("CLIENTE" , b.getmCliente());
+                insetValor.put("ARTICULO" , b.getmArticulo());
+                insetValor.put("DESCRIPCION" , b.getmDescripcion());
+                insetValor.put("CODVENDEDOR" , b.getmCodVendedor());
+                insetValor.put("VENDEDOR" , b.getmVendedor2());
+                myDataBase.insert("IMV_DETALLES", null, insetValor );
             }
         }
         catch (Exception e) {

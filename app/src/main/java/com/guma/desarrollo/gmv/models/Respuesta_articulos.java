@@ -10,7 +10,6 @@ import java.util.ArrayList;
 
 public class Respuesta_articulos {
     private ArrayList<Articulo> results;
-
     public int getCount() {
         return results.size();
     }

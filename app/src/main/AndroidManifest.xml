@@ -29,7 +29,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".Activity.LoginActivity"
             android:label="@string/app_name"
@@ -105,8 +104,9 @@
             android:label="@string/title_activity_facturas"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activity.RazonActivity" />
-        <activity android:name=".Activity.RazonesActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity
+            android:name=".Activity.RazonesActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".Activity.listview_row" />
         <activity
             android:name=".Activity.CrearAgendaActivity"
@@ -126,15 +126,21 @@
         <activity
             android:name=".Activity.ScrollingRazones"
             android:label="@string/title_activity_scrolling_razones"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
 
+        <!--
         <receiver android:name=".CheckInternetBroadcast">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
+        -->
 
-        <activity android:name=".Activity.NewClienteActivity"></activity>
+        <activity android:name=".Activity.NewClienteActivity" />
+        <activity
+            android:name=".Activity.ImvActivity"
+            android:label="@string/title_activity_imv"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

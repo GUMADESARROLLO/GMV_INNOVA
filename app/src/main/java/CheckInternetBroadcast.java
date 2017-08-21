@@ -16,9 +16,9 @@ public class CheckInternetBroadcast extends BroadcastReceiver{
     public void onReceive(Context context, Intent intent) {
     int[] type = {ConnectivityManager.TYPE_MOBILE,ConnectivityManager.TYPE_WIFI};
         if (isNetworkAvaliable(context,type)){
-            Toast.makeText(context, "Si hay interne!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Tiene conexion a internet!!", Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(context, "no interne!!!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "No Tiene Conexion!!!", Toast.LENGTH_SHORT).show();
         }
     }
     private  boolean isNetworkAvaliable(Context context, int[] typeNetworks){

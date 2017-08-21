@@ -8,6 +8,7 @@ import com.guma.desarrollo.gmv.models.Respuesta_articulos;
 import com.guma.desarrollo.gmv.models.Respuesta_clientes;
 import com.guma.desarrollo.gmv.models.Respuesta_cobros;
 import com.guma.desarrollo.gmv.models.Respuesta_historial;
+import com.guma.desarrollo.gmv.models.Respuesta_imv;
 import com.guma.desarrollo.gmv.models.Respuesta_indicadores;
 import com.guma.desarrollo.gmv.models.Respuesta_mora;
 
@@ -112,5 +113,9 @@ public interface Servicio {
     @FormUrlEncoded
     @POST("Historial")
     Call<Respuesta_historial> obtHistorial(@Field("mVendedor") String mVendedor);
+
+    @FormUrlEncoded
+    @POST("imVendedores")
+    Call<Respuesta_imv> getImv (@Field("mVendedor") String mVendedor);
 
 }

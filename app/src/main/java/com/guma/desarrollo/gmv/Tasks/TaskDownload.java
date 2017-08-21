@@ -23,6 +23,7 @@ import com.guma.desarrollo.gmv.models.Respuesta_actividades;
 import com.guma.desarrollo.gmv.models.Respuesta_articulos;
 import com.guma.desarrollo.gmv.models.Respuesta_clientes;
 import com.guma.desarrollo.gmv.models.Respuesta_historial;
+import com.guma.desarrollo.gmv.models.Respuesta_imv;
 import com.guma.desarrollo.gmv.models.Respuesta_pedidos;
 import com.guma.desarrollo.gmv.models.Respuesta_puntos;
 
@@ -60,8 +61,10 @@ public class TaskDownload extends AsyncTask<Integer,Integer,String> {
 
     @Override
     protected String doInBackground(Integer... params) {
-
         Usuario = preferences.getString("VENDEDOR","0");
+
+
+       Usuario = preferences.getString("VENDEDOR","0");
         Class_retrofit.Objfit()
                 .create(Servicio.class)
                 .obtenerListaArticulos()
@@ -72,7 +75,6 @@ public class TaskDownload extends AsyncTask<Integer,Integer,String> {
                             pdialog.setMessage("Articulos.... ");
                             Respuesta_articulos articuloRespuesta = response.body();
                             Log.d(TAG, "onResponse: Articulos " + articuloRespuesta.getCount());
-                            Log.d(TAG, "onResponse: Articulos " + articuloRespuesta.getResults().get(0).getmCodigo()+" --- "+articuloRespuesta.getResults().get(0).getmPrecio());
 
                             Articulos_model.SaveArticulos(cnxt,articuloRespuesta.getResults());
                         }else{
@@ -270,9 +272,29 @@ public class TaskDownload extends AsyncTask<Integer,Integer,String> {
                     });
         }
 
+
+        Class_retrofit.Objfit()
+                .create(Servicio.class)
+                .getImv(Usuario)
+                .enqueue(new Callback<Respuesta_imv>() {
+                    @Override
+                    public void onResponse(Call<Respuesta_imv> call, Response<Respuesta_imv> response) {
+                        if(response.isSuccessful()){
+                            Log.d(TAG, "onResponse: Successful IMV"  );
+                            Clientes_model.SaveImV(cnxt,response.body().getResults());
+                            pdialog.dismiss();
+                        }else{
+                            pdialog.dismiss();
+                            Log.d(TAG, "onResponse: noSuccessful IMV" + response.errorBody() );
+                        }
+                    }
+                    @Override
+                    public void onFailure(Call<Respuesta_imv> call, Throwable t) {
+                        Log.d(TAG, "onResponse: Failure IMV " + t.getMessage() );
+                        pdialog.dismiss();
+                    }
+                });
         pdialog.dismiss();
-
-
         editor.putString("lstDownload", Clock.getTimeStamp());
         editor.apply();
 

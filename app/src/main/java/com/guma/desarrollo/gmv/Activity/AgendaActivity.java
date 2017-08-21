@@ -1,5 +1,6 @@
 package com.guma.desarrollo.gmv.Activity;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -105,6 +106,12 @@ public class AgendaActivity extends AppCompatActivity  implements ConnectivityRe
                 editor.putString("BANDERA", "0").apply();
                 startActivity(new Intent(AgendaActivity.this,MarcarRegistroActivity.class));
                 finish();
+            }
+        });
+        findViewById(R.id.imv).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AgendaActivity.this,ImvActivity.class));
             }
         });
 

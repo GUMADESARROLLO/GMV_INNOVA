@@ -39,6 +39,15 @@
             android:layout_margin="10dp">
             <ImageView
 
+                android:id="@+id/imv"
+                android:layout_height="35dp"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:tint="@color/INN_LIGHT_NARANJA"
+                android:src="@drawable/ic_timeline_white_36dp"
+                />
+            <ImageView
+
                 android:id="@+id/imgNew"
                 android:layout_height="35dp"
                 android:layout_width="0dp"

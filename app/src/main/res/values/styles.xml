@@ -1,4 +1,5 @@
 <resources>
+
     <style name="captionOnly">
         <item name="android:background">@null</item>
         <item name="android:clickable">false</item>
